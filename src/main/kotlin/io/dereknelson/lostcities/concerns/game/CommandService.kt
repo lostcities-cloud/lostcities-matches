@@ -1,5 +1,6 @@
-package io.dereknelson.lostcities.concerns.games
+package io.dereknelson.lostcities.concerns.game
 
+import io.dereknelson.lostcities.concerns.game.components.Phase
 import org.springframework.stereotype.Service
 
 @Service

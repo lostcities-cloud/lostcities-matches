@@ -1,5 +1,6 @@
-package io.dereknelson.lostcities.concerns.games
+package io.dereknelson.lostcities.concerns.game
 
+import io.dereknelson.lostcities.concerns.game.components.DeckFactory
 import io.dereknelson.lostcities.concerns.matches.Match
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -10,19 +11,17 @@ import kotlin.collections.LinkedHashSet
 class GameService {
 
     @Autowired
-    lateinit var deckFactory: DeckFactory
+    private lateinit var deckFactory: DeckFactory
 
-    private fun buildInitialGameState(match: Match) : GameState {
+    fun constructStateFromMatch(match: Match) : GameState {
         val shuffledCards = deckFactory.buildDeck()
             .shuffled(Random(match.seed))
 
-        val gameState = GameState(
+        return GameState(
             match.id,
             match.players,
             match.seed,
             LinkedHashSet(shuffledCards)
         )
-
-        return gameState
     }
 }

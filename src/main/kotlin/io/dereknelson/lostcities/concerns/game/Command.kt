@@ -1,6 +1,10 @@
-package io.dereknelson.lostcities.concerns.games
+package io.dereknelson.lostcities.concerns.game
 
-data class Command(
+import io.dereknelson.lostcities.concerns.game.components.Card
+import io.dereknelson.lostcities.concerns.game.components.Color
+import io.dereknelson.lostcities.concerns.game.components.Phase
+
+data class Command (
     val playerId: Long,
     val phase: Phase,
     val draw: Boolean,

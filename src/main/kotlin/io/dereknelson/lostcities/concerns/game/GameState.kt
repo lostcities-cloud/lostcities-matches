@@ -1,5 +1,9 @@
-package io.dereknelson.lostcities.concerns.games
+package io.dereknelson.lostcities.concerns.game
 
+import io.dereknelson.lostcities.concerns.game.components.Card
+import io.dereknelson.lostcities.concerns.game.components.Color
+import io.dereknelson.lostcities.concerns.game.components.Phase
+import io.dereknelson.lostcities.concerns.game.components.PlayArea
 import io.dereknelson.lostcities.concerns.matches.UserPair
 import io.dereknelson.lostcities.concerns.users.User
 import java.util.*
@@ -36,7 +40,7 @@ class GameState(
         phase = if(phase == Phase.PLAY_OR_DISCARD) {
             Phase.DRAW
         } else {
-            Phase. PLAY_OR_DISCARD
+            Phase.PLAY_OR_DISCARD
         }
     }
 

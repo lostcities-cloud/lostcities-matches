@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.concerns.games
+package io.dereknelson.lostcities.concerns.game.components
 
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
