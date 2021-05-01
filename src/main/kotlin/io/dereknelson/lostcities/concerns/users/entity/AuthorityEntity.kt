@@ -17,10 +17,11 @@ import javax.validation.constraints.Size
 @Entity
 @Table(name = "jhi_authority")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-class AuthorityEntity : Serializable {
+data class AuthorityEntity (
     @Id
     @Column(length = 50)
-    var name: @NotNull @Size(max = 50) String? = null
+    var name: @NotNull @Size(max = 50) String
+) : Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) {

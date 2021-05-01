@@ -14,10 +14,12 @@ import java.util.*
 @RestController
 @RequestMapping("/api/users")
 class UserController {
+
     @Autowired
-    lateinit var userService: UserService
+    private lateinit var userService: UserService
+
     @Autowired
-    lateinit var modelMapper : ModelMapper
+    private lateinit var modelMapper : ModelMapper
 
     @GetMapping("/{id}")
     fun findUserById(@PathVariable  id: Long) : UserDto? {
