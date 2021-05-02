@@ -29,18 +29,18 @@ class GameController {
     private lateinit var commandService: CommandService
 
     @Autowired
-    private lateinit var modelMapper : ModelMapper
+    private lateinit var modelMapper: ModelMapper
 
-    @GetMapping("/{id}", produces=[MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findById(
         @PathVariable id: Long,
         userDetails: UserDetails
-    ) : GameState? {
+    ): GameState? {
         return retrieveGame(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
-    @PatchMapping("/{id}", produces=[MediaType.APPLICATION_JSON_VALUE])
+    @PatchMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun playCommand(@PathVariable id: Long, @RequestBody commandDto: CommandDto) {
         val gameState = retrieveGame(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
@@ -58,6 +58,6 @@ class GameController {
     private fun retrieveGame(id: Long): Optional<GameState> {
         return matchService.findById(id)
             .map { match -> gameService.constructStateFromMatch(match) }
-            .map { game -> commandService.playAll(game)}
+            .map { game -> commandService.playAll(game) }
     }
 }

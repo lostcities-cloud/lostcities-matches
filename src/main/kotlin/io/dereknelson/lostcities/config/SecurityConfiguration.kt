@@ -72,7 +72,7 @@ class SecurityConfiguration(
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .and()
-            .httpBasic()
+            .formLogin()
         // @formatter:on
     }
 
