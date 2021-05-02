@@ -17,7 +17,7 @@ import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
 @RestController
-@RequestMapping("/api/matches")
+@RequestMapping("/api/game")
 class GameController {
 
     @Autowired

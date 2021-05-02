@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(
         name = "command",
-        indexes = [Index(name="gameId", columnList="gameId", unique=false)]
+        indexes = [Index(name="game_id", columnList="game_id", unique=false)]
 )
 data class CommandEntity (
     @Id
