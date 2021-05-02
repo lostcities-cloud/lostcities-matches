@@ -6,8 +6,8 @@
 
 logging:
   level:
-    ROOT: INFO
-    io.dereknelson.lostcities: INFO
+    ROOT: DEBUG
+    io.dereknelson.lostcities: DEBUG
 
 spring:
   config:

@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.api.users
 
+import io.dereknelson.lostcities.concerns.users.User
 import io.dereknelson.lostcities.concerns.users.UserService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
 @RestController
-@RequestMapping("/api/users", produces=[MediaType.APPLICATION_JSON_VALUE])
+@RequestMapping("/api/users")
 class UserController {
 
     @Autowired
@@ -22,10 +23,10 @@ class UserController {
     @Autowired
     private lateinit var modelMapper : ModelMapper
 
-    @GetMapping("{id}", produces=[MediaType.APPLICATION_JSON_VALUE])
+    @GetMapping("{id}")
     fun findUserById(@PathVariable  id: Long) : UserDto? {
         return userService.findById(id)
-            .map { modelMapper.map(it, UserDto::class.java) }
+            .map { UserDto(id=it.id, login=it.login, email=it.email, langKey=it.langKey) }
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 }

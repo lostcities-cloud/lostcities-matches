@@ -22,7 +22,9 @@ class UserService {
     }
 
     fun findById(id: Long): Optional<User> {
-        return userRepository.findById(id).map { modelMapper.map(it, User::class.java) }
+        return userRepository.findById(id)
+            .map { User(id=it.id, login=it.login!!, email=it.email!!, langKey=it.langKey ?: "en_US") }
+
     }
 
     fun findAllById(id: Iterable<Long>): Collection<User> {
@@ -33,12 +35,18 @@ class UserService {
         userRepository.findById(user.id!!).ifPresent { userRepository.delete(it) }
     }
 
-    fun register(registration: Registration) {
-        userRepository.save(
-            modelMapper.map(
-                registration,
-                UserEntity::class.java
-            )
+    fun register(registration: Registration): User {
+        var userEntity = modelMapper.map(
+            registration,
+            UserEntity::class.java
+        )
+
+        userEntity = userRepository.save(userEntity)
+
+        return User(
+            id=userEntity.id,
+            login=userEntity.login!!,
+            email=userEntity.email!!
         )
     }
 }

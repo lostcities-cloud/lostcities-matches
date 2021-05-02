@@ -43,6 +43,8 @@ class SecurityConfiguration(
             .disable()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling()
+            .authenticationEntryPoint(problemSupport)
+            .accessDeniedHandler(problemSupport)
             .and()
             .headers()
             .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
@@ -60,7 +62,7 @@ class SecurityConfiguration(
             .authorizeRequests()
             .antMatchers("/login").permitAll()
             .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/register").permitAll()
+            .antMatchers("/api/registration").permitAll()
             .antMatchers("/api/activate").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
@@ -71,10 +73,6 @@ class SecurityConfiguration(
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .and()
             .httpBasic()
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
         // @formatter:on
     }
 

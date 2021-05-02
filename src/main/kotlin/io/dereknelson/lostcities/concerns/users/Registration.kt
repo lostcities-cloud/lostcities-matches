@@ -16,5 +16,5 @@ data class Registration (
     val firstName: @NotNull @Size(max = 50) String,
     val lastName: @Size(max = 50) String?,
     val langKey: @NotNull @Size(min = 2, max = 10) String = "en_US",
-    val authorities: @Size(min = 1) Set<AuthorityEntity> = HashSet(),
+    var authorities: @Size(min = 1) Set<AuthorityEntity> = HashSet(),
 )

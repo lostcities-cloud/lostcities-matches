@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.concerns
 
+import io.dereknelson.lostcities.api.register.RegistrationDto
 import io.dereknelson.lostcities.concerns.game.Command
 import io.dereknelson.lostcities.concerns.game.components.Card
 import io.dereknelson.lostcities.concerns.game.components.Color
@@ -8,8 +9,11 @@ import io.dereknelson.lostcities.concerns.game.entities.CommandEntity
 import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchEntity
 import io.dereknelson.lostcities.concerns.matches.UserPair
+import io.dereknelson.lostcities.concerns.users.Registration
 import io.dereknelson.lostcities.concerns.users.User
 import io.dereknelson.lostcities.concerns.users.UserRef
+import io.dereknelson.lostcities.concerns.users.entity.AuthorityEntity
+import io.dereknelson.lostcities.library.security.AuthoritiesConstants
 import org.modelmapper.ModelMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -23,6 +27,20 @@ class ModelMapperConfiguration {
     @Bean
     fun modelMapper(): ModelMapper {
         val modelMapper = ModelMapper()
+
+        modelMapper.addConverter({ context ->
+            if(context.source == null) {
+                null
+            } else {
+                val src: UserRef = context.source as UserRef
+
+                User(
+                    id = src.id,
+                    login = src.login!!,
+                    email = src.email!!,
+                )
+            }
+        }, UserRef::class.java, User::class.java)
 
         modelMapper.addConverter({ context ->
             if(context.source == null) {
@@ -143,6 +161,20 @@ class ModelMapperConfiguration {
                 )
             }
         }, CommandEntity::class.java, Command::class.java)
+
+        modelMapper.addConverter({ context ->
+            val src = context.source as RegistrationDto
+
+            Registration(
+                login=src.login,
+                email=src.email,
+                password=src.password,
+                firstName=src.firstName,
+                lastName=src.lastName,
+                langKey=src.langKey,
+                authorities=src.authorities.map { AuthorityEntity(name=it) }.toSet(),
+            )
+        }, RegistrationDto::class.java, Registration::class.java)
 
         modelMapper.addConverter({ context ->
             val src = context.source as Command

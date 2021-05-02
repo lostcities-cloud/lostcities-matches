@@ -49,6 +49,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	implementation("org.zalando:problem-spring-web:0.21.0")
+	implementation("io.springfox:springfox-boot-starter:3.0.0")
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
 
 	implementation("org.modelmapper:modelmapper:2.4.1")
 	implementation("org.flywaydb:flyway-core")

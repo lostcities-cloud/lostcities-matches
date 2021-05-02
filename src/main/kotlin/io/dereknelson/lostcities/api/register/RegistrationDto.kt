@@ -1,11 +1,7 @@
-package io.dereknelson.lostcities.api.registration
+package io.dereknelson.lostcities.api.register
 
-import io.dereknelson.lostcities.concerns.users.entity.AuthorityEntity
 import io.dereknelson.lostcities.library.Constants
 import io.dereknelson.lostcities.library.security.AuthoritiesConstants
-import org.apache.commons.lang3.StringUtils
-import java.util.*
-import javax.persistence.*
 import javax.validation.constraints.Email
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
@@ -18,5 +14,5 @@ data class RegistrationDto (
     var firstName: @NotNull @Size(max = 50) String,
     var lastName: @Size(max = 50) String?,
     var langKey: @Size(min = 2, max = 10) String = "en_US",
-    var authorities: Set<AuthorityEntity> = setOf(AuthorityEntity(name=AuthoritiesConstants.USER)),
+    var authorities: Set<String> = setOf(AuthoritiesConstants.USER),
 )
