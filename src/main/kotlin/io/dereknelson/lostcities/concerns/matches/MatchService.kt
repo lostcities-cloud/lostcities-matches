@@ -1,8 +1,8 @@
 package io.dereknelson.lostcities.concerns.matches
 
+import io.dereknelson.lostcities.concerns.users.User
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -53,5 +53,16 @@ class MatchService {
     fun delete(match: Match) {
         val matchEntity : MatchEntity = modelMapper.map(match, MatchEntity::class.java)
         matchRepository.delete(matchEntity)
+    }
+
+    fun joinMatch(match: Match, user: User): Match {
+        if(match.players.contains(user) || match.players.isPopulated) {
+            throw UnableToJoinMatchException()
+        } else {
+            match.players.user2 = user
+        }
+
+        val matchEntity : MatchEntity = modelMapper.map(match, MatchEntity::class.java)
+        return modelMapper.map(matchRepository.save(matchEntity), Match::class.java)
     }
 }

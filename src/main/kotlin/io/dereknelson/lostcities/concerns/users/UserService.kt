@@ -3,6 +3,7 @@ package io.dereknelson.lostcities.concerns.users
 import io.dereknelson.lostcities.concerns.users.entity.UserEntity
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -14,6 +15,11 @@ class UserService {
 
     @Autowired
     private lateinit var userRepository : UserRepository
+
+    fun find(userDetails: UserDetails) : Optional<User> {
+        return userRepository.findOneByLogin(userDetails.username)
+            .map { modelMapper.map(it, User::class.java) }
+    }
 
     fun findById(id: Long): Optional<User> {
         return userRepository.findById(id).map { modelMapper.map(it, User::class.java) }

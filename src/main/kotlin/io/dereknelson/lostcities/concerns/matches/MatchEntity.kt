@@ -13,6 +13,7 @@ data class MatchEntity(
     @Id
     var id: Long? = null,
 
+    @Column(name="seed")
     var seed: Long? = null,
 
     @ManyToOne
@@ -21,16 +22,24 @@ data class MatchEntity(
     @ManyToOne
     var player2: UserRef? = null,
 
+    @Column(name="is_ready")
     var isReady: Boolean? = false,
+
+    @Column(name="is_started")
     var isStarted: Boolean? = false,
+
+    @Column(name="is_completed")
     var isCompleted: Boolean? = false
 ) {
+    @Column(name="created_date")
     @CreatedDate
-    val createdDate: Timestamp? = null
+    var createdDate: Timestamp? = null
 
+    @Column(name="last_modified_date")
     @LastModifiedDate
-    val lastModifiedDate: Timestamp? = null
+    var lastModifiedDate: Timestamp? = null
 
+    @Column(name="created_by")
     @CreatedBy
     var createdBy: Long? = null
 }

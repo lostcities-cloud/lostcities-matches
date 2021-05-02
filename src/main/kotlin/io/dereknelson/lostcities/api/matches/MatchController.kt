@@ -2,6 +2,7 @@ package io.dereknelson.lostcities.api.matches
 
 import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchService
+import io.dereknelson.lostcities.concerns.users.UserService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,6 +14,9 @@ import org.springframework.web.server.ResponseStatusException
 @RestController
 @RequestMapping("/api/matches")
 class MatchController {
+    @Autowired
+    lateinit var userService: UserService
+
     @Autowired
     lateinit var matchService: MatchService
 
@@ -26,7 +30,22 @@ class MatchController {
             .create(modelMapper.map(matchDto, Match::class.java))
     }
 
-    @GetMapping("{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @PatchMapping("/{id}")
+    fun joinMatch(
+        @PathVariable id: Long,
+        userDetails: UserDetails
+    ) {
+        val match = matchService.findById(id)
+            .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
+
+        val user = userService.find(userDetails)
+            .orElseThrow { ResponseStatusException(HttpStatus.UNAUTHORIZED) }
+
+        matchService.joinMatch(match, user)
+    }
+
+    @GetMapping("/{id}")
     fun findById(@PathVariable id: Long) : MatchDto? {
         return matchService
             .findById(id)

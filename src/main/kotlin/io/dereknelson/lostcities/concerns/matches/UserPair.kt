@@ -11,6 +11,10 @@ data class UserPair (
     val isPopulated: Boolean
         get() = user1 != null && user2 != null
 
+    fun contains(user: User): Boolean {
+        return user1 == user || user2 == user
+    }
+
     fun shuffled(seed: Long) {
         if(isPopulated) {
             val users: List<User> = listOf(this.user1!!, this.user2!!)

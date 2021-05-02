@@ -5,6 +5,7 @@ import io.dereknelson.lostcities.concerns.game.components.Color
 import io.dereknelson.lostcities.concerns.game.components.Phase
 
 data class Command (
+    val gameId: Long,
     val playerId: Long,
     val phase: Phase,
     val draw: Boolean,

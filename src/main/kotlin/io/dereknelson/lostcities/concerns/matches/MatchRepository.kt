@@ -13,7 +13,6 @@ internal interface MatchRepository : JpaRepository<MatchEntity, Long> {
         WHERE
             matchEntity.player1.id = :playerId OR 
             matchEntity.player2.id = :playerId
-            
     """)
     fun getGamesByPlayerId(playerId: Long): List<MatchEntity>
 
@@ -26,7 +25,6 @@ internal interface MatchRepository : JpaRepository<MatchEntity, Long> {
             matchEntity.player2.id = :playerId
         ) AND
         matchEntity.isCompleted = true
-            
     """)
     fun getCompletedGamesByPlayerId(playerId: Long): List<MatchEntity>
 
@@ -36,7 +34,6 @@ internal interface MatchRepository : JpaRepository<MatchEntity, Long> {
         WHERE
         matchEntity.player1.id <> :playerId AND
         matchEntity.isReady = false
-            
     """)
     fun getAvailableGamesForPlayer(playerId: Long): List<MatchEntity>
 
@@ -46,7 +43,6 @@ internal interface MatchRepository : JpaRepository<MatchEntity, Long> {
         WHERE
         matchEntity.player1.id <> :playerId AND
         matchEntity.isReady = false
-            
     """)
     fun getRecentlyCompletedGames(): List<MatchEntity>
 }

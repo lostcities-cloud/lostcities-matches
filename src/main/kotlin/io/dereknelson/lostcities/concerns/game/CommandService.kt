@@ -1,19 +1,34 @@
 package io.dereknelson.lostcities.concerns.game
 
 import io.dereknelson.lostcities.concerns.game.components.Phase
+import io.dereknelson.lostcities.concerns.game.entities.CommandEntity
+import org.modelmapper.ModelMapper
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
 class CommandService {
 
+    @Autowired
+    private lateinit var commandRepository: CommandRepository
+
+    @Autowired
+    private lateinit var modelMapper: ModelMapper
+
     fun applyCommand(game: GameState, command: Command) {
         if(game.currentPlayer.id == command.playerId && command.phase == game.phase && command.validate()) {
             execute(game, command)
+        } else {
+            throw UnableToPlayCommandException()
         }
     }
 
-    fun applyCommands(game: GameState, commands: List<Command>) {
-        commands.forEach { applyCommand(game, it) }
+    fun playAll(game: GameState) : GameState {
+        commandRepository.findByGameId(game.id)
+            .map { modelMapper.map(it, Command::class.java) }
+            .forEach { applyCommand(game, it) }
+
+        return game
     }
 
     private fun execute(game: GameState, command: Command) {
@@ -42,5 +57,9 @@ class CommandService {
         }
 
         game.nextPhase()
+    }
+
+    fun save(command: Command?) {
+        modelMapper.map(command, CommandEntity::class.java)
     }
 }
