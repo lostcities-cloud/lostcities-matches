@@ -55,7 +55,7 @@ class CacheConfiguration() {
             cm.createCache(cacheName, jcacheConfiguration)
         }
     }
-    
+
     init {
         jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(
             CacheConfigurationBuilder.newCacheConfigurationBuilder(

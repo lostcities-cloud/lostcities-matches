@@ -47,13 +47,19 @@ class ModelMapperConfiguration {
                 val match = Match(
                     id = src.id!!,
                     seed = src.seed!!,
-                    players = UserPair(user1 = null, user2 = null),
+                    players = UserPair(
+                        user1 = null,
+                        user2 = null,
+                        score1 = src.score1,
+                        score2 = src.score2
+                    ),
+                    concededBy = modelMapper.map(src.concededBy, User::class.java),
                     isReady = src.isReady!!,
                     isStarted = src.isStarted!!,
                     isCompleted = src.isCompleted!!,
                     createdDate = modelMapper.map(src.createdDate!!, LocalDateTime::class.java),
                     lastModifiedDate = modelMapper.map(src.createdDate, LocalDateTime::class.java),
-                    createdBy = src.createdBy!!
+                    createdBy = src.createdBy!!,
                 )
 
                 if (src.player1 == null) {
@@ -78,9 +84,11 @@ class ModelMapperConfiguration {
                     id = src.id,
                     player1 = null,
                     player2 = null,
+                    score1 = src.players.score1,
+                    score2 = src.players.score2,
                     isReady = src.isReady,
                     isStarted = src.isStarted,
-                    isCompleted = src.isCompleted
+                    isCompleted = src.isCompleted,
                 )
 
                 if (src.players.user1 == null) {
@@ -91,6 +99,10 @@ class ModelMapperConfiguration {
                 if (src.players.user2 == null) {
                     match.player2 =
                         UserRef(src.players.user2?.id, src.players.user2?.login!!, src.players.user2?.email!!)
+                }
+
+                if(src.concededBy != null) {
+                    match.concededBy = UserRef(src.concededBy.id, src.concededBy.login, src.concededBy.email)
                 }
 
                 match

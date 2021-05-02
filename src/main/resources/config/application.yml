@@ -1,4 +1,8 @@
+
 spring:
+
+  mvc:
+    throw-exception-if-no-handler-found: true
   config:
     use-legacy-processing: true
   application:
@@ -56,6 +60,9 @@ spring:
   output:
     ansi:
       console-available: true
+  autoconfigure:
+    exclude= org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+
 
 server:
   port: 8080

@@ -1,9 +1,13 @@
 package io.dereknelson.lostcities.concerns.matches
 
 import io.dereknelson.lostcities.concerns.users.User
+import io.dereknelson.lostcities.concerns.users.UserRef
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.web.server.ResponseStatusException
+import java.lang.RuntimeException
 import java.util.*
 
 @Service
@@ -15,42 +19,59 @@ class MatchService {
 
     private val random : Random = Random()
 
-    fun markAsStarted(match: Match ): Boolean {
-        return matchRepository.findById(match.id)
-            .filter { it.isReady!! }
-            .map { matchEntity: MatchEntity ->
-                matchEntity.isStarted = true
-                true
-            }
-            .orElse(false)
+    fun markStarted(match: Match): Match {
+        var matchEntity = modelMapper.map(match, MatchEntity::class.java)
+
+        if (matchEntity.isReady!!) {
+            throw RuntimeException("Unable to start match [${match.id}]")
+        } else {
+            matchEntity.isStarted = true
+            matchEntity = matchRepository.save(matchEntity)
+
+            return modelMapper.map(matchEntity, Match::class.java)
+        }
     }
 
-    fun markAsCompleted(match: Match): Boolean {
-        return matchRepository.findById(match.id)
-            .filter { it.isReady!! && it.isStarted!! }
-            .map { matchEntity: MatchEntity ->
-                matchEntity.isCompleted = true
-                true
-            }
-            .orElse(false)
+    fun markAsCompleted(match: Match): Match {
+        var matchEntity = modelMapper.map(match, MatchEntity::class.java)
+
+        if (matchEntity.isCompleted!!) {
+            throw RuntimeException("Unable to complete match [${match.id}]")
+        } else {
+            matchEntity.isCompleted = true
+            matchEntity = matchRepository.save(matchEntity)
+
+            return modelMapper.map(matchEntity, Match::class.java)
+        }
+    }
+
+    fun concede(match: Match, user: User): Match {
+        var matchEntity = modelMapper.map(match, MatchEntity::class.java)
+
+        if (matchEntity.concededBy != null) {
+            throw RuntimeException("Unable to complete match [${match.id}]")
+        } else {
+            matchEntity.isCompleted = true
+            matchEntity.concededBy = UserRef(user.id, user.login, user.email)
+            matchEntity = matchRepository.save(matchEntity)
+
+            return modelMapper.map(matchEntity, Match::class.java)
+        }
     }
 
     fun findById(id: Long): Optional<Match> {
-        return matchRepository.findById(id).map { modelMapper.map(it, Match::class.java) }
+        return matchRepository.findById(id)
+            .map { modelMapper.map(it, Match::class.java) }
     }
 
-    //fun findAvailableForUser(userDetails: UserDetails): Optional<Match> {
-        //return matchRepository.getAvailableGamesForPlayer(userDetails).map { modelMapper.map(it, Match::class.java) }
-    //}
-
     fun create(match: Match): Match {
-        var matchEntity: MatchEntity = modelMapper.map(match, MatchEntity::class.java)
+        val matchEntity: MatchEntity = modelMapper.map(match, MatchEntity::class.java)
         matchEntity.seed = random.nextLong()
 
         return modelMapper.map(matchRepository.save(matchEntity), Match::class.java)
     }
 
-    fun delete(match: Match) {
+    private fun delete(match: Match) {
         val matchEntity : MatchEntity = modelMapper.map(match, MatchEntity::class.java)
         matchRepository.delete(matchEntity)
     }

@@ -9,11 +9,12 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.stereotype.Component
+import org.springframework.stereotype.Service
 import java.util.*
 import java.util.stream.Collectors
 import javax.annotation.PostConstruct
 
-@Component
+@Service
 class TokenProvider(
 
 ) {

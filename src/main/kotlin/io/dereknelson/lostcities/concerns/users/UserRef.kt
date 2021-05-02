@@ -5,7 +5,7 @@ import javax.persistence.Id
 import javax.persistence.Table
 
 @Entity
-@Table(name = "jhi_user")
+@Table(name = "user")
 data class UserRef(
     @Id
     val id: Long? = null,
