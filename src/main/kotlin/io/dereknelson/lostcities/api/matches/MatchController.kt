@@ -2,6 +2,7 @@ package io.dereknelson.lostcities.api.matches
 
 import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchService
+import io.dereknelson.lostcities.concerns.matches.UserPair
 import io.dereknelson.lostcities.concerns.users.UserService
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import springfox.documentation.annotations.ApiIgnore
 
 @RestController
 @RequestMapping("/api/matches", produces=[MediaType.APPLICATION_JSON_VALUE])
@@ -27,13 +29,12 @@ class MatchController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
-        @RequestBody matchDto : MatchDto,
-        @AuthenticationPrincipal userDetails: UserDetails
+        @AuthenticationPrincipal @ApiIgnore userDetails: UserDetails
     ): Match {
         val user = userService.find(userDetails)
             .orElseThrow { ResponseStatusException(HttpStatus.UNAUTHORIZED) }
 
-        matchDto.players.user1 = user
+        val matchDto = MatchDto(players=UserPair(user1=user))
 
         return matchService
             .create(modelMapper.map(matchDto, Match::class.java))

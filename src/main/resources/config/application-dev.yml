@@ -7,7 +7,7 @@
 logging:
   level:
     ROOT: info
-    io.dereknelson.lostcities: DEBUG
+    io.dereknelson.lostcities: debug
 
 spring:
   config:
@@ -46,14 +46,16 @@ spring:
     user: sa
     password:
     baseline-version: 0
+    table: SCHEMA_VERSION
     check-location: true
     baseline-on-migrate: true
-    locations: classpath:/db/migration
+    locations: classpath:db/migration
+    validate-on-migrate: true
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
   # mail:
   #   host: localhost
   #   port: 25
@@ -64,8 +66,10 @@ spring:
   thymeleaf:
     cache: false
   security:
+
     user:
       name: admin
       password: testing
+
 server:
   port: 8080

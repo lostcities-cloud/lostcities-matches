@@ -1,6 +1,7 @@
 package io.dereknelson.lostcities.config
 
 import io.dereknelson.lostcities.library.security.AuthoritiesConstants
+import io.dereknelson.lostcities.library.security.JWTConfigurer
 import io.dereknelson.lostcities.library.security.TokenProvider
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
@@ -72,12 +73,8 @@ class SecurityConfiguration(
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .and()
-            .formLogin()
+            .httpBasic()
         // @formatter:on
     }
-
-    //private fun securityConfigurerAdapter(): JWTConfigurer {
-    //    return JWTConfigurer(tokenProvider)
-    //}
 
 }
