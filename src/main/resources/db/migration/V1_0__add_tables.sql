@@ -6,75 +6,84 @@ create table AUTHORITY
 
 create table COMMAND
 (
-    ID BIGINT not null
+    ID         BIGINT not null
         primary key,
+    PLAYER     VARCHAR(255),
+    PHASE      INTEGER,
+    DISCARD    BOOLEAN,
+    DRAW       BOOLEAN,
+    MATCH_ID   BIGINT,
+    COLOR      INTEGER,
     CARD_COLOR INTEGER,
-    CARD_VALUE INTEGER,
-    COLOR INTEGER,
-    DISCARD BOOLEAN,
-    DRAW BOOLEAN,
-    GAME_ID BIGINT,
-    PHASE INTEGER,
-    PLAYER_ID BIGINT
+    CARD_VALUE INTEGER
 );
 
-create index GAME_ID
-	on COMMAND (GAME_ID);
+create index MATCH_ID
+    on COMMAND (MATCH_ID);
 
 create table USER
 (
-    ID BIGINT not null
+    ID                 BIGINT      not null
         primary key,
-    EMAIL VARCHAR(255),
-    LOGIN VARCHAR(255),
-    CREATED_BY VARCHAR(50) not null,
-    CREATED_DATE TIMESTAMP,
-    LAST_MODIFIED_BY VARCHAR(50),
-    LAST_MODIFIED_DATE TIMESTAMP,
-    ACTIVATED BOOLEAN not null,
-    ACTIVATION_KEY VARCHAR(20),
-    FIRST_NAME VARCHAR(50),
-    IMAGE_URL VARCHAR(256),
-    LANG_KEY VARCHAR(10),
-    LAST_NAME VARCHAR(50),
-    PASSWORD_HASH VARCHAR(60) not null,
-    RESET_DATE TIMESTAMP,
-    RESET_KEY VARCHAR(20)
+    EMAIL              VARCHAR(255),
+    LOGIN              VARCHAR(255),
+    PASSWORD_HASH      VARCHAR(60) not null,
+    FIRST_NAME         VARCHAR(50) not null,
+    LAST_NAME          VARCHAR(50),
+    IMAGE_URL          VARCHAR(256),
+    LANG_KEY           VARCHAR(10),
+    ACTIVATED          BOOLEAN     not null,
+    ACTIVATION_KEY     VARCHAR(20),
+    RESET_DATE         TIMESTAMP,
+    RESET_KEY          VARCHAR(20),
+    CREATED_BY         BIGINT,
+    CREATED_DATE       TIMESTAMP,
+    LAST_MODIFIED_BY   VARCHAR(50),
+    LAST_MODIFIED_DATE TIMESTAMP
 );
 
-create table MATCH_ENTITY
+create table MATCH
 (
-    ID BIGINT not null
+    ID                 BIGINT not null
         primary key,
-    CREATED_BY BIGINT,
-    CREATED_DATE TIMESTAMP,
-    IS_COMPLETED BOOLEAN,
-    IS_READY BOOLEAN,
-    IS_STARTED BOOLEAN,
+    SEED               BIGINT,
+    PLAYER_1           BIGINT not null,
+    PLAYER_2           BIGINT,
+    CONCEDED_BY        BIGINT,
+    SCORE_1            INTEGER,
+    SCORE_2            INTEGER,
+    IS_COMPLETED       BOOLEAN,
+    IS_READY           BOOLEAN,
+    IS_STARTED         BOOLEAN,
+    CREATED_BY         BIGINT,
+    CREATED_DATE       TIMESTAMP,
+    LAST_MODIFIED_BY   VARCHAR(50),
     LAST_MODIFIED_DATE TIMESTAMP,
-    SCORE_1 INTEGER,
-    SCORE_2 INTEGER,
-    SEED BIGINT,
-    CONCEDED_BY BIGINT,
-    PLAYER_1 BIGINT not null,
-    PLAYER_2 BIGINT,
-    constraint FKBAY1Y7K9W4INDL8JQ35OTB02A
-        foreign key (PLAYER_2) references USER (ID),
-    constraint FKEVY9M6JORDV12T1K1BJHVCW1A
-        foreign key (CONCEDED_BY) references USER (ID),
-    constraint FKJL1GSDTGXFOXB0PVI0QEEJ9Q1
-        foreign key (PLAYER_1) references USER (ID)
+    constraint CONCEDED_BY_FOREIGN_KEY
+        foreign key (CONCEDED_BY) references USER,
+    constraint PLAYER_1_FOREIGN_KEY
+        foreign key (PLAYER_1) references USER,
+    constraint PLAYER_2_FOREIGN_KEY
+        foreign key (PLAYER_2) references USER
 );
+
+create index PLAYER_1_INDEX
+    on MATCH (PLAYER_1);
+
+create index PLAYER_2_INDEX
+    on MATCH (PLAYER_2);
 
 create table USER_AUTHORITY
 (
-    USER_ID BIGINT not null,
+    USER_ID        BIGINT      not null,
     AUTHORITY_NAME VARCHAR(50) not null,
     primary key (USER_ID, AUTHORITY_NAME),
-    constraint FK6KTGLPL5MJOSA283RVKEN2PY5
-        foreign key (AUTHORITY_NAME) references AUTHORITY (NAME),
-    constraint FKPQLSJPKYBGOS9W2SVCRI7J8XY
-        foreign key (USER_ID) references USER (ID)
+    constraint AUTHORITY_FOREIGN_KEY
+        foreign key (AUTHORITY_NAME) references AUTHORITY,
+    constraint AUTHORITY_NAME_FOREIGN_KEY
+        foreign key (AUTHORITY_NAME) references AUTHORITY,
+    constraint USER_AUTHORITY_FOREIGN_KEY
+        foreign key (USER_ID) references USER
 );
 
 create sequence SEQUENCE_GENERATOR

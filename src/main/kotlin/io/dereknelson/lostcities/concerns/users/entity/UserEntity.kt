@@ -68,7 +68,8 @@ class UserEntity: AbstractAuditingEntity(), Serializable {
     @JoinTable(
         name = "user_authority",
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
-        inverseJoinColumns = [JoinColumn(name = "authority_name", referencedColumnName = "name")]
+        inverseJoinColumns = [JoinColumn(name = "authority_name", referencedColumnName = "name")],
+        foreignKey = ForeignKey(name="USER_AUTHORITY_FOREIGN_KEY")
     )
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @BatchSize(size = 20)

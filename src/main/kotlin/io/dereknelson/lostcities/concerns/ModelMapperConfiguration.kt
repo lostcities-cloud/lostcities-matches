@@ -75,8 +75,8 @@ class ModelMapperConfiguration {
                     isReady = src.isReady!!,
                     isStarted = src.isStarted!!,
                     isCompleted = src.isCompleted!!,
-                    createdDate = modelMapper.map(src.createdDate!!, LocalDateTime::class.java),
-                    lastModifiedDate = modelMapper.map(src.createdDate, LocalDateTime::class.java),
+                    createdDate = LocalDateTime.ofInstant(src.createdDate, ZoneOffset.UTC),
+                    lastModifiedDate = LocalDateTime.ofInstant(src.lastModifiedDate, ZoneOffset.UTC),
                     createdBy = src.createdBy!!,
                 )
 
@@ -99,7 +99,7 @@ class ModelMapperConfiguration {
                 val src: Match = context.source as Match
 
                 val match = MatchEntity(
-                    id = src.id,
+                    id= src.id,
                     player1 = null,
                     player2 = null,
                     score1 = src.players.score1,
@@ -151,8 +151,8 @@ class ModelMapperConfiguration {
                 } else null
 
                 Command(
-                    gameId = src.gameId,
-                    playerId = src.playerId,
+                    gameId = src.matchId,
+                    player = src.player,
                     phase = src.phase,
                     draw = src.draw,
                     discard = src.discard,
@@ -180,8 +180,8 @@ class ModelMapperConfiguration {
             val src = context.source as Command
 
             CommandEntity(
-                gameId = src.gameId,
-                playerId = src.playerId,
+                matchId = src.gameId,
+                player = src.player,
                 phase = src.phase,
                 draw = src.draw,
                 discard = src.discard,

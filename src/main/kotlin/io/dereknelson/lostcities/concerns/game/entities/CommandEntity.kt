@@ -7,7 +7,7 @@ import javax.persistence.*
 @Entity
 @Table(
         name = "command",
-        indexes = [Index(name="game_id", columnList="game_id", unique=false)]
+        indexes = [Index(name="match_id", columnList="match_id", unique=false)]
 )
 data class CommandEntity (
     @Id
@@ -15,11 +15,11 @@ data class CommandEntity (
     @SequenceGenerator(name = "sequenceGenerator")
     var id: Long? = null,
 
-    @Column(name="game_id")
-    val gameId: Long,
+    @Column(name="match_id")
+    val matchId: Long,
 
-    @Column(name="player_id")
-    val playerId: Long,
+    @Column(name="player")
+    val player: String,
 
     @Column(name="phase")
     val phase: Phase,

@@ -1,6 +1,8 @@
 package io.dereknelson.lostcities.concerns.game
 
 import io.dereknelson.lostcities.concerns.game.entities.CommandEntity
+import io.dereknelson.lostcities.concerns.users.User
+import io.dereknelson.lostcities.concerns.users.UserRepository
 import io.dereknelson.lostcities.concerns.users.entity.UserEntity
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
@@ -14,5 +16,10 @@ import java.util.*
 @Repository
 internal interface CommandRepository : JpaRepository<CommandEntity, Long> {
 
-    fun findByGameId(matchId: Long): List<CommandEntity>
+    companion object {
+        const val COMMANDS_BY_MATCH_CACHE: String = "commandsByMatchId"
+    }
+
+    @Cacheable(cacheNames = [COMMANDS_BY_MATCH_CACHE])
+    fun findByMatchId(matchId: Long): List<CommandEntity>
 }

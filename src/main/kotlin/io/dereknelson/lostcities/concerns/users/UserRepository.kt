@@ -14,7 +14,7 @@ import java.util.*
 internal interface UserRepository : JpaRepository<UserEntity, Long> {
     companion object {
         const val USERS_BY_LOGIN_CACHE: String = "usersByLogin"
-        const val USERS_BY_EMAIL_CACHE = "usersByLogin"
+        const val USERS_BY_EMAIL_CACHE = "usersByEmail"
     }
 
     fun findOneByActivationKey(activationKey: String?): Optional<User>

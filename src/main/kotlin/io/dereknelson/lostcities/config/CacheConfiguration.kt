@@ -1,5 +1,7 @@
 package io.dereknelson.lostcities.config
 
+import io.dereknelson.lostcities.concerns.game.CommandRepository
+import io.dereknelson.lostcities.concerns.matches.MatchRepository
 import io.dereknelson.lostcities.concerns.users.UserRepository
 import io.dereknelson.lostcities.concerns.users.entity.AuthorityEntity
 import io.dereknelson.lostcities.concerns.users.entity.UserEntity
@@ -38,8 +40,10 @@ class CacheConfiguration() {
     val cacheManagerCustomizer: JCacheManagerCustomizer
         @Bean
         get() = JCacheManagerCustomizer { cm: javax.cache.CacheManager ->
-            createCache(cm, UserRepository.USERS_BY_LOGIN_CACHE);
-            createCache(cm, UserRepository.USERS_BY_EMAIL_CACHE);
+            createCache(cm, CommandRepository.COMMANDS_BY_MATCH_CACHE)
+            createCache(cm, MatchRepository.MATCHES_BY_PLAYER_CACHE)
+            createCache(cm, UserRepository.USERS_BY_LOGIN_CACHE)
+            createCache(cm, UserRepository.USERS_BY_EMAIL_CACHE)
             createCache(cm, UserEntity::class.java.name)
             createCache(cm, AuthorityEntity::class.java.name)
             createCache(cm, UserEntity::class.java.name + ".authorities")

@@ -1,5 +1,7 @@
 package io.dereknelson.lostcities.concerns.matches
 
+import io.dereknelson.lostcities.concerns.game.CommandRepository
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
@@ -7,6 +9,11 @@ import org.springframework.stereotype.Repository
 @Repository
 internal interface MatchRepository : JpaRepository<MatchEntity, Long> {
 
+    companion object {
+        const val MATCHES_BY_PLAYER_CACHE: String = "usersByPlayer"
+    }
+
+    @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
     @Query("""
         SELECT matchEntity 
         FROM MatchEntity matchEntity

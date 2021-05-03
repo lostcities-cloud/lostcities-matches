@@ -1,7 +1,7 @@
 package io.dereknelson.lostcities.config
 
 import io.dereknelson.lostcities.library.security.AuthoritiesConstants
-import io.dereknelson.lostcities.library.security.JWTConfigurer
+import io.dereknelson.lostcities.library.security.JWTFilter
 import io.dereknelson.lostcities.library.security.TokenProvider
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
@@ -72,8 +72,12 @@ class SecurityConfiguration(
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .and()
-            .httpBasic()
+            .anyRequest().authenticated()
+
+        val customFilter = JWTFilter(tokenProvider)
+        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter::class.java)
+
+        http.headers().cacheControl();
         // @formatter:on
     }
 

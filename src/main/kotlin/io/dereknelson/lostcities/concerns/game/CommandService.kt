@@ -16,7 +16,7 @@ class CommandService {
     private lateinit var modelMapper: ModelMapper
 
     fun applyCommand(game: GameState, command: Command) {
-        if(game.currentPlayer.id == command.playerId && command.phase == game.phase && command.validate()) {
+        if(game.currentPlayer.login == command.player && command.phase == game.phase && command.validate()) {
             execute(game, command)
         } else {
             throw UnableToPlayCommandException()
@@ -24,7 +24,7 @@ class CommandService {
     }
 
     fun playAll(game: GameState) : GameState {
-        commandRepository.findByGameId(game.id)
+        commandRepository.findByMatchId(game.id)
             .map { modelMapper.map(it, Command::class.java) }
             .forEach { applyCommand(game, it) }
 
@@ -41,9 +41,9 @@ class CommandService {
 
     private fun playOrDiscard(game: GameState, command: Command) {
         if(command.discard) {
-            game.discard(command.playerId, command.card!!)
+            game.discard(command.player, command.card!!)
         } else {
-            game.playCard(command.playerId, command.card!!)
+            game.playCard(command.player, command.card!!)
         }
 
         game.nextPhase()
@@ -51,9 +51,9 @@ class CommandService {
 
     private fun draw(game: GameState, command: Command) {
         if(command.color != null) {
-            game.drawFromDiscard(command.playerId, command.color)
+            game.drawFromDiscard(command.player, command.color)
         } else {
-            game.drawCard(command.playerId)
+            game.drawCard(command.player)
         }
 
         game.nextPhase()

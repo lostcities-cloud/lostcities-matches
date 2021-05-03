@@ -6,7 +6,7 @@ import io.dereknelson.lostcities.concerns.game.components.Phase
 
 data class Command (
     val gameId: Long,
-    val playerId: Long,
+    val player: String,
     val phase: Phase,
     val draw: Boolean,
     val discard: Boolean,
