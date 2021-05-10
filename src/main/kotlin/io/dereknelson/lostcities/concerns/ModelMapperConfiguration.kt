@@ -1,10 +1,8 @@
 package io.dereknelson.lostcities.concerns
 
-import io.dereknelson.lostcities.api.register.RegistrationDto
+import io.dereknelson.lostcities.api.users.RegistrationDto
 import io.dereknelson.lostcities.concerns.game.Command
 import io.dereknelson.lostcities.concerns.game.components.Card
-import io.dereknelson.lostcities.concerns.game.components.Color
-import io.dereknelson.lostcities.concerns.game.components.Phase
 import io.dereknelson.lostcities.concerns.game.entities.CommandEntity
 import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchEntity
@@ -13,7 +11,6 @@ import io.dereknelson.lostcities.concerns.users.Registration
 import io.dereknelson.lostcities.concerns.users.User
 import io.dereknelson.lostcities.concerns.users.UserRef
 import io.dereknelson.lostcities.concerns.users.entity.AuthorityEntity
-import io.dereknelson.lostcities.library.security.AuthoritiesConstants
 import org.modelmapper.ModelMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

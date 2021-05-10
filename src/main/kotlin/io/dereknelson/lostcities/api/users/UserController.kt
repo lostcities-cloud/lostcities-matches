@@ -2,6 +2,8 @@ package io.dereknelson.lostcities.api.users
 
 import io.dereknelson.lostcities.concerns.users.User
 import io.dereknelson.lostcities.concerns.users.UserService
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,8 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
+@Api("User actions")
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 class UserController {
 
     @Autowired
@@ -23,6 +26,7 @@ class UserController {
     @Autowired
     private lateinit var modelMapper : ModelMapper
 
+    @ApiOperation(value = "Find a user.")
     @GetMapping("{id}")
     fun findUserById(@PathVariable  id: Long) : UserDto? {
         return userService.findById(id)

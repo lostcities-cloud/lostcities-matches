@@ -36,11 +36,17 @@ create table USER
     ACTIVATION_KEY     VARCHAR(20),
     RESET_DATE         TIMESTAMP,
     RESET_KEY          VARCHAR(20),
-    CREATED_BY         BIGINT,
+    CREATED_BY         VARCHAR(50),
     CREATED_DATE       TIMESTAMP,
     LAST_MODIFIED_BY   VARCHAR(50),
     LAST_MODIFIED_DATE TIMESTAMP
 );
+
+create unique index USER_LOGIN_INDEX
+    on USER (LOGIN);
+
+create unique index USER_EMAIL_INDEX
+    on USER (EMAIL);
 
 create table MATCH
 (
@@ -55,7 +61,7 @@ create table MATCH
     IS_COMPLETED       BOOLEAN,
     IS_READY           BOOLEAN,
     IS_STARTED         BOOLEAN,
-    CREATED_BY         BIGINT,
+    CREATED_BY         VARCHAR(50),
     CREATED_DATE       TIMESTAMP,
     LAST_MODIFIED_BY   VARCHAR(50),
     LAST_MODIFIED_DATE TIMESTAMP,

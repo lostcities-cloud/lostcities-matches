@@ -1,8 +1,10 @@
 package io.dereknelson.lostcities.config
 
 import io.dereknelson.lostcities.library.security.AuthoritiesConstants
-import io.dereknelson.lostcities.library.security.JWTFilter
+import io.dereknelson.lostcities.library.security.JwtConfigurer
+import io.dereknelson.lostcities.library.security.JwtFilter
 import io.dereknelson.lostcities.library.security.TokenProvider
+import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -11,6 +13,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.web.filter.CorsFilter
@@ -65,6 +69,7 @@ class SecurityConfiguration(
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/registration").permitAll()
             .antMatchers("/api/activate").permitAll()
+            .antMatchers("/swagger-ui/index.html").permitAll()
             .antMatchers("/api/account/reset-password/init").permitAll()
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/**").authenticated()
@@ -72,13 +77,22 @@ class SecurityConfiguration(
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .anyRequest().authenticated()
 
-        val customFilter = JWTFilter(tokenProvider)
-        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter::class.java)
+            //.anyRequest().authenticated()
+            .and()
+            .apply(securityConfigurerAdapter())
 
         http.headers().cacheControl();
         // @formatter:on
+    }
+
+    @Bean
+    fun encoder(): PasswordEncoder {
+        return BCryptPasswordEncoder()
+    }
+
+    private fun securityConfigurerAdapter(): JwtConfigurer {
+        return JwtConfigurer(tokenProvider)
     }
 
 }

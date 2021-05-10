@@ -18,7 +18,12 @@ import javax.validation.constraints.Size
 
 
 @Entity
-@Table(name = "user")
+@Table(name = "user",
+    indexes = [
+        Index(name="user_login_index", columnList="login", unique=true),
+        Index(name="user_email_index", columnList="email", unique=true),
+    ]
+)
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class UserEntity: AbstractAuditingEntity(), Serializable {
     @Id

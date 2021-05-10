@@ -4,6 +4,10 @@ import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchService
 import io.dereknelson.lostcities.concerns.matches.UserPair
 import io.dereknelson.lostcities.concerns.users.UserService
+import io.swagger.annotations.Api
+import io.swagger.annotations.ApiOperation
+import io.swagger.annotations.ApiResponse
+import io.swagger.annotations.ApiResponses
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import springfox.documentation.annotations.ApiIgnore
 
+@Api("Matches and match making")
 @RestController
 @RequestMapping("/api/matches", produces=[MediaType.APPLICATION_JSON_VALUE])
 class MatchController {
@@ -26,6 +31,10 @@ class MatchController {
     @Autowired
     lateinit var modelMapper : ModelMapper
 
+    @ApiOperation(value = "Create and join a new match.")
+    @ApiResponses(value = [
+        ApiResponse(code=201, message="Match created."),
+    ])
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
@@ -40,7 +49,11 @@ class MatchController {
             .create(modelMapper.map(matchDto, Match::class.java))
     }
 
-    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Join an existing match.")
+    @ApiResponses(value = [
+        ApiResponse(code=200, message="Match joined."),
+        ApiResponse(code=409, message="This match is already started.")
+    ])
     @PatchMapping("/{id}")
     fun joinMatch(
         @PathVariable id: Long,
@@ -55,6 +68,11 @@ class MatchController {
         matchService.joinMatch(match, user)
     }
 
+    @ApiOperation(value = "Find an existing match.")
+    @ApiResponses(value = [
+        ApiResponse(code=200, message="Match found."),
+        ApiResponse(code=404, message="Match not found.")
+    ])
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Long) : MatchDto? {
         return matchService
@@ -63,6 +81,7 @@ class MatchController {
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
+    @ApiOperation(value = "Find matches available to join.")
     @GetMapping
     fun findAvailableForUser(@AuthenticationPrincipal userDetails : UserDetails): List<MatchDto>  {
         return emptyList()
