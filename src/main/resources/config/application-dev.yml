@@ -72,3 +72,9 @@ spring:
 
 server:
   port: 8080
+
+application:
+  security:
+    authentication:
+      jwt:
+        base64-secret: dGVzdGluZw==

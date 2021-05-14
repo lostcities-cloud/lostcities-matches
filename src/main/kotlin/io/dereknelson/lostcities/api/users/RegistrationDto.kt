@@ -1,7 +1,7 @@
 package io.dereknelson.lostcities.api.users
 
-import io.dereknelson.lostcities.library.Constants
-import io.dereknelson.lostcities.library.security.AuthoritiesConstants
+import io.dereknelson.lostcities.common.Constants
+import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 import javax.validation.constraints.Email
@@ -28,7 +28,7 @@ data class RegistrationDto (
     var lastName: @Size(max = 50) String?,
 
     @ApiModelProperty(example = "en_US", required = true, position = 5)
-    var langKey: @Size(min = 2, max = 10) String = "en_US",
+    var langKey: @Size(min = 2, max = 10) String = Constants.DEFAULT_LANGUAGE,
 
     @ApiModelProperty(example = "[${AuthoritiesConstants.USER}]", required = true, position = 6)
     var authorities: Set<String> = setOf(AuthoritiesConstants.USER),

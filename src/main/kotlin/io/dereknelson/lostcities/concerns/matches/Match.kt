@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.concerns.matches
 
-import io.dereknelson.lostcities.concerns.users.User
+import io.dereknelson.lostcities.common.User
 import java.time.LocalDateTime
 
 

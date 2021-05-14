@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.api.users
 
+import io.dereknelson.lostcities.common.Constants
 import io.swagger.annotations.ApiModel
 import io.swagger.annotations.ApiModelProperty
 
@@ -15,5 +16,5 @@ data class UserDto(
     val email: String?=null,
 
     @ApiModelProperty(example = "en_US", required = true, position = 3)
-    val langKey: String="en_US"
+    val langKey: String= Constants.DEFAULT_LANGUAGE
 )

@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.concerns.users.entity
+package io.dereknelson.lostcities.concerns.user.entity
 
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy

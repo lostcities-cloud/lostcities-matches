@@ -3,7 +3,7 @@ package io.dereknelson.lostcities.api.matches
 import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchService
 import io.dereknelson.lostcities.concerns.matches.UserPair
-import io.dereknelson.lostcities.concerns.users.UserService
+import io.dereknelson.lostcities.concerns.user.UserService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse

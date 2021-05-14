@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.library.security
 
-import io.dereknelson.lostcities.library.Constants
+import io.dereknelson.lostcities.common.Constants
 import org.springframework.data.domain.AuditorAware
 import org.springframework.stereotype.Component
 import java.util.*

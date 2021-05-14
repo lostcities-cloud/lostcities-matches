@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.library.security
+package io.dereknelson.lostcities.library.security.jwt
 
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter
 import org.springframework.security.config.annotation.web.builders.HttpSecurity

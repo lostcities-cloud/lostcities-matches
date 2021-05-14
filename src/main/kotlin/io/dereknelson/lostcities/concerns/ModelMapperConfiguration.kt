@@ -7,10 +7,10 @@ import io.dereknelson.lostcities.concerns.game.entities.CommandEntity
 import io.dereknelson.lostcities.concerns.matches.Match
 import io.dereknelson.lostcities.concerns.matches.MatchEntity
 import io.dereknelson.lostcities.concerns.matches.UserPair
-import io.dereknelson.lostcities.concerns.users.Registration
-import io.dereknelson.lostcities.concerns.users.User
-import io.dereknelson.lostcities.concerns.users.UserRef
-import io.dereknelson.lostcities.concerns.users.entity.AuthorityEntity
+import io.dereknelson.lostcities.concerns.user.Registration
+import io.dereknelson.lostcities.common.User
+import io.dereknelson.lostcities.common.UserRef
+import io.dereknelson.lostcities.concerns.user.entity.AuthorityEntity
 import org.modelmapper.ModelMapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

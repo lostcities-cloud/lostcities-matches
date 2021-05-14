@@ -1,8 +1,8 @@
-package io.dereknelson.lostcities.concerns.users.entity
+package io.dereknelson.lostcities.concerns.user.entity
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import io.dereknelson.lostcities.library.security.AbstractAuditingEntity
-import io.dereknelson.lostcities.library.Constants
+import io.dereknelson.lostcities.common.Constants
 import org.apache.commons.lang3.StringUtils
 import org.hibernate.annotations.BatchSize
 import org.hibernate.annotations.Cache

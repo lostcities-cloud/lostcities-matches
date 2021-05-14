@@ -1,8 +1,11 @@
-package io.dereknelson.lostcities.concerns.users
+package io.dereknelson.lostcities.concerns.user
 
-import io.dereknelson.lostcities.concerns.users.entity.UserEntity
+import io.dereknelson.lostcities.common.User
+import io.dereknelson.lostcities.concerns.user.entity.UserEntity
+import io.dereknelson.lostcities.common.Constants
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.CacheManager
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -20,6 +23,9 @@ class UserService {
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
 
+    @Autowired
+    private lateinit var cacheManager: CacheManager
+
     fun find(userDetails: UserDetails) : Optional<User> {
         return userRepository.findOneByLogin(userDetails.username)
             .map { modelMapper.map(it, User::class.java) }
@@ -27,7 +33,7 @@ class UserService {
 
     fun findById(id: Long): Optional<User> {
         return userRepository.findById(id)
-            .map { User(id=it.id, login=it.login!!, email=it.email!!, langKey=it.langKey ?: "en_US") }
+            .map { User(id=it.id, login=it.login!!, email=it.email!!, langKey=it.langKey ?: Constants.DEFAULT_LANGUAGE) }
 
     }
 
@@ -46,7 +52,7 @@ class UserService {
             registration,
             UserEntity::class.java
         )
-
+        userEntity.activated = true
         userEntity = userRepository.save(userEntity)
 
         return User(
@@ -54,5 +60,23 @@ class UserService {
             login=userEntity.login!!,
             email=userEntity.email!!
         )
+    }
+
+    fun activateRegistration(key: String?): Optional<User> {
+        return userRepository
+            .findOneByActivationKey(key)
+            .map { user ->
+                user.activated = true
+                user.activationKey = null
+                clearUserCaches(user)
+                User(id=user.id, login=user.login!!, user.email!!, user.langKey!!)
+            }
+    }
+
+    private fun clearUserCaches(user: UserEntity) {
+        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE))!!.evict(user.login!!)
+        if (user.email != null) {
+            Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE))!!.evict(user.email!!)
+        }
     }
 }

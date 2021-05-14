@@ -1,8 +1,6 @@
-package io.dereknelson.lostcities.concerns.users
+package io.dereknelson.lostcities.concerns.user
 
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class UserServiceIntegrationTest {
 

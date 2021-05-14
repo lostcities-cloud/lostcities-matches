@@ -1,12 +1,10 @@
 package io.dereknelson.lostcities.concerns.matches
 
-import io.dereknelson.lostcities.concerns.users.User
-import io.dereknelson.lostcities.concerns.users.UserRef
+import io.dereknelson.lostcities.common.User
+import io.dereknelson.lostcities.common.UserRef
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
-import org.springframework.web.server.ResponseStatusException
 import java.lang.RuntimeException
 import java.util.*
 

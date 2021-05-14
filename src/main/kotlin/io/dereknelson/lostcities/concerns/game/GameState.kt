@@ -5,7 +5,7 @@ import io.dereknelson.lostcities.concerns.game.components.Color
 import io.dereknelson.lostcities.concerns.game.components.Phase
 import io.dereknelson.lostcities.concerns.game.components.PlayArea
 import io.dereknelson.lostcities.concerns.matches.UserPair
-import io.dereknelson.lostcities.concerns.users.User
+import io.dereknelson.lostcities.common.User
 import java.util.*
 import kotlin.collections.LinkedHashSet
 

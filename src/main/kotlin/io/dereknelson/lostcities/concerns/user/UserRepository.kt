@@ -1,6 +1,7 @@
-package io.dereknelson.lostcities.concerns.users
+package io.dereknelson.lostcities.concerns.user
 
-import io.dereknelson.lostcities.concerns.users.entity.UserEntity
+import io.dereknelson.lostcities.common.User
+import io.dereknelson.lostcities.concerns.user.entity.UserEntity
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -11,13 +12,13 @@ import java.time.Instant
 import java.util.*
 
 @Repository
-internal interface UserRepository : JpaRepository<UserEntity, Long> {
+interface UserRepository : JpaRepository<UserEntity, Long> {
     companion object {
         const val USERS_BY_LOGIN_CACHE: String = "usersByLogin"
         const val USERS_BY_EMAIL_CACHE = "usersByEmail"
     }
 
-    fun findOneByActivationKey(activationKey: String?): Optional<User>
+    fun findOneByActivationKey(activationKey: String?): Optional<UserEntity>
 
     fun findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(dateTime: Instant): List<User>
 
@@ -29,12 +30,12 @@ internal interface UserRepository : JpaRepository<UserEntity, Long> {
 
     @EntityGraph(attributePaths = ["authorities"])
     @Cacheable(cacheNames = [USERS_BY_LOGIN_CACHE])
-    fun findOneWithAuthoritiesByLogin(login: String?): Optional<User>
+    fun findOneWithAuthoritiesByLogin(login: String?): Optional<UserEntity>
 
     @EntityGraph(attributePaths = ["authorities"])
     @Cacheable(cacheNames = [USERS_BY_EMAIL_CACHE])
-    fun findOneWithAuthoritiesByEmailIgnoreCase(email: String?): Optional<User>
+    fun findOneWithAuthoritiesByEmailIgnoreCase(email: String?): Optional<UserEntity>
 
-    fun findAllByLoginNot(pageable: Pageable?, login: String?): Page<User>
+    fun findAllByLoginNot(pageable: Pageable?, login: String?): Page<UserEntity>
 
 }

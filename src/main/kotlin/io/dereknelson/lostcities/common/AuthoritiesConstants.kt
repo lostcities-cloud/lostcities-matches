@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.library.security
+package io.dereknelson.lostcities.common
 
 /**
  * Constants for Spring Security authorities.

@@ -1,9 +1,8 @@
 package io.dereknelson.lostcities.config
 
-import io.dereknelson.lostcities.library.security.AuthoritiesConstants
-import io.dereknelson.lostcities.library.security.JwtConfigurer
-import io.dereknelson.lostcities.library.security.JwtFilter
-import io.dereknelson.lostcities.library.security.TokenProvider
+import io.dereknelson.lostcities.common.AuthoritiesConstants
+import io.dereknelson.lostcities.library.security.jwt.JwtConfigurer
+import io.dereknelson.lostcities.library.security.jwt.TokenProvider
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
@@ -23,9 +22,7 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-@Import(
-    SecurityProblemSupport::class
-)
+@Import(SecurityProblemSupport::class)
 class SecurityConfiguration(
     private val tokenProvider: TokenProvider,
     private val corsFilter: CorsFilter,
@@ -33,10 +30,14 @@ class SecurityConfiguration(
 ) : WebSecurityConfigurerAdapter() {
 
     override fun configure(web: WebSecurity) {
-        web.ignoring()
+        web
+            .ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/app/**/*.{js,html}")
+            .antMatchers("/i18n/**")
+            .antMatchers("/content/**")
             .antMatchers("/h2-console/**")
-            .antMatchers("/swagger-ui/index.html")
+            .antMatchers("/swagger-ui/**")
             .antMatchers("/test/**")
     }
 
@@ -48,39 +49,40 @@ class SecurityConfiguration(
             .disable()
             .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling()
-            .authenticationEntryPoint(problemSupport)
-            .accessDeniedHandler(problemSupport)
+                .authenticationEntryPoint(problemSupport)
+                .accessDeniedHandler(problemSupport)
             .and()
-            .headers()
-            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
+                .headers()
+                .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
             .and()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
+                .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
             .and()
-            .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'")
+                .featurePolicy("geolocation 'none'; midi 'none'; sync-xhr 'none'; microphone 'none'; camera 'none'; magnetometer 'none'; gyroscope 'none'; speaker 'none'; fullscreen 'self'; payment 'none'")
             .and()
-            .frameOptions()
-            .deny()
+                .frameOptions()
+                .deny()
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-            .antMatchers("/login").permitAll()
-            .antMatchers("/api/authenticate").permitAll()
-            .antMatchers("/api/registration").permitAll()
-            .antMatchers("/api/activate").permitAll()
-            .antMatchers("/swagger-ui/index.html").permitAll()
-            .antMatchers("/api/account/reset-password/init").permitAll()
-            .antMatchers("/api/account/reset-password/finish").permitAll()
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/register").permitAll()
+                .antMatchers("/api/activate").permitAll()
+                .antMatchers("/api/account/reset-password/init").permitAll()
+                .antMatchers("/api/account/reset-password/finish").permitAll()
+                .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/management/health").permitAll()
+                .antMatchers("/management/health/**").permitAll()
+                .antMatchers("/management/info").permitAll()
+                .antMatchers("/management/prometheus").permitAll()
+                .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
 
-            //.anyRequest().authenticated()
             .and()
-            .apply(securityConfigurerAdapter())
+                .httpBasic()
+            .and()
+                .apply(securityConfigurerAdapter())
 
         http.headers().cacheControl();
         // @formatter:on

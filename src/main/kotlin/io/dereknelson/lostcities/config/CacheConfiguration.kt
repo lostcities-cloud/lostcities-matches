@@ -2,9 +2,9 @@ package io.dereknelson.lostcities.config
 
 import io.dereknelson.lostcities.concerns.game.CommandRepository
 import io.dereknelson.lostcities.concerns.matches.MatchRepository
-import io.dereknelson.lostcities.concerns.users.UserRepository
-import io.dereknelson.lostcities.concerns.users.entity.AuthorityEntity
-import io.dereknelson.lostcities.concerns.users.entity.UserEntity
+import io.dereknelson.lostcities.concerns.user.UserRepository
+import io.dereknelson.lostcities.concerns.user.entity.AuthorityEntity
+import io.dereknelson.lostcities.concerns.user.entity.UserEntity
 import io.dereknelson.lostcities.library.cache.PrefixedKeyGenerator
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder

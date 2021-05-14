@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.concerns.users
+package io.dereknelson.lostcities.common
 
 import javax.persistence.Entity
 import javax.persistence.Id

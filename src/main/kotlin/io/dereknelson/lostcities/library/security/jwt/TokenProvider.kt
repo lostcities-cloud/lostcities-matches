@@ -1,14 +1,12 @@
-package io.dereknelson.lostcities.library.security
+package io.dereknelson.lostcities.library.security.jwt
 
 import io.jsonwebtoken.*
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import java.util.*
 import java.util.stream.Collectors
@@ -23,8 +21,7 @@ class TokenProvider(
     private var tokenValidityInMilliseconds: Long = 0
     private var tokenValidityInMillisecondsForRememberMe: Long = 0
 
-    @Value("application.security.authentication.jwt.base64-secret")
-    private var secret: String = "test"
+    private var secret: String = "ZmNhZmUyNzNkNTE1ZTdiZDA2MmJjNWY4MWE2NzFlMTRkMmViNGE3M2E0YTRiYjg1ZGMxMDY1NGZkNjhhMTdmMjI4OTA5NTUzMzkyZjI1NDUyNjFlY2M3MjBkY2Y2OTAwMGU3NDQwYWMxNmZiNTJjZmZjMzkxMmU1OGZmYzQxOGU="
     //@Value("application.authentication.jwt.token-validity-in-seconds")
     private var tokenValidityInSeconds: String = "0"
     //@Value("application.security.authentication.jwt.token-validity-in-seconds-for-remember-me")
@@ -52,7 +49,7 @@ class TokenProvider(
         return Jwts.builder()
             .setSubject(authentication.name)
             .claim(AUTHORITIES_KEY, authorities)
-            .signWith(SignatureAlgorithm.HS512, secretKey)
+            .signWith(SignatureAlgorithm.HS512, secretKey!!)
             .setExpiration(validity)
             .compact()
     }

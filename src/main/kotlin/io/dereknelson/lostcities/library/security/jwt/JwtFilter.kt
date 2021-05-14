@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.library.security
+package io.dereknelson.lostcities.library.security.jwt
 
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.context.SecurityContextHolder

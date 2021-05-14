@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.library.security
 
+import io.dereknelson.lostcities.common.AuthoritiesConstants
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
