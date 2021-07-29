@@ -1,9 +1,9 @@
 package io.dereknelson.lostcities.api.users
 
 import io.dereknelson.lostcities.common.User
-import io.dereknelson.lostcities.concerns.user.Registration
-import io.dereknelson.lostcities.concerns.user.UserService
-import io.dereknelson.lostcities.concerns.user.entity.AuthorityEntity
+import io.dereknelson.lostcities.domains.user.Registration
+import io.dereknelson.lostcities.domains.user.UserService
+import io.dereknelson.lostcities.domains.user.entity.AuthorityEntity
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.library.security.jwt.JwtFilter
 import io.dereknelson.lostcities.library.security.jwt.TokenProvider
@@ -14,7 +14,6 @@ import io.swagger.annotations.ApiResponses
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -30,20 +29,14 @@ import javax.validation.Valid
 @Api("User actions")
 @RestController
 @RequestMapping("/api")
-class UserController {
+class UserController (
+    private var tokenProvider: TokenProvider,
+    private var authenticationManagerBuilder: AuthenticationManagerBuilder,
+    private var userService: UserService,
+    private var modelMapper : ModelMapper
+) {
+
     private val log: Logger = LoggerFactory.getLogger(UserController::class.java)
-
-    @Autowired
-    private lateinit var tokenProvider: TokenProvider
-
-    @Autowired
-    private lateinit var authenticationManagerBuilder: AuthenticationManagerBuilder
-
-    @Autowired
-    private lateinit var userService: UserService
-
-    @Autowired
-    private lateinit var modelMapper : ModelMapper
 
     @ApiOperation(value = "Register a new user.")
     @ApiResponses(value = [

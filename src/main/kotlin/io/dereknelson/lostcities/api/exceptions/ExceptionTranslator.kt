@@ -34,10 +34,7 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
      * Post-process the Problem payload to add the message key for the front-end if needed.
      */
     override fun process(entity: ResponseEntity<Problem>, request: NativeWebRequest): ResponseEntity<Problem>? {
-        if (entity == null) {
-            return null
-        }
-        val problem: Problem = entity.getBody()!!
+        val problem: Problem = entity.body!!
         if (!(problem is ConstraintViolationProblem || problem is DefaultProblem)) {
             return entity
         }
@@ -53,7 +50,7 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
             .with(PATH_KEY, requestUri)
         if (problem is ConstraintViolationProblem) {
             builder
-                .with(VIOLATIONS_KEY, (problem as ConstraintViolationProblem).getViolations())
+                .with(VIOLATIONS_KEY, (problem as ConstraintViolationProblem).violations)
                 .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION)
         } else {
             builder.withCause((problem as DefaultProblem).cause).withDetail(problem.detail)
@@ -72,17 +69,17 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
     ): ResponseEntity<Problem> {
         val result: BindingResult = ex.bindingResult
         val fieldErrors: List<FieldError> = result
-            .getFieldErrors()
+            .fieldErrors
             .stream()
             .map { f: FieldError ->
-                    val code : String = if (StringUtils.isNotBlank(f.getDefaultMessage()))
-                        f.getDefaultMessage()!!
+                    val code : String = if (StringUtils.isNotBlank(f.defaultMessage))
+                        f.defaultMessage!!
                     else
-                        f.getCode()!!
+                        f.code!!
 
                     FieldError(
-                        f.getObjectName().replaceFirst("DTO$".toRegex(), ""),
-                        f.getField(),
+                        f.objectName.replaceFirst("DTO$".toRegex(), ""),
+                        f.field,
                         code
                     )
                 }
@@ -119,19 +116,19 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
     }
 
     fun prepare(throwable: Throwable, status: StatusType, type: URI?): ProblemBuilder {
-        val activeProfiles: Collection<String> = Arrays.asList(*env.activeProfiles)
+        val activeProfiles: Collection<String> = listOf(*env.activeProfiles)
         if (activeProfiles.contains(SpringProfileConstants.SPRING_PROFILE_PRODUCTION)) {
             if (throwable is HttpMessageConversionException) {
                 return Problem
                     .builder()
                     .withType(type)
-                    .withTitle(status.getReasonPhrase())
+                    .withTitle(status.reasonPhrase)
                     .withStatus(status)
                     .withDetail("Unable to convert http message")
                     .withCause(
                         Optional.ofNullable(throwable.cause)
-                            .filter { cause: Throwable? -> isCausalChainsEnabled() }
-                            .map { throwable: Throwable? -> this.toProblem(throwable!!) }
+                            .filter { isCausalChainsEnabled }
+                            .map { this.toProblem(it) }
                             .orElse(null)
                     )
             }
@@ -139,13 +136,13 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
                 return Problem
                     .builder()
                     .withType(type)
-                    .withTitle(status.getReasonPhrase())
+                    .withTitle(status.reasonPhrase)
                     .withStatus(status)
                     .withDetail("Failure during data access")
                     .withCause(
                         Optional.ofNullable(throwable.cause)
-                            .filter{ cause: Throwable? -> isCausalChainsEnabled() }
-                            .map{ throwable: Throwable? -> this.toProblem(throwable!!) }
+                            .filter{ isCausalChainsEnabled }
+                            .map{ this.toProblem(it) }
                             .orElse(null)
                     )
             }
@@ -158,8 +155,8 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
                     .withDetail("Unexpected runtime exception")
                     .withCause(
                         Optional.ofNullable(throwable.cause)
-                            .filter { cause: Throwable? -> isCausalChainsEnabled() }
-                            .map { throwable: Throwable? -> this.toProblem(throwable!!) }
+                            .filter { isCausalChainsEnabled }
+                            .map { this.toProblem(it) }
                             .orElse(null)
                     )
             }
@@ -167,13 +164,13 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
         return Problem
             .builder()
             .withType(type)
-            .withTitle(status.getReasonPhrase())
+            .withTitle(status.reasonPhrase)
             .withStatus(status)
             .withDetail(throwable.message)
             .withCause(
                 Optional.ofNullable(throwable.cause)
-                    .filter { cause: Throwable? -> isCausalChainsEnabled() }
-                    .map { throwable: Throwable? -> this.toProblem(throwable!!) }
+                    .filter { isCausalChainsEnabled }
+                    .map { this.toProblem(it) }
                     .orElse(null)
             )
     }

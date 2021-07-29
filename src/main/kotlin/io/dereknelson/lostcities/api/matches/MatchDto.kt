@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.api.matches
 
-import io.dereknelson.lostcities.concerns.matches.UserPair
+import io.dereknelson.lostcities.domains.matches.UserPair
 import io.swagger.annotations.ApiModelProperty
 
 class MatchDto(

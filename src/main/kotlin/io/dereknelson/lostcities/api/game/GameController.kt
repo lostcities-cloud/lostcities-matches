@@ -1,17 +1,16 @@
 package io.dereknelson.lostcities.api.matches
 
 import io.dereknelson.lostcities.api.game.CommandDto
-import io.dereknelson.lostcities.concerns.game.Command
-import io.dereknelson.lostcities.concerns.game.CommandService
-import io.dereknelson.lostcities.concerns.game.GameService
-import io.dereknelson.lostcities.concerns.game.GameState
-import io.dereknelson.lostcities.concerns.matches.MatchService
+import io.dereknelson.lostcities.domains.game.Command
+import io.dereknelson.lostcities.domains.game.CommandService
+import io.dereknelson.lostcities.domains.game.GameService
+import io.dereknelson.lostcities.domains.game.GameState
+import io.dereknelson.lostcities.domains.matches.MatchService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.modelmapper.ModelMapper
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.core.userdetails.UserDetails
@@ -22,19 +21,12 @@ import java.util.*
 @Api("Game")
 @RestController
 @RequestMapping("/api/game")
-class GameController {
-
-    @Autowired
-    private lateinit var matchService: MatchService
-
-    @Autowired
-    private lateinit var gameService: GameService
-
-    @Autowired
-    private lateinit var commandService: CommandService
-
-    @Autowired
-    private lateinit var modelMapper: ModelMapper
+class GameController(
+    private var matchService: MatchService,
+    private var gameService: GameService,
+    private var commandService: CommandService,
+    private var modelMapper: ModelMapper
+) {
 
     @ApiOperation(value = "Retrieve a game state.")
     @ApiResponses(value = [

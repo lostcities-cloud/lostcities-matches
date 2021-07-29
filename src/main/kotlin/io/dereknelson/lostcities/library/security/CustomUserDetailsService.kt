@@ -1,8 +1,8 @@
 package io.dereknelson.lostcities.library.security
 
-import io.dereknelson.lostcities.concerns.user.UserNotActivatedException
-import io.dereknelson.lostcities.concerns.user.UserRepository
-import io.dereknelson.lostcities.concerns.user.entity.UserEntity
+import io.dereknelson.lostcities.domains.user.UserNotActivatedException
+import io.dereknelson.lostcities.domains.user.UserRepository
+import io.dereknelson.lostcities.domains.user.entity.UserEntity
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator
 import org.slf4j.LoggerFactory
 import org.springframework.security.core.GrantedAuthority

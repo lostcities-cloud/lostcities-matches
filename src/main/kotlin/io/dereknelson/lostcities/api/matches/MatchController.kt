@@ -1,15 +1,14 @@
 package io.dereknelson.lostcities.api.matches
 
-import io.dereknelson.lostcities.concerns.matches.Match
-import io.dereknelson.lostcities.concerns.matches.MatchService
-import io.dereknelson.lostcities.concerns.matches.UserPair
-import io.dereknelson.lostcities.concerns.user.UserService
+import io.dereknelson.lostcities.domains.matches.Match
+import io.dereknelson.lostcities.domains.matches.MatchService
+import io.dereknelson.lostcities.domains.matches.UserPair
+import io.dereknelson.lostcities.domains.user.UserService
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.modelmapper.ModelMapper
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -21,15 +20,11 @@ import springfox.documentation.annotations.ApiIgnore
 @Api("Matches and match making")
 @RestController
 @RequestMapping("/api/matches", produces=[MediaType.APPLICATION_JSON_VALUE])
-class MatchController {
-    @Autowired
-    lateinit var userService: UserService
-
-    @Autowired
-    lateinit var matchService: MatchService
-
-    @Autowired
-    lateinit var modelMapper : ModelMapper
+class MatchController (
+    private var userService: UserService,
+    private var matchService: MatchService,
+    private var modelMapper : ModelMapper
+) {
 
     @ApiOperation(value = "Create and join a new match.")
     @ApiResponses(value = [
