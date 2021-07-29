@@ -19,7 +19,7 @@ class CommandService(
         }
     }
 
-    fun playAll(game: GameState) : GameState {
+    fun applyCommands(game: GameState) : GameState {
         commandRepository.findByMatchId(game.id)
             .map { modelMapper.map(it, Command::class.java) }
             .forEach { applyCommand(game, it) }

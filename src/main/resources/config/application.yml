@@ -1,6 +1,5 @@
 
 spring:
-
   mvc:
     throw-exception-if-no-handler-found: true
   config:
@@ -43,6 +42,7 @@ spring:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
+    lazy-initialization: true
   task:
     execution:
       thread-name-prefix: lostcities-task-

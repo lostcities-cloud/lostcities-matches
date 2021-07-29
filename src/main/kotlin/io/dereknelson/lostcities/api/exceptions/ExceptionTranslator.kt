@@ -50,7 +50,7 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
             .with(PATH_KEY, requestUri)
         if (problem is ConstraintViolationProblem) {
             builder
-                .with(VIOLATIONS_KEY, (problem as ConstraintViolationProblem).violations)
+                .with(VIOLATIONS_KEY, (problem).violations)
                 .with(MESSAGE_KEY, ErrorConstants.ERR_VALIDATION)
         } else {
             builder.withCause((problem as DefaultProblem).cause).withDetail(problem.detail)

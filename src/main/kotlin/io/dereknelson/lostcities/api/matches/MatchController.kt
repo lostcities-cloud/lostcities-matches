@@ -9,11 +9,13 @@ import io.swagger.annotations.ApiOperation
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.modelmapper.ModelMapper
+import org.springframework.context.annotation.Lazy
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.server.ResponseStatusException
 import springfox.documentation.annotations.ApiIgnore
 
@@ -35,10 +37,9 @@ class MatchController (
     fun createAndJoin(
         @AuthenticationPrincipal @ApiIgnore userDetails: UserDetails
     ): Match {
-        val user = userService.find(userDetails)
+        val matchDto = userService.find(userDetails)
+            .map { MatchDto(players=UserPair(user1=it)) }
             .orElseThrow { ResponseStatusException(HttpStatus.UNAUTHORIZED) }
-
-        val matchDto = MatchDto(players=UserPair(user1=user))
 
         return matchService
             .create(modelMapper.map(matchDto, Match::class.java))
@@ -69,9 +70,8 @@ class MatchController (
         ApiResponse(code=404, message="Match not found.")
     ])
     @GetMapping("/{id}")
-    fun findById(@PathVariable id: Long) : MatchDto? {
-        return matchService
-            .findById(id)
+    fun findById(@PathVariable id: Long) : MatchDto {
+        return matchService.findById(id)
             .map { modelMapper.map(it, MatchDto::class.java) }
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
@@ -79,6 +79,6 @@ class MatchController (
     @ApiOperation(value = "Find matches available to join.")
     @GetMapping
     fun findAvailableForUser(@AuthenticationPrincipal userDetails : UserDetails): List<MatchDto>  {
-        return emptyList()
+        TODO("Not Implemented")
     }
 }

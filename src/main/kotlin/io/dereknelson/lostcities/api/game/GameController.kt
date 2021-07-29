@@ -37,7 +37,7 @@ class GameController(
     fun findById(
         @PathVariable id: Long,
         userDetails: UserDetails
-    ): GameState? {
+    ): GameState {
         return retrieveGame(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
@@ -45,9 +45,8 @@ class GameController(
     @ApiOperation(value = "Play a command in a game.")
     @ApiResponses(value = [
         ApiResponse(code=201, message="Command executed."),
-        ApiResponse(code=400, message="Invalid command."),
         ApiResponse(code=404, message="Game not found."),
-        ApiResponse(code=409, message="Unable to play command."),
+        ApiResponse(code=406, message="Invalid command.")
     ])
     @PatchMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun playCommand(@PathVariable id: Long, @RequestBody commandDto: CommandDto) {
@@ -60,13 +59,13 @@ class GameController(
             commandService.applyCommand(gameState, command)
             commandService.save(command)
         } catch (e: RuntimeException) {
-            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR)
+            throw ResponseStatusException(HttpStatus.NOT_ACCEPTABLE)
         }
     }
 
     private fun retrieveGame(id: Long): Optional<GameState> {
         return matchService.findById(id)
             .map { match -> gameService.constructStateFromMatch(match) }
-            .map { game -> commandService.playAll(game) }
+            .map { game -> commandService.applyCommands(game) }
     }
 }

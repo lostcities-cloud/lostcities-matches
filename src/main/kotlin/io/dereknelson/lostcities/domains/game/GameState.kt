@@ -6,16 +6,15 @@ import io.dereknelson.lostcities.domains.game.components.Phase
 import io.dereknelson.lostcities.domains.game.components.PlayArea
 import io.dereknelson.lostcities.domains.matches.UserPair
 import io.dereknelson.lostcities.common.User
-import java.util.*
 import kotlin.collections.LinkedHashSet
 
 class GameState(
     val id : Long,
-    val players : UserPair,
-    var initialSeed : Long,
-    val deck : LinkedHashSet<Card>
+    players : UserPair,
+    private val deck : LinkedHashSet<Card>
 ) {
-    private val random : Random = Random(initialSeed)
+    var phase = Phase.PLAY_OR_DISCARD
+    var currentPlayer : User = players.user1!!
 
     private val discard = PlayArea()
 
@@ -23,18 +22,11 @@ class GameState(
         players.user1?.login!! to PlayArea(),
         players.user2?.login!! to PlayArea()
     )
+
     private val playerHands: Map<String, MutableList<Card>> = mapOf(
         players.user1?.login!! to mutableListOf(),
         players.user2?.login!! to mutableListOf()
     )
-
-    var phase = Phase.PLAY_OR_DISCARD
-
-    var currentPlayer : User = players.user1!!
-
-    fun nextSeed() : Long {
-        return random.nextLong()
-    }
 
     fun nextPhase() {
         phase = if(phase == Phase.PLAY_OR_DISCARD) {
@@ -50,14 +42,6 @@ class GameState(
             deck.remove(drawn)
             getHand(player).add(drawn)
         }
-    }
-
-    fun canDrawFromDiscard(color : Color) : Boolean {
-        return !discard.isEmpty(color)
-    }
-
-    fun isCardInHand(player : String, card : Card) : Boolean {
-        return getHand(player).contains(card)
     }
 
     fun drawFromDiscard(player : String, color: Color) {
@@ -79,6 +63,14 @@ class GameState(
         if(isCardInHand(player, card)) {
             discard.get(card.color).add(card)
         }
+    }
+
+    private fun canDrawFromDiscard(color : Color) : Boolean {
+        return !discard.isEmpty(color)
+    }
+
+    private fun isCardInHand(player : String, card : Card) : Boolean {
+        return getHand(player).contains(card)
     }
 
     private fun getHand(player : String) : MutableList<Card> {

@@ -1,10 +1,12 @@
 package io.dereknelson.lostcities.domains.game.components
 
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
 import java.util.stream.IntStream
 
 @Service
+@Lazy
 class DeckFactory {
 
     fun buildDeck() : List<Card> {

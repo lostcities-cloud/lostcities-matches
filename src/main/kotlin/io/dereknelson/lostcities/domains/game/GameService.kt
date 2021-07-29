@@ -2,7 +2,9 @@ package io.dereknelson.lostcities.domains.game
 
 import io.dereknelson.lostcities.domains.game.components.DeckFactory
 import io.dereknelson.lostcities.domains.matches.Match
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
+
 import java.util.*
 import kotlin.collections.LinkedHashSet
 
@@ -18,7 +20,6 @@ class GameService(
         return GameState(
             match.id,
             match.players,
-            match.seed,
             LinkedHashSet(shuffledCards)
         )
     }

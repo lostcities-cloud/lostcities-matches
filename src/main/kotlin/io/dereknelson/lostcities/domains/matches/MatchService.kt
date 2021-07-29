@@ -3,6 +3,7 @@ package io.dereknelson.lostcities.domains.matches
 import io.dereknelson.lostcities.common.User
 import io.dereknelson.lostcities.common.UserRef
 import org.modelmapper.ModelMapper
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.util.*
