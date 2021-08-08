@@ -39,6 +39,14 @@ class UserService(
     fun register(registration: Registration): User {
         registration.password = passwordEncoder.encode(registration.password)
 
+        userRepository.findOneByLogin(registration.login).ifPresent {
+            throw UserAlreadyExistsException("")
+        }
+
+        userRepository.findOneByEmailIgnoreCase(registration.email).ifPresent {
+            throw UserAlreadyExistsException("")
+        }
+
         var userEntity = modelMapper.map(
             registration,
             UserEntity::class.java

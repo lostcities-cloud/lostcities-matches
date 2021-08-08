@@ -73,6 +73,12 @@ spring:
 server:
   port: 8080
 
+springdoc:
+  api-docs.enabled: true
+  swagger-ui: true
+  packagesToScan: io.dereknelson.lostcities.api
+
+
 application:
   security:
     authentication:

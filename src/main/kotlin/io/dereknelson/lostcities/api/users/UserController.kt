@@ -7,10 +7,13 @@ import io.dereknelson.lostcities.domains.user.entity.AuthorityEntity
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.library.security.jwt.JwtFilter
 import io.dereknelson.lostcities.library.security.jwt.TokenProvider
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
-import io.swagger.annotations.ApiResponse
-import io.swagger.annotations.ApiResponses
+
+
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.tags.Tag
+
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -26,7 +29,7 @@ import java.util.*
 import javax.servlet.http.HttpServletRequest
 import javax.validation.Valid
 
-@Api("User actions")
+@Tag(name = "User actions")
 @RestController
 @RequestMapping("/api")
 class UserController (
@@ -38,10 +41,10 @@ class UserController (
 
     private val log: Logger = LoggerFactory.getLogger(UserController::class.java)
 
-    @ApiOperation(value = "Register a new user.")
+    @Operation(summary = "Register a new user.")
     @ApiResponses(value = [
-        ApiResponse(code=200, message=""),
-        ApiResponse(code=409, message="User already exists.")
+        ApiResponse(responseCode="200", description=""),
+        ApiResponse(responseCode="409", description="User already exists.")
     ])
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -53,7 +56,7 @@ class UserController (
         return UserDto(user.id, user.login, user.email, user.langKey)
     }
 
-    @ApiOperation(value = "Find a user.")
+    @Operation(summary = "Find a user.")
     @GetMapping("/user/{id}")
     fun findUserById(@PathVariable  id: Long) : UserDto? {
         return userService.findById(id)
@@ -61,12 +64,14 @@ class UserController (
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
+    @Operation(summary = "Get my current user information.")
     @GetMapping("/authenticate")
     fun isAuthenticated(request: HttpServletRequest): String? {
         log.debug("REST request to check if the current user is authenticated")
         return request.remoteUser
     }
 
+    @Operation(summary = "Authenticate a user.")
     @PostMapping("/authenticate")
     fun authorize(@Valid @RequestBody loginDto: LoginDto): ResponseEntity<JwtTokenDto> {
         val authenticationToken = UsernamePasswordAuthenticationToken(
@@ -82,6 +87,7 @@ class UserController (
         return ResponseEntity<JwtTokenDto>(JwtTokenDto(jwt), httpHeaders, HttpStatus.OK)
     }
 
+    @Operation(summary = "Activate a user.")
     @GetMapping("/activate")
     fun activateAccount(@RequestParam(value = "key", required=true) key: String) {
         val user: Optional<User> = userService.activateRegistration(key)

@@ -1,19 +1,17 @@
 package io.dereknelson.lostcities.api.matches
 
 import io.dereknelson.lostcities.domains.matches.UserPair
-import io.swagger.annotations.ApiModelProperty
+import io.swagger.v3.oas.annotations.media.Schema
 
 class MatchDto(
-
-
     val players: UserPair,
 
-    @ApiModelProperty(example = "false", required = true, position = 1)
+    @Schema(example = "false", required = true)
     val isReady: Boolean = false,
 
-    @ApiModelProperty(example = "false", required = true, position = 2)
+    @Schema(example = "false", required = true)
     val isStarted: Boolean = false,
 
-    @ApiModelProperty(example = "false", required = true, position = 3)
+    @Schema(example = "false", required = true)
     val isCompleted: Boolean = false
 )

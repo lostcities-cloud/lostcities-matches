@@ -6,10 +6,13 @@ import io.dereknelson.lostcities.domains.game.CommandService
 import io.dereknelson.lostcities.domains.game.GameService
 import io.dereknelson.lostcities.domains.game.GameState
 import io.dereknelson.lostcities.domains.matches.MatchService
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
-import io.swagger.annotations.ApiResponse
-import io.swagger.annotations.ApiResponses
+
+
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
+
+
 import org.modelmapper.ModelMapper
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -18,7 +21,6 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
-@Api("Game")
 @RestController
 @RequestMapping("/api/game")
 class GameController(
@@ -28,10 +30,10 @@ class GameController(
     private var modelMapper: ModelMapper
 ) {
 
-    @ApiOperation(value = "Retrieve a game state.")
+    @Operation(description = "Retrieve a game state.")
     @ApiResponses(value = [
-        ApiResponse(code=200, message="Game retrieved."),
-        ApiResponse(code=404, message="Game not found.")
+        ApiResponse(responseCode="200", description= "Game retrieved."),
+        ApiResponse(responseCode="404", description= "Game not found.")
     ])
     @GetMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun findById(
@@ -42,11 +44,11 @@ class GameController(
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
-    @ApiOperation(value = "Play a command in a game.")
+    @Operation(description = "Play a command in a game.")
     @ApiResponses(value = [
-        ApiResponse(code=201, message="Command executed."),
-        ApiResponse(code=404, message="Game not found."),
-        ApiResponse(code=406, message="Invalid command.")
+        ApiResponse(responseCode="201", description= "Command executed."),
+        ApiResponse(responseCode="404", description= "Game not found."),
+        ApiResponse(responseCode="406", description= "Invalid command.")
     ])
     @PatchMapping("/{id}", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun playCommand(@PathVariable id: Long, @RequestBody commandDto: CommandDto) {

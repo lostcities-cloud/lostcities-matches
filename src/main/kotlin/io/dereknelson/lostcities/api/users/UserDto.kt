@@ -1,20 +1,19 @@
 package io.dereknelson.lostcities.api.users
 
 import io.dereknelson.lostcities.common.Constants
-import io.swagger.annotations.ApiModel
-import io.swagger.annotations.ApiModelProperty
+import io.swagger.v3.oas.annotations.media.Schema
 
-@ApiModel(description = "User")
+@Schema(description = "User")
 data class UserDto(
-    @ApiModelProperty(example = "1", required = true, position = 0)
+    @Schema(example = "1", required = true)
     var id: Long?=null,
 
-    @ApiModelProperty(example = "ttesterson", required = true, position = 1)
+    @Schema(example = "ttesterson", required = true)
     val login: String?=null,
 
-    @ApiModelProperty(example = "test@example.com", required = true, position = 2)
+    @Schema(example = "test@example.com", required = true)
     val email: String?=null,
 
-    @ApiModelProperty(example = "en_US", required = true, position = 3)
+    @Schema(example = "en_US", required = true)
     val langKey: String= Constants.DEFAULT_LANGUAGE
 )
