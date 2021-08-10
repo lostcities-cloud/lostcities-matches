@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.api.users
 
-import io.dereknelson.lostcities.common.User
+import io.dereknelson.lostcities.common.model.User
 import io.dereknelson.lostcities.domains.user.Registration
 import io.dereknelson.lostcities.domains.user.UserService
 import io.dereknelson.lostcities.domains.user.entity.AuthorityEntity

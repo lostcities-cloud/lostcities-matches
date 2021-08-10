@@ -1,8 +1,8 @@
 package io.dereknelson.lostcities.api.game
 
-import io.dereknelson.lostcities.domains.game.components.Card
-import io.dereknelson.lostcities.domains.game.components.Color
-import io.dereknelson.lostcities.domains.game.components.Phase
+import io.dereknelson.lostcities.common.model.game.components.Card
+import io.dereknelson.lostcities.common.model.game.components.Color
+import io.dereknelson.lostcities.common.model.game.components.Phase
 
 data class CommandDto(
     val playerId: Long,

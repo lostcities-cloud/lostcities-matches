@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.api.matches
 
-import io.dereknelson.lostcities.domains.matches.UserPair
+import io.dereknelson.lostcities.common.model.match.UserPair
 import io.swagger.v3.oas.annotations.media.Schema
 
 class MatchDto(

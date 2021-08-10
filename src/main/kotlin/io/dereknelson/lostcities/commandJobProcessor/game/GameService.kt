@@ -1,8 +1,7 @@
-package io.dereknelson.lostcities.domains.game
+package io.dereknelson.lostcities.commandJobProcessor.game
 
-import io.dereknelson.lostcities.domains.game.components.DeckFactory
-import io.dereknelson.lostcities.domains.matches.Match
-import org.springframework.context.annotation.Lazy
+import io.dereknelson.lostcities.common.model.game.GameState
+import io.dereknelson.lostcities.common.model.match.Match
 import org.springframework.stereotype.Service
 
 import java.util.*

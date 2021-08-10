@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.domains.game
+package io.dereknelson.lostcities.commandJobProcessor.game
 
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus

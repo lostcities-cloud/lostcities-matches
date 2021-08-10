@@ -1,4 +1,3 @@
-
 spring:
   mvc:
     throw-exception-if-no-handler-found: true
@@ -62,6 +61,10 @@ spring:
   autoconfigure:
     exclude= org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
+kafka:
+  server: localhost:9092
+  command-job-topic: command-job-topic
+  game-change-notification-topic: game-change-notification-topic
 
 server:
   port: 8080

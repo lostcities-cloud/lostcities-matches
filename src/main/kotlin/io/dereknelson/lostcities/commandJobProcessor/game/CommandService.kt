@@ -1,7 +1,9 @@
-package io.dereknelson.lostcities.domains.game
+package io.dereknelson.lostcities.commandJobProcessor.game
 
-import io.dereknelson.lostcities.domains.game.components.Phase
-import io.dereknelson.lostcities.domains.game.entities.CommandEntity
+import io.dereknelson.lostcities.common.model.game.components.Phase
+import io.dereknelson.lostcities.commandJobProcessor.game.entities.CommandEntity
+import io.dereknelson.lostcities.common.model.game.Command
+import io.dereknelson.lostcities.common.model.game.GameState
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 

@@ -1,6 +1,6 @@
-package io.dereknelson.lostcities.domains.game
+package io.dereknelson.lostcities.commandJobProcessor.game
 
-import io.dereknelson.lostcities.domains.game.entities.CommandEntity
+import io.dereknelson.lostcities.commandJobProcessor.game.entities.CommandEntity
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository

@@ -1,7 +1,7 @@
-package io.dereknelson.lostcities.domains.game.entities
+package io.dereknelson.lostcities.commandJobProcessor.game.entities
 
-import io.dereknelson.lostcities.domains.game.components.Color
-import io.dereknelson.lostcities.domains.game.components.Phase
+import io.dereknelson.lostcities.common.model.game.components.Color
+import io.dereknelson.lostcities.common.model.game.components.Phase
 import javax.persistence.*
 
 @Entity

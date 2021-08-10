@@ -1,8 +1,8 @@
 package io.dereknelson.lostcities.api.matches
 
-import io.dereknelson.lostcities.domains.matches.Match
+import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.domains.matches.MatchService
-import io.dereknelson.lostcities.domains.matches.UserPair
+import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.domains.user.UserService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -10,13 +10,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 
 import org.modelmapper.ModelMapper
-import org.springframework.context.annotation.Lazy
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.server.ResponseStatusException
 
 
@@ -38,7 +36,7 @@ class MatchController (
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: UserDetails
     ): Match {
         val matchDto = userService.find(userDetails)
-            .map { MatchDto(players=UserPair(user1=it)) }
+            .map { MatchDto(players= UserPair(user1=it)) }
             .orElseThrow { ResponseStatusException(HttpStatus.UNAUTHORIZED) }
 
         return matchService

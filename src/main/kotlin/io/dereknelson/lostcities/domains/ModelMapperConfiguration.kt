@@ -1,15 +1,15 @@
 package io.dereknelson.lostcities.domains
 
 import io.dereknelson.lostcities.api.users.RegistrationDto
-import io.dereknelson.lostcities.domains.game.Command
-import io.dereknelson.lostcities.domains.game.components.Card
-import io.dereknelson.lostcities.domains.game.entities.CommandEntity
-import io.dereknelson.lostcities.domains.matches.Match
+import io.dereknelson.lostcities.common.model.game.Command
+import io.dereknelson.lostcities.common.model.game.components.Card
+import io.dereknelson.lostcities.commandJobProcessor.game.entities.CommandEntity
+import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.domains.matches.MatchEntity
-import io.dereknelson.lostcities.domains.matches.UserPair
+import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.domains.user.Registration
-import io.dereknelson.lostcities.common.User
-import io.dereknelson.lostcities.common.UserRef
+import io.dereknelson.lostcities.common.model.User
+import io.dereknelson.lostcities.common.model.UserRef
 import io.dereknelson.lostcities.domains.user.entity.AuthorityEntity
 import org.modelmapper.ModelMapper
 import org.springframework.context.annotation.Bean

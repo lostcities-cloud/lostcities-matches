@@ -61,6 +61,7 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 
+	implementation("org.springframework.kafka:spring-kafka:2.7.2")
 
 	implementation("org.hibernate:hibernate-jcache")
 	implementation("org.ehcache.modules:ehcache-107:3.9.2")
@@ -68,6 +69,7 @@ dependencies {
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("io.dereknelson.lostcities:lostcities-common")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("com.h2database:h2")
 	runtimeOnly("com.h2database:h2")

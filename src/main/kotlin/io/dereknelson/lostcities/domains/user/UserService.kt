@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.domains.user
 
-import io.dereknelson.lostcities.common.User
+import io.dereknelson.lostcities.common.model.User
 import io.dereknelson.lostcities.domains.user.entity.UserEntity
 import io.dereknelson.lostcities.common.Constants
 import org.modelmapper.ModelMapper

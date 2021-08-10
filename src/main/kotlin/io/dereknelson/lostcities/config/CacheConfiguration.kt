@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.config
 
-import io.dereknelson.lostcities.domains.game.CommandRepository
+import io.dereknelson.lostcities.commandJobProcessor.game.CommandRepository
 import io.dereknelson.lostcities.domains.matches.MatchRepository
 import io.dereknelson.lostcities.domains.user.UserRepository
 import io.dereknelson.lostcities.domains.user.entity.AuthorityEntity

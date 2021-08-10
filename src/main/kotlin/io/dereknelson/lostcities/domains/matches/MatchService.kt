@@ -1,9 +1,9 @@
 package io.dereknelson.lostcities.domains.matches
 
-import io.dereknelson.lostcities.common.User
-import io.dereknelson.lostcities.common.UserRef
+import io.dereknelson.lostcities.common.model.User
+import io.dereknelson.lostcities.common.model.UserRef
+import io.dereknelson.lostcities.common.model.match.Match
 import org.modelmapper.ModelMapper
-import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.util.*

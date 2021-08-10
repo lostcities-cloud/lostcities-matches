@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.domains.matches
 
-import io.dereknelson.lostcities.common.UserRef
+import io.dereknelson.lostcities.common.model.UserRef
 import io.dereknelson.lostcities.library.security.AbstractAuditingEntity
 import java.io.Serializable
 import javax.persistence.*

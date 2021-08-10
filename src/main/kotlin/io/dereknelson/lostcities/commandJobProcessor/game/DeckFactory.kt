@@ -1,5 +1,7 @@
-package io.dereknelson.lostcities.domains.game.components
+package io.dereknelson.lostcities.commandJobProcessor.game
 
+import io.dereknelson.lostcities.common.model.game.components.Card
+import io.dereknelson.lostcities.common.model.game.components.Color
 import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
 import java.util.stream.Collectors
