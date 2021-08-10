@@ -49,7 +49,7 @@ class CommandService(
 
     private fun draw(game: GameState, command: Command) {
         if(command.color != null) {
-            game.drawFromDiscard(command.player, command.color)
+            game.drawFromDiscard(command.player, command.color!!)
         } else {
             game.drawCard(command.player)
         }

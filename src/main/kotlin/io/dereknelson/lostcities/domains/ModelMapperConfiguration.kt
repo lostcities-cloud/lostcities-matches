@@ -117,7 +117,7 @@ class ModelMapperConfiguration {
                 }
 
                 if(src.concededBy != null) {
-                    match.concededBy = UserRef(src.concededBy.id, src.concededBy.login, src.concededBy.email)
+                    match.concededBy = UserRef(src.concededBy!!.id, src.concededBy!!.login, src.concededBy!!.email)
                 }
 
                 match
