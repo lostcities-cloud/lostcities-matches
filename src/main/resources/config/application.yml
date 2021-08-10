@@ -62,7 +62,7 @@ spring:
     exclude= org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
 kafka:
-  server: localhost:9092
+  server: kafka:9092
   command-job-topic: command-job-topic
   game-change-notification-topic: game-change-notification-topic
 
