@@ -20,14 +20,18 @@ configurations {
 		extendsFrom(configurations.annotationProcessor.get())
 	}
 }
-
-repositories {
-	mavenCentral()
+allprojects {
+	repositories {
+		mavenCentral()
+		maven { setUrl("https://jitpack.io") }
+	}
 }
 
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
+	implementation("com.github.nelson54.lostcities-cloud:lostcities-common:master-SNAPSHOT")
+
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
@@ -69,7 +73,6 @@ dependencies {
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("io.dereknelson.lostcities:lostcities-common")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	implementation("com.h2database:h2")
 	runtimeOnly("com.h2database:h2")
