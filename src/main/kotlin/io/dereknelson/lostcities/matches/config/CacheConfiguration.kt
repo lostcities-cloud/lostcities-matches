@@ -1,10 +1,6 @@
 package io.dereknelson.lostcities.matches.config
 
-import io.dereknelson.lostcities.commandJobProcessor.game.CommandRepository
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import io.dereknelson.lostcities.domains.user.UserRepository
-import io.dereknelson.lostcities.domains.user.entity.AuthorityEntity
-import io.dereknelson.lostcities.domains.user.entity.UserEntity
 import io.dereknelson.lostcities.matches.library.cache.PrefixedKeyGenerator
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder
@@ -40,13 +36,7 @@ class CacheConfiguration() {
     val cacheManagerCustomizer: JCacheManagerCustomizer
         @Bean
         get() = JCacheManagerCustomizer { cm: javax.cache.CacheManager ->
-            createCache(cm, CommandRepository.COMMANDS_BY_MATCH_CACHE)
             createCache(cm, MatchRepository.MATCHES_BY_PLAYER_CACHE)
-            createCache(cm, UserRepository.USERS_BY_LOGIN_CACHE)
-            createCache(cm, UserRepository.USERS_BY_EMAIL_CACHE)
-            createCache(cm, UserEntity::class.java.name)
-            createCache(cm, AuthorityEntity::class.java.name)
-            createCache(cm, UserEntity::class.java.name + ".authorities")
         }
 
     val keyGenerator: KeyGenerator

@@ -13,8 +13,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 @ComponentScan(
 	"io.dereknelson.lostcities.matches.library.security",
 	"io.dereknelson.lostcities.matches.config",
-	"io.dereknelson.lostcities.domains",
-	"io.dereknelson.lostcities.api",
+	"io.dereknelson.lostcities.matches.persistence",
+	"io.dereknelson.lostcities.matches.api",
 )
 @EnableConfigurationProperties(KafkaConfiguration::class)
 @SpringBootApplication(exclude=[ErrorMvcAutoConfiguration::class])
