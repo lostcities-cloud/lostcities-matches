@@ -4,7 +4,7 @@ spring:
   config:
     use-legacy-processing: true
   application:
-    name: lostcities
+    name: lostcities-matches
   profiles:
     # The commented value for `active` can be replaced with valid Spring profiles to load.
     # Otherwise, it will be filled in by gradle when building the JAR file
@@ -44,13 +44,13 @@ spring:
     lazy-initialization: true
   task:
     execution:
-      thread-name-prefix: lostcities-task-
+      thread-name-prefix: lostcities-matches-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: lostcities-scheduling-
+      thread-name-prefix: lostcities-matches-scheduling-
       pool:
         size: 2
   thymeleaf:
