@@ -30,7 +30,8 @@ allprojects {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
-	implementation("com.github.nelson54.lostcities-cloud:lostcities-common:master-SNAPSHOT")
+	//implementation("com.github.nelson54.lostcities-cloud:lostcities-common:master-SNAPSHOT")
+	implementation(project(":LostCitiesCommon"))
 
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
