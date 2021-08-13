@@ -17,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
+import java.util.*
 
 
 @RestController
@@ -25,6 +26,7 @@ class MatchController (
     private var matchService: MatchService,
     private var modelMapper : ModelMapper
 ) {
+    private var random: Random = Random()
 
     @Operation(description = "Create and join a new match.")
     @ApiResponses(value = [
@@ -34,13 +36,10 @@ class MatchController (
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails
-    ): Match {
+    ): MatchDto {
+        val match = matchService.create(Match.buildMatch(player=userDetails.id, random))
 
-
-        val matchDto = MatchDto(players= UserPair(user1=userDetails.id))
-
-        return matchService
-            .create(modelMapper.map(matchDto, Match::class.java))
+        return modelMapper.map(match, MatchDto::class.java)
     }
 
     @Operation(description = "Join an existing match.")
