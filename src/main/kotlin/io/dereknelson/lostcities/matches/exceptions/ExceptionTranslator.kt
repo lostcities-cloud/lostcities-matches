@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.exceptions
-import io.dereknelson.lostcities.api.users.InvalidPasswordException
+
+import io.dereknelson.lostcities.common.SpringProfileConstants
 import org.apache.commons.lang3.StringUtils
 import org.springframework.core.env.Environment
 import org.springframework.dao.ConcurrencyFailureException
@@ -92,15 +93,6 @@ class ExceptionTranslator(private val env: Environment) : ProblemHandling, Secur
             .with(FIELD_ERRORS_KEY, fieldErrors)
             .build()
         return create(ex, problem, request)
-    }
-
-
-    @ExceptionHandler
-    fun handleInvalidPasswordException(
-        ex: InvalidPasswordException?,
-        request: NativeWebRequest?
-    ): ResponseEntity<Problem> {
-        return create(InvalidPasswordException(), request!!)
     }
 
     @ExceptionHandler

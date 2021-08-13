@@ -15,11 +15,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 	"io.dereknelson.lostcities.matches.config",
 	"io.dereknelson.lostcities.matches.persistence",
 	"io.dereknelson.lostcities.matches.api",
+	"io.dereknelson.lostcities.matches.service",
+	"io.dereknelson.lostcities.common.auth"
 )
-@EnableConfigurationProperties(KafkaConfiguration::class)
+//@EnableConfigurationProperties(KafkaConfiguration::class)
 @SpringBootApplication(exclude=[ErrorMvcAutoConfiguration::class])
-class LostcitiesApplication
+class LostcitiesMatchesApplication
 
 fun main(args: Array<String>) {
-	runApplication<LostcitiesApplication>(*args)
+	runApplication<LostcitiesMatchesApplication>(*args)
 }

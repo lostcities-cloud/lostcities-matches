@@ -1,7 +1,7 @@
 package io.dereknelson.lostcities.matches.service
 
+import io.dereknelson.lostcities.common.auth.entity.UserRef
 import io.dereknelson.lostcities.common.model.User
-import io.dereknelson.lostcities.common.model.UserRef
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
@@ -51,7 +51,7 @@ class MatchService(
             throw RuntimeException("Unable to complete match [${match.id}]")
         } else {
             matchEntity.isCompleted = true
-            matchEntity.concededBy = UserRef(user.id, user.login, user.email)
+            matchEntity.concededBy = user.id
             matchEntity = matchRepository.save(matchEntity)
 
             return modelMapper.map(matchEntity, Match::class.java)
@@ -76,10 +76,10 @@ class MatchService(
     }
 
     fun joinMatch(match: Match, user: User): Match {
-        if(match.players.contains(user) || match.players.isPopulated) {
+        if(match.players.contains(user.id!!) || match.players.isPopulated) {
             throw UnableToJoinMatchException()
         } else {
-            match.players.user2 = user
+            match.players.user2 = user.id!!
         }
 
         val matchEntity : MatchEntity = modelMapper.map(match, MatchEntity::class.java)

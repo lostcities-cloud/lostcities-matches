@@ -15,8 +15,8 @@ import org.springframework.kafka.core.ProducerFactory
 import org.springframework.kafka.support.serializer.JsonSerializer
 
 
-@Configuration
-@ConfigurationProperties(value="kafka")
+//@Configuration
+//@ConfigurationProperties(value="kafka")
 class KafkaConfiguration {
     lateinit var server: String
     lateinit var commandJobTopic: String

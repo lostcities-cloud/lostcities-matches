@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.matches.persistence
 
-import io.dereknelson.lostcities.common.model.UserRef
+import io.dereknelson.lostcities.common.auth.entity.UserRef
 import io.dereknelson.lostcities.matches.library.security.AbstractAuditingEntity
 import java.io.Serializable
 import javax.persistence.*
@@ -11,7 +11,6 @@ import javax.persistence.*
     indexes = [
         Index(name="player_1_index", columnList="player_1", unique=false),
         Index(name="player_2_index", columnList="player_2", unique=false),
-
     ]
 )
 data class MatchEntity (
@@ -22,21 +21,11 @@ data class MatchEntity (
     @Column(name = "seed")
     var seed: Long? = null,
 
-    @ManyToOne
-    @JoinColumn(
-        name = "player_1",
-        nullable = false,
-        foreignKey = ForeignKey(name="PLAYER_1_FOREIGN_KEY")
-    )
-    var player1: UserRef? = null,
+    @Column(name="player_1")
+    var player1: Long? = null,
 
-    @ManyToOne
-    @JoinColumn(
-        name = "player_2",
-        nullable = true,
-        foreignKey = ForeignKey(name="PLAYER_2_FOREIGN_KEY")
-    )
-    var player2: UserRef? = null,
+    @Column(name="player_2")
+    var player2: Long? = null,
 
     @Column(name = "score_1")
     var score1: Int? = null,
@@ -44,13 +33,8 @@ data class MatchEntity (
     @Column(name = "score_2")
     var score2: Int? = null,
 
-    @ManyToOne
-    @JoinColumn(
-        name = "conceded_by",
-        nullable = true,
-        foreignKey = ForeignKey(name="CONCEDED_BY_FOREIGN_KEY")
-    )
-    var concededBy: UserRef? = null,
+    @Column(name = "conceded_by")
+    var concededBy: Long? = null,
 
     @Column(name = "is_ready")
     var isReady: Boolean? = false,
