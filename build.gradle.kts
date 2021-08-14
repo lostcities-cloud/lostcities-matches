@@ -80,12 +80,14 @@ dependencies {
 	runtimeOnly("org.postgresql:postgresql")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-	
-	testImplementation("org.mockito:mockito-core:3.+")
-	testImplementation("org.junit.jupiter:junit-jupiter:5.5.2")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-	testImplementation("org.springframework.security:spring-security-test")
+
+	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+	//testImplementation("org.mockito:mockito-core:3.+")
+	testImplementation("org.mockito:mockito-junit-jupiter:2.23.0")
+	//testImplementation("org.springframework.boot:spring-boot-starter-test")
+	//testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
+	//testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
 	testImplementation("org.assertj:assertj-core:3.19.0")
 }

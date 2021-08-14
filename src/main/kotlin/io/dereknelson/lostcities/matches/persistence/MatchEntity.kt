@@ -19,7 +19,7 @@ data class MatchEntity (
     var id: Long? = null,
 
     @Column(name = "seed")
-    var seed: Long? = null,
+    var seed: Long,
 
     @Column(name="player_1")
     var player1: Long? = null,
@@ -28,22 +28,22 @@ data class MatchEntity (
     var player2: Long? = null,
 
     @Column(name = "score_1")
-    var score1: Int? = null,
+    var score1: Int = 0,
 
     @Column(name = "score_2")
-    var score2: Int? = null,
+    var score2: Int = 0,
 
     @Column(name = "conceded_by")
     var concededBy: Long? = null,
 
     @Column(name = "is_ready")
-    var isReady: Boolean? = false,
+    var isReady: Boolean = false,
 
     @Column(name = "is_started")
-    var isStarted: Boolean? = false,
+    var isStarted: Boolean = false,
 
     @Column(name = "is_completed")
-    var isCompleted: Boolean? = false,
+    var isCompleted: Boolean = false,
     ): AbstractAuditingEntity(), Serializable {
 
     companion object {

@@ -66,7 +66,7 @@ class MatchController (
         val match = matchService.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
-        matchService.joinMatch(match, userDetails.asUser())
+        matchService.joinMatch(match, userDetails.id)
     }
 
     @Operation(
@@ -92,4 +92,6 @@ class MatchController (
     fun findAvailableForUser(@AuthenticationPrincipal @Parameter(hidden=true) userDetails : LostCitiesUserDetails): List<MatchDto>  {
         TODO("Not Implemented")
     }
+
+
 }

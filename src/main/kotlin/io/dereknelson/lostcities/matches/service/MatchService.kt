@@ -3,86 +3,129 @@ package io.dereknelson.lostcities.matches.service
 import io.dereknelson.lostcities.common.auth.entity.UserRef
 import io.dereknelson.lostcities.common.model.User
 import io.dereknelson.lostcities.common.model.match.Match
+import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
+import java.time.LocalDateTime
+import java.time.ZoneOffset
 import java.util.*
 
 @Service
 class MatchService(
-    private var modelMapper: ModelMapper,
     private var matchRepository : MatchRepository
 ) {
 
     private val random : Random = Random()
 
     fun markStarted(match: Match): Match {
-        var matchEntity = modelMapper.map(match, MatchEntity::class.java)
+        var matchEntity = match.toMatchEntity()
 
-        if (matchEntity.isReady!!) {
+        if (!matchEntity.isReady || matchEntity.isStarted) {
             throw RuntimeException("Unable to start match [${match.id}]")
         } else {
             matchEntity.isStarted = true
             matchEntity = matchRepository.save(matchEntity)
 
-            return modelMapper.map(matchEntity, Match::class.java)
+            return matchEntity.toMatch()
         }
     }
 
-    fun markAsCompleted(match: Match): Match {
-        var matchEntity = modelMapper.map(match, MatchEntity::class.java)
+    fun markCompleted(match: Match): Match {
+        var matchEntity = match.toMatchEntity()
 
-        if (matchEntity.isCompleted!!) {
+        if (
+            !matchEntity.isStarted ||
+            !matchEntity.isReady ||
+            matchEntity.isCompleted
+        ) {
             throw RuntimeException("Unable to complete match [${match.id}]")
         } else {
             matchEntity.isCompleted = true
             matchEntity = matchRepository.save(matchEntity)
 
-            return modelMapper.map(matchEntity, Match::class.java)
+            return matchEntity.toMatch()
         }
     }
 
-    fun concede(match: Match, user: User): Match {
-        var matchEntity = modelMapper.map(match, MatchEntity::class.java)
+    fun concede(match: Match, userId: Long): Match {
+        var matchEntity = match.toMatchEntity()
 
-        if (matchEntity.concededBy != null) {
+        if (
+            matchEntity.concededBy != null || match.players.contains(userId)
+        ) {
             throw RuntimeException("Unable to complete match [${match.id}]")
         } else {
             matchEntity.isCompleted = true
-            matchEntity.concededBy = user.id
+            matchEntity.concededBy = userId
             matchEntity = matchRepository.save(matchEntity)
 
-            return modelMapper.map(matchEntity, Match::class.java)
+            return matchEntity.toMatch()
         }
-    }
-
-    fun findById(id: Long): Optional<Match> {
-        return matchRepository.findById(id)
-            .map { modelMapper.map(it, Match::class.java) }
     }
 
     fun create(match: Match): Match {
-        val matchEntity: MatchEntity = modelMapper.map(match, MatchEntity::class.java)
+        val matchEntity = match.toMatchEntity()
         matchEntity.seed = random.nextLong()
-
-        return modelMapper.map(matchRepository.save(matchEntity), Match::class.java)
+        return matchRepository.save(matchEntity).toMatch()
     }
 
-    private fun delete(match: Match) {
-        val matchEntity : MatchEntity = modelMapper.map(match, MatchEntity::class.java)
-        matchRepository.delete(matchEntity)
+    fun findById(id: Long): Optional<Match> {
+        return matchRepository.findById(id).map { it.toMatch() }
     }
 
-    fun joinMatch(match: Match, user: User): Match {
-        if(match.players.contains(user.id!!) || match.players.isPopulated) {
+    fun deleteById(id: Long) {
+        matchRepository.deleteById(id)
+
+    }
+
+    fun joinMatch(match: Match, userId: Long): Match {
+        if(match.players.contains(userId) || match.players.isPopulated) {
             throw UnableToJoinMatchException()
-        } else {
-            match.players.user2 = user.id!!
         }
 
-        val matchEntity : MatchEntity = modelMapper.map(match, MatchEntity::class.java)
-        return modelMapper.map(matchRepository.save(matchEntity), Match::class.java)
+        val matchEntity = match.toMatchEntity()
+
+        matchEntity.player2 = userId
+        matchEntity.isReady = true
+
+        return matchRepository.save(matchEntity).toMatch()
+    }
+
+    private fun MatchEntity.toMatch(): Match {
+        return Match(
+            id = this.id!!,
+            seed = this.seed,
+            players = UserPair(
+                user1 = this.player1,
+                user2 = this.player2,
+                score1 = this.score1,
+                score2 = this.score2
+            ),
+            concededBy = this.concededBy,
+            isReady = this.isReady,
+            isStarted = this.isStarted,
+            isCompleted = this.isCompleted,
+            createdDate = LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC),
+            lastModifiedDate = LocalDateTime.ofInstant(this.lastModifiedDate, ZoneOffset.UTC),
+            createdBy = this.createdBy,
+        )
+    }
+
+    private fun Match.toMatchEntity(): MatchEntity {
+        return MatchEntity(
+            id=this.id,
+            seed=this.seed,
+            player1=this.players.user1,
+            player2=this.players.user2,
+            score1=this.players.score1,
+            score2 = this.players.score2,
+            isReady = this.isReady,
+            isStarted = this.isStarted,
+            isCompleted = this.isCompleted,
+            concededBy = this.concededBy
+        )
     }
 }
