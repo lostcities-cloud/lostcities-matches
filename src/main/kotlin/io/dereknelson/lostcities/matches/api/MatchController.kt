@@ -7,12 +7,15 @@ import io.dereknelson.lostcities.matches.service.MatchService
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 
 import org.modelmapper.ModelMapper
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
@@ -22,13 +25,18 @@ import java.util.*
 
 @RestController
 @RequestMapping("/api/matches", produces=[MediaType.APPLICATION_JSON_VALUE])
+@PreAuthorize("hasRole('ROLE_USER')")
 class MatchController (
     private var matchService: MatchService,
     private var modelMapper : ModelMapper
 ) {
     private var random: Random = Random()
 
-    @Operation(description = "Create and join a new match.")
+
+    @Operation(
+        description = "Create and join a new match.",
+        security = [ SecurityRequirement(name = "bearer-key") ]
+    )
     @ApiResponses(value = [
         ApiResponse(responseCode="201", description="Match created."),
     ])
@@ -42,7 +50,10 @@ class MatchController (
         return modelMapper.map(match, MatchDto::class.java)
     }
 
-    @Operation(description = "Join an existing match.")
+    @Operation(
+        description = "Join an existing match.",
+        security = [ SecurityRequirement(name = "bearer-key") ]
+    )
     @ApiResponses(value = [
         ApiResponse(responseCode="200", description="Match joined."),
         ApiResponse(responseCode="409", description="This match is already started.")
@@ -58,7 +69,10 @@ class MatchController (
         matchService.joinMatch(match, userDetails.asUser())
     }
 
-    @Operation(description = "Find an existing match.")
+    @Operation(
+        description = "Find an existing match.",
+        security = [ SecurityRequirement(name = "bearer-key") ]
+    )
     @ApiResponses(value = [
         ApiResponse(responseCode="200", description="Match found."),
         ApiResponse(responseCode="404", description="Match not found.")
@@ -70,9 +84,12 @@ class MatchController (
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
-    @Operation(description = "Find matches available to join.")
+    @Operation(
+        description = "Find matches available to join.",
+        security = [ SecurityRequirement(name = "bearer-key") ]
+    )
     @GetMapping
-    fun findAvailableForUser(@AuthenticationPrincipal userDetails : UserDetails): List<MatchDto>  {
+    fun findAvailableForUser(@AuthenticationPrincipal @Parameter(hidden=true) userDetails : LostCitiesUserDetails): List<MatchDto>  {
         TODO("Not Implemented")
     }
 }

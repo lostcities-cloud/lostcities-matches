@@ -3,7 +3,10 @@ package io.dereknelson.lostcities.matches.config
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.common.auth.JwtConfigurer
 import io.dereknelson.lostcities.common.auth.TokenProvider
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
+import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -20,9 +23,11 @@ import org.springframework.web.filter.CorsFilter
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport
 
 
+@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport::class)
+@SecurityScheme(name = "jwt_auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
 class SecurityConfiguration(
     private val tokenProvider: TokenProvider,
     private val corsFilter: CorsFilter,
