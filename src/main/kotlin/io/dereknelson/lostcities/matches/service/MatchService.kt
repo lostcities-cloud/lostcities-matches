@@ -1,12 +1,9 @@
 package io.dereknelson.lostcities.matches.service
 
-import io.dereknelson.lostcities.common.auth.entity.UserRef
-import io.dereknelson.lostcities.common.model.User
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import org.modelmapper.ModelMapper
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
@@ -23,13 +20,13 @@ class MatchService(
     fun markStarted(match: Match): Match {
         var matchEntity = match.toMatchEntity()
 
-        if (!matchEntity.isReady || matchEntity.isStarted) {
-            throw RuntimeException("Unable to start match [${match.id}]")
-        } else {
+        if (matchEntity.isReady && !matchEntity.isStarted) {
             matchEntity.isStarted = true
             matchEntity = matchRepository.save(matchEntity)
 
             return matchEntity.toMatch()
+        } else {
+            throw RuntimeException("Unable to start match [${match.id}]")
         }
     }
 
@@ -96,7 +93,7 @@ class MatchService(
 
     private fun MatchEntity.toMatch(): Match {
         return Match(
-            id = this.id!!,
+            id = this.id,
             seed = this.seed,
             players = UserPair(
                 user1 = this.player1,

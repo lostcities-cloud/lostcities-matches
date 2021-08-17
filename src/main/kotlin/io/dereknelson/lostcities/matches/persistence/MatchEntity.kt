@@ -1,7 +1,6 @@
 package io.dereknelson.lostcities.matches.persistence
 
-import io.dereknelson.lostcities.common.auth.entity.UserRef
-import io.dereknelson.lostcities.matches.library.security.AbstractAuditingEntity
+import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
 import java.io.Serializable
 import javax.persistence.*
 
@@ -13,7 +12,7 @@ import javax.persistence.*
         Index(name="player_2_index", columnList="player_2", unique=false),
     ]
 )
-data class MatchEntity (
+class MatchEntity (
 
     @Id
     var id: Long? = null,
@@ -22,7 +21,7 @@ data class MatchEntity (
     var seed: Long,
 
     @Column(name="player_1")
-    var player1: Long? = null,
+    var player1: Long,
 
     @Column(name="player_2")
     var player2: Long? = null,
@@ -43,8 +42,8 @@ data class MatchEntity (
     var isStarted: Boolean = false,
 
     @Column(name = "is_completed")
-    var isCompleted: Boolean = false,
-    ): AbstractAuditingEntity(), Serializable {
+    var isCompleted: Boolean = false
+): AbstractAuditingEntity(), Serializable {
 
     companion object {
         private const val serialVersionUID = 1L

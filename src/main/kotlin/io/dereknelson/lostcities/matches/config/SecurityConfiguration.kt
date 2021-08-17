@@ -2,7 +2,7 @@ package io.dereknelson.lostcities.matches.config
 
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.common.auth.JwtConfigurer
-import io.dereknelson.lostcities.common.auth.TokenProvider
+import io.dereknelson.lostcities.common.library.TokenProvider
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.context.annotation.Bean
