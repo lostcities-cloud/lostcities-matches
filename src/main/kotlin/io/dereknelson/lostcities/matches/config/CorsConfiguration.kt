@@ -18,9 +18,10 @@ class CorsConfiguration {
         val source = UrlBasedCorsConfigurationSource()
 
         if (allowedOrigins.isNotEmpty()) {
+            source.registerCorsConfiguration("/swagger-ui/**", CorsConfiguration())
             source.registerCorsConfiguration("/api/**", CorsConfiguration())
             source.registerCorsConfiguration("/management/**", CorsConfiguration())
-            source.registerCorsConfiguration("/v2/api-docs", CorsConfiguration())
+            source.registerCorsConfiguration("/v3/api-docs", CorsConfiguration())
         }
         return CorsFilter(source)
     }

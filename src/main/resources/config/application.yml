@@ -59,7 +59,7 @@ spring:
     ansi:
       console-available: true
   autoconfigure:
-    exclude= org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
 kafka:
   server: kafka:9092
@@ -67,10 +67,11 @@ kafka:
 
 server:
   port: 8080
-  servlet:
-    session:
-      cookie:
-        http-only: true
+  forward-headers-strategy: framework
+
+springdoc:
+  api-docs.enabled: true
+  packagesToScan: io.dereknelson.lostcities.matches.api
 
 # Properties to be exposed on the /info management endpoint
 info:
