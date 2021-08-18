@@ -27,8 +27,7 @@ import java.util.*
 @RequestMapping("/api/matches", produces=[MediaType.APPLICATION_JSON_VALUE])
 @PreAuthorize("hasRole('ROLE_USER')")
 class MatchController (
-    private var matchService: MatchService,
-    private var modelMapper : ModelMapper
+    private var matchService: MatchService
 ) {
     private var random: Random = Random()
 
@@ -47,7 +46,7 @@ class MatchController (
     ): MatchDto {
         val match = matchService.create(Match.buildMatch(player=userDetails.login, random))
 
-        return modelMapper.map(match, MatchDto::class.java)
+        return match.asMatchDto()
     }
 
     @Operation(
@@ -80,7 +79,7 @@ class MatchController (
     @GetMapping("/{id}")
     fun findById(@PathVariable id: Long) : MatchDto {
         return matchService.findById(id)
-            .map { modelMapper.map(it, MatchDto::class.java) }
+            .map { it.asMatchDto() }
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
     }
 
@@ -93,5 +92,12 @@ class MatchController (
         TODO("Not Implemented")
     }
 
-
+    private fun Match.asMatchDto(): MatchDto {
+        return MatchDto(
+            this.players,
+            this.isReady,
+            this.isStarted,
+            this.isCompleted
+        )
+    }
 }
