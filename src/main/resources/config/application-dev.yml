@@ -6,8 +6,8 @@
 
 logging:
   level:
-    ROOT: info
-    io.dereknelson.lostcities: debug
+    ROOT: error
+    io.dereknelson.lostcities: error
 
 spring:
   config:
@@ -72,6 +72,10 @@ spring:
 
 server:
   port: 8080
+
+kafka:
+  server: localhost:9092
+  create-game-topic: create-game-topic
 
 springdoc:
   api-docs.enabled: true

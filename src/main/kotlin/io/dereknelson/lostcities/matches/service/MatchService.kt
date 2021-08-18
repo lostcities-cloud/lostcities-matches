@@ -2,17 +2,23 @@ package io.dereknelson.lostcities.matches.service
 
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
+import io.dereknelson.lostcities.matches.api.MatchDto
+import io.dereknelson.lostcities.matches.events.EventProperties
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.*
 
 @Service
 class MatchService(
-    private var matchRepository : MatchRepository
+    private var matchRepository : MatchRepository,
+    private var eventProperties: EventProperties,
+    private var kafkaTemplate: KafkaTemplate<String, MatchDto>
 ) {
 
     private val random : Random = Random()
@@ -47,19 +53,17 @@ class MatchService(
         }
     }
 
-    fun concede(match: Match, userId: Long): Match {
+    fun concede(match: Match, user: String): Match {
         var matchEntity = match.toMatchEntity()
 
-        if (
-            matchEntity.concededBy != null || match.players.contains(userId)
-        ) {
-            throw RuntimeException("Unable to complete match [${match.id}]")
-        } else {
+        if (match.players.contains(user) && matchEntity.concededBy == null) {
             matchEntity.isCompleted = true
-            matchEntity.concededBy = userId
+            matchEntity.concededBy = user
             matchEntity = matchRepository.save(matchEntity)
 
             return matchEntity.toMatch()
+        } else {
+            throw RuntimeException("Unable to concede match [${match.id}]")
         }
     }
 
@@ -78,20 +82,26 @@ class MatchService(
 
     }
 
-    fun joinMatch(match: Match, userId: Long): Match {
-        if(match.players.contains(userId) || match.players.isPopulated) {
+    fun joinMatch(match: Match, user: String): Match {
+        if(match.players.contains(user) || match.players.isPopulated) {
             throw UnableToJoinMatchException()
         }
 
         val matchEntity = match.toMatchEntity()
 
-        matchEntity.player2 = userId
+        matchEntity.player2 = user
         matchEntity.isReady = true
 
         return matchRepository.save(matchEntity).toMatch()
     }
 
     private fun MatchEntity.toMatch(): Match {
+        val lastModifiedDate = if(this.createdDate != null) {
+            LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC)
+        } else {
+               null
+        }
+
         return Match(
             id = this.id,
             seed = this.seed,
@@ -105,8 +115,16 @@ class MatchService(
             isReady = this.isReady,
             isStarted = this.isStarted,
             isCompleted = this.isCompleted,
-            createdDate = LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC),
-            lastModifiedDate = LocalDateTime.ofInstant(this.lastModifiedDate, ZoneOffset.UTC),
+            createdDate = if(this.createdDate != null) {
+                LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC)
+            } else {
+                null
+            },
+            lastModifiedDate = if(this.lastModifiedDate != null) {
+                    LocalDateTime.ofInstant(this.lastModifiedDate, ZoneOffset.UTC)
+                } else {
+                    null
+                },
             createdBy = this.createdBy,
         )
     }
@@ -124,5 +142,9 @@ class MatchService(
             isCompleted = this.isCompleted,
             concededBy = this.concededBy
         )
+    }
+
+    fun createGame(matchDto: MatchDto) {
+        kafkaTemplate.send(eventProperties.createGameTopic, matchDto)
     }
 }

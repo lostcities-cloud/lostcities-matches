@@ -45,7 +45,7 @@ class MatchController (
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails
     ): MatchDto {
-        val match = matchService.create(Match.buildMatch(player=userDetails.id, random))
+        val match = matchService.create(Match.buildMatch(player=userDetails.login, random))
 
         return modelMapper.map(match, MatchDto::class.java)
     }
@@ -66,7 +66,7 @@ class MatchController (
         val match = matchService.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
-        matchService.joinMatch(match, userDetails.id)
+        matchService.joinMatch(match, userDetails.login)
     }
 
     @Operation(

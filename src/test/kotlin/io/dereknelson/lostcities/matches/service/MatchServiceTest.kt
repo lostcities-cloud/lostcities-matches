@@ -2,23 +2,23 @@ package io.dereknelson.lostcities.matches.service
 
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
-import io.dereknelson.lostcities.matches.persistence.MatchEntity
+import io.dereknelson.lostcities.matches.api.MatchDto
+import io.dereknelson.lostcities.matches.events.EventProperties
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
-import org.mockito.ArgumentCaptor
 import org.mockito.Mock
 import org.mockito.InjectMocks
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.Mockito.`when`
-import org.mockito.Mockito.times
+import org.springframework.kafka.core.KafkaTemplate
+
 import java.lang.RuntimeException
-import java.util.*
 
 
 @ExtendWith(MockitoExtension::class)
@@ -27,8 +27,17 @@ internal class MatchServiceTest {
     @Mock
     lateinit var matchRepository: MatchRepository
 
+    @Mock
+    lateinit var eventProperties: EventProperties
+
+    @Mock
+    lateinit var kafkaTemplate: KafkaTemplate<String, MatchDto>
+
     @InjectMocks
     lateinit var matchService: MatchService
+
+    val user1 = "USER_1"
+    val user2 = "USER_2"
 
     @Test
     fun `markStarted correctly starts a match`() {
@@ -36,8 +45,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = true,
             isStarted = false
@@ -57,8 +66,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = true,
             isStarted = true
@@ -75,8 +84,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = false,
             isStarted = false
@@ -93,8 +102,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = true,
             isStarted = true
@@ -114,8 +123,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = true,
             isStarted = true,
@@ -133,8 +142,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = true,
             isStarted = true,
@@ -144,9 +153,9 @@ internal class MatchServiceTest {
         `when`(matchRepository.save(any()))
             .thenAnswer { it.getArgument(0) }
 
-        val concededMatch = matchService.concede(match, 1001)
+        val concededMatch = matchService.concede(match, user1)
 
-        assertThat(concededMatch.concededBy).isEqualTo(1001)
+        assertThat(concededMatch.concededBy).isEqualTo(user1)
     }
 
     @Test
@@ -155,8 +164,8 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
-                user2 = 1002,
+                user1 = user1,
+                user2 = user2,
             ),
             isReady = true,
             isStarted = true,
@@ -164,7 +173,7 @@ internal class MatchServiceTest {
         )
 
         assertThrows(RuntimeException::class.java) {
-            matchService.concede(match, 69)
+            matchService.concede(match, "UNKNOWN_USER")
         }
     }
 
@@ -186,7 +195,7 @@ internal class MatchServiceTest {
             id = 1,
             seed = 1000,
             players = UserPair(
-                user1 = 1001,
+                user1 = user1,
                 user2 = null,
             )
         )
@@ -194,8 +203,8 @@ internal class MatchServiceTest {
         `when`(matchRepository.save(any()))
             .thenAnswer { it.getArgument(0) }
 
-        val joinedMatch = matchService.joinMatch(match, 1002)
+        val joinedMatch = matchService.joinMatch(match, user2)
 
-        assertThat(joinedMatch.players.user2).isEqualTo(1002)
+        assertThat(joinedMatch.players.user2).isEqualTo(user2)
     }
 }

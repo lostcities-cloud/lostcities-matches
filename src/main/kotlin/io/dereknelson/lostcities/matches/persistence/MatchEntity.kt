@@ -21,10 +21,10 @@ class MatchEntity (
     var seed: Long,
 
     @Column(name="player_1")
-    var player1: Long,
+    var player1: String,
 
     @Column(name="player_2")
-    var player2: Long? = null,
+    var player2: String? = null,
 
     @Column(name = "score_1")
     var score1: Int = 0,
@@ -33,7 +33,7 @@ class MatchEntity (
     var score2: Int = 0,
 
     @Column(name = "conceded_by")
-    var concededBy: Long? = null,
+    var concededBy: String? = null,
 
     @Column(name = "is_ready")
     var isReady: Boolean = false,

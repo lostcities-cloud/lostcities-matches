@@ -63,8 +63,7 @@ spring:
 
 kafka:
   server: kafka:9092
-  command-job-topic: command-job-topic
-  game-change-notification-topic: game-change-notification-topic
+  create-game-topic: command-job-topic
 
 server:
   port: 8080
