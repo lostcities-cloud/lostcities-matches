@@ -18,7 +18,7 @@ import java.util.*
 class MatchService(
     private var matchRepository : MatchRepository,
     private var eventProperties: EventProperties,
-    private var kafkaTemplate: KafkaTemplate<String, MatchDto>
+    private var kafkaTemplate: KafkaTemplate<String, Any>
 ) {
 
     private val random : Random = Random()
