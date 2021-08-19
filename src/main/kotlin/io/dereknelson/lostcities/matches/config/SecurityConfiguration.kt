@@ -50,9 +50,11 @@ class SecurityConfiguration(
     override fun configure(http: HttpSecurity) {
         // @formatter:off
         http
+            .cors()
+            .and()
             .csrf()
             .disable()
-            .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter::class.java)
+            //.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling()
                 .authenticationEntryPoint(problemSupport)
                 .accessDeniedHandler(problemSupport)
