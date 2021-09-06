@@ -14,19 +14,25 @@ plugins {
 
 group = "io.dereknelson"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_13
+java.sourceCompatibility = JavaVersion.VERSION_16
 
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
 	}
 }
-allprojects {
-	repositories {
-		mavenCentral()
-		maven { setUrl("https://jitpack.io") }
+
+repositories {
+	maven {
+		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
+		credentials {
+			username = System.getenv("GITHUB_ACTOR")
+			password = System.getenv("GITHUB_TOKEN")
+		}
 	}
+	mavenCentral()
 }
+
 
 allOpen {
 	annotation("javax.persistence.Entity")
@@ -37,8 +43,8 @@ allOpen {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
-	//implementation("com.github.nelson54.lostcities-cloud:lostcities-common:master-SNAPSHOT")
-	implementation(project(":LostCitiesCommon"))
+	implementation("com.github.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
+
 
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
@@ -105,7 +111,7 @@ dependencies {
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "15"
+		jvmTarget = "16"
 	}
 }
 
