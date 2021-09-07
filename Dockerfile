@@ -14,4 +14,4 @@ RUN gradle clean build --no-daemon
 
 EXPOSE 8080
 
-CMD gradlew bootRun --no-daemon
+CMD gradle bootRun --no-daemon
