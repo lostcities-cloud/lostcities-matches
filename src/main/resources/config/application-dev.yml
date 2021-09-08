@@ -36,21 +36,22 @@ spring:
       poolName: Hikari
       auto-commit: true
 
-  flyway:
-    enabled: false
-    url: jdbc:postgresql://matches-database:5432/lostcities-matches
-    user: sa
-    password:
-    baseline-version: 0
-    table: SCHEMA_VERSION
-    check-location: true
-    baseline-on-migrate: true
-    locations: classpath:db/migration
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
       ddl-auto: create-drop
+
+  flyway:
+    enabled: false
+    url: jdbc:postgresql://matches-database:5432/lostcities-matches
+    username: matches
+    password: example
+    baseline-version: 0
+    table: SCHEMA_VERSION
+    check-location: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
   # mail:
   #   host: localhost
   #   port: 25
