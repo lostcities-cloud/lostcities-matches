@@ -44,8 +44,6 @@ extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
 	implementation("com.github.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
-
-
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
 	implementation("org.springframework.boot:spring-boot-starter-web") {

@@ -42,9 +42,16 @@ class MatchController (
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
+        @RequestParam("ai") ai: Boolean,
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails
     ): MatchDto {
-        val match = matchService.create(Match.buildMatch(player=userDetails.login, random))
+        if(ai) {
+            throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)
+        }
+
+        val match = matchService.create(
+            Match.buildMatch(player=userDetails.login, random)
+        )
 
         return match.asMatchDto()
     }
@@ -88,7 +95,10 @@ class MatchController (
         security = [ SecurityRequirement(name = "bearer-key") ]
     )
     @GetMapping
-    fun findAvailableForUser(@AuthenticationPrincipal @Parameter(hidden=true) userDetails : LostCitiesUserDetails): List<MatchDto>  {
+    fun findAvailableForUser(
+        @AuthenticationPrincipal @Parameter(hidden=true) userDetails : LostCitiesUserDetails
+    ): List<MatchDto>  {
+
         TODO("Not Implemented")
     }
 
