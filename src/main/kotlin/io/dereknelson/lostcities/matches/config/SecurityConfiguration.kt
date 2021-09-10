@@ -2,6 +2,7 @@ package io.dereknelson.lostcities.matches.config
 
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.common.auth.JwtConfigurer
+import io.dereknelson.lostcities.common.auth.JwtFilter
 import io.dereknelson.lostcities.common.library.TokenProvider
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
@@ -54,7 +55,7 @@ class SecurityConfiguration(
             .and()
             .csrf()
             .disable()
-            //.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(corsFilter, jwtFilter())
             .exceptionHandling()
                 .authenticationEntryPoint(problemSupport)
                 .accessDeniedHandler(problemSupport)
@@ -98,6 +99,10 @@ class SecurityConfiguration(
     @Bean
     fun encoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
+    }
+
+    private fun jwtFilter(): JwtFilter {
+        return JwtFilter(tokenProvider)
     }
 
     private fun securityConfigurerAdapter(): JwtConfigurer {

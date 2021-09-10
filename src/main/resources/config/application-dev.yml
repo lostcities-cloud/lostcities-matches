@@ -6,7 +6,7 @@
 
 logging:
   level:
-    ROOT: error
+    ROOT: info
     io.dereknelson.lostcities: error
 
 spring:
@@ -61,11 +61,6 @@ spring:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:
     cache: false
-  security:
-
-    user:
-      name: admin
-      password: testing
 
 server:
   port: 8080

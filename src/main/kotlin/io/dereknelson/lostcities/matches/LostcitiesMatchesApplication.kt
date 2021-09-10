@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @EnableJpaRepositories
 @ComponentScan(
-	"io.dereknelson.lostcities.matches.library.security",
+	"io.dereknelson.lostcities.matches.library",
 	"io.dereknelson.lostcities.matches.config",
 	"io.dereknelson.lostcities.matches.persistence",
 	"io.dereknelson.lostcities.matches.api",
@@ -24,7 +24,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 )
 @EnableConfigurationProperties(EventProperties::class)
 @SpringBootApplication(exclude=[ErrorMvcAutoConfiguration::class])
-@OpenAPIDefinition(servers = [Server(url="http://lostcities.com")])
+@OpenAPIDefinition(servers = [Server(url="lostcities.com")])
 class LostcitiesMatchesApplication
 
 fun main(args: Array<String>) {
