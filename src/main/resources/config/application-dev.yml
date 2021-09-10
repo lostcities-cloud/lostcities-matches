@@ -74,7 +74,7 @@ server:
 
 
 kafka:
-  server: localhost:9092
+  server: kafka:9092
   create-game-topic: create-game-topic
 
 application:
