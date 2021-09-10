@@ -42,8 +42,8 @@ class MatchController (
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
-        @RequestParam("ai") ai: Boolean,
-        @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails
+        @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails,
+        @RequestParam ai: Boolean
     ): MatchDto {
         if(ai) {
             throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)

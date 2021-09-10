@@ -13,5 +13,6 @@ ENV GITHUB_TOKEN=$token
 RUN gradle clean build --no-daemon
 
 EXPOSE 8080
+EXPOSE 5005
 
 CMD gradle bootRun --no-daemon
