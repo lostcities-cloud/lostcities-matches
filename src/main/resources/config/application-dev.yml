@@ -29,7 +29,7 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://matches-database:5432/lostcities-matches
+    url: jdbc:postgresql://172.20.0.40:5432/lostcities-matches
     username: matches
     password: example
     hikari:
@@ -44,7 +44,7 @@ spring:
 
   flyway:
     enabled: false
-    url: jdbc:postgresql://matches-database:5432/lostcities-matches
+    url: jdbc:postgresql://172.20.0.40:5432/lostcities-matches
     username: matches
     password: example
     baseline-version: 0
@@ -69,7 +69,7 @@ server:
 
 
 kafka:
-  server: kafka:9092
+  server: 172.20.0.50:9092
   create-game-topic: create-game-topic
 
 application:

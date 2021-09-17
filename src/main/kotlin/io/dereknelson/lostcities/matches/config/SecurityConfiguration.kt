@@ -22,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.web.filter.CorsFilter
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport
+import javax.servlet.Filter
 
 
 @Configuration
@@ -51,11 +52,11 @@ class SecurityConfiguration(
     override fun configure(http: HttpSecurity) {
         // @formatter:off
         http
+            .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter::class.java)
             .cors()
             .and()
             .csrf()
             .disable()
-            .addFilterBefore(corsFilter, jwtFilter())
             .exceptionHandling()
                 .authenticationEntryPoint(problemSupport)
                 .accessDeniedHandler(problemSupport)
@@ -74,23 +75,16 @@ class SecurityConfiguration(
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authorizeRequests()
-                .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/register").permitAll()
-                .antMatchers("/api/activate").permitAll()
+
                 .antMatchers("/api/account/reset-password/init").permitAll()
                 .antMatchers("/api/account/reset-password/finish").permitAll()
                 .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                .antMatchers("/api/**").authenticated()
+                //.antMatchers("/api/**").authenticated()
                 .antMatchers("/management/health").permitAll()
                 .antMatchers("/management/health/**").permitAll()
                 .antMatchers("/management/info").permitAll()
                 .antMatchers("/management/prometheus").permitAll()
                 .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-
-            .and()
-                .httpBasic()
-            .and()
-                .apply(securityConfigurerAdapter())
 
         http.headers().cacheControl();
         // @formatter:on
@@ -101,12 +95,8 @@ class SecurityConfiguration(
         return BCryptPasswordEncoder()
     }
 
-    private fun jwtFilter(): JwtFilter {
+    private fun jwtFilter(): Filter {
         return JwtFilter(tokenProvider)
-    }
-
-    private fun securityConfigurerAdapter(): JwtConfigurer {
-        return JwtConfigurer(tokenProvider)
     }
 
 }

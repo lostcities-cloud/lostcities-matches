@@ -31,6 +31,12 @@ class MatchController (
 ) {
     private var random: Random = Random()
 
+    @GetMapping("/test")
+    fun test(): String {
+        println("testing")
+
+        return "asdf"
+    }
 
     @Operation(
         description = "Create and join a new match.",
@@ -43,7 +49,7 @@ class MatchController (
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails,
-        @RequestParam ai: Boolean
+        @RequestParam("ai") ai: Boolean = false
     ): MatchDto {
         if(ai) {
             throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)
