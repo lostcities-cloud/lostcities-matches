@@ -40,6 +40,7 @@ class SecurityConfiguration(
         web
             .ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers("/api/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")

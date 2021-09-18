@@ -2,8 +2,6 @@ package io.dereknelson.lostcities.matches.service
 
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
-import io.dereknelson.lostcities.matches.api.MatchDto
-import io.dereknelson.lostcities.matches.events.EventProperties
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
@@ -16,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.Mockito.`when`
-import org.springframework.kafka.core.KafkaTemplate
 
 import java.lang.RuntimeException
 
@@ -26,12 +23,6 @@ internal class MatchServiceTest {
     
     @Mock
     lateinit var matchRepository: MatchRepository
-
-    @Mock
-    lateinit var eventProperties: EventProperties
-
-    @Mock
-    lateinit var kafkaTemplate: KafkaTemplate<String, MatchDto>
 
     @InjectMocks
     lateinit var matchService: MatchService

@@ -106,6 +106,12 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.19.0")
 }
 
+tasks.bootRun {
+	if (project.hasProperty("debug_jvm")) {
+		jvmArgs("-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005")
+	}
+}
+
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
 		freeCompilerArgs = listOf("-Xjsr305=strict")

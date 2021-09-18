@@ -2,23 +2,17 @@ package io.dereknelson.lostcities.matches.service
 
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
-import io.dereknelson.lostcities.matches.api.MatchDto
-import io.dereknelson.lostcities.matches.events.EventProperties
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
-import java.time.ZoneId
 import java.time.ZoneOffset
 import java.util.*
 
 @Service
 class MatchService(
-    private var matchRepository : MatchRepository,
-    private var eventProperties: EventProperties,
-    private var kafkaTemplate: KafkaTemplate<String, Any>
+    private var matchRepository : MatchRepository
 ) {
 
     private val random : Random = Random()
@@ -142,9 +136,5 @@ class MatchService(
             isCompleted = this.isCompleted,
             concededBy = this.concededBy
         )
-    }
-
-    fun createGame(matchDto: MatchDto) {
-        kafkaTemplate.send(eventProperties.createGameTopic, matchDto)
     }
 }
