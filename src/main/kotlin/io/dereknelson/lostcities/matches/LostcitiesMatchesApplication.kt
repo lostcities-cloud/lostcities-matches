@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 	"io.dereknelson.lostcities.matches.persistence",
 	"io.dereknelson.lostcities.matches.api",
 	"io.dereknelson.lostcities.matches.service",
+	"io.dereknelson.lostcities.common.auth",
 	"io.dereknelson.lostcities.common.library"
 )
 

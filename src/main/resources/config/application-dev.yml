@@ -8,6 +8,8 @@ logging:
   level:
     ROOT: info
     io.dereknelson.lostcities: error
+    org.springframework.security.web.FilterChainProxy: debug
+    org.hibernate: info
 
 spring:
   config:
@@ -34,16 +36,16 @@ spring:
     password: example
     hikari:
       poolName: Hikari
-      auto-commit: true
+      auto-commit: false
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
   flyway:
-    enabled: false
+    enabled: true
     url: jdbc:postgresql://172.20.0.25:5432/lostcities-matches
     username: matches
     password: example

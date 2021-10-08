@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.context.SecurityContextHolder
 
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
@@ -45,7 +46,7 @@ class MatchController (
     ])
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    //@PreAuthorize("hasAuthority('ROLE_USER')")
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails,
         @RequestParam("ai") ai: Boolean = false
@@ -70,7 +71,7 @@ class MatchController (
         ApiResponse(responseCode="409", description="This match is already started.")
     ])
     @PatchMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     fun joinMatch(
         @PathVariable id: Long,
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails: LostCitiesUserDetails
@@ -90,7 +91,7 @@ class MatchController (
         ApiResponse(responseCode="404", description="Match not found.")
     ])
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findById(@PathVariable id: Long) : MatchDto {
         return matchService.findById(id)
             .map { it.asMatchDto() }
@@ -102,7 +103,7 @@ class MatchController (
         security = [ SecurityRequirement(name = "bearer-key") ]
     )
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails : LostCitiesUserDetails
     ): List<MatchDto>  {

@@ -1,15 +1,19 @@
 package io.dereknelson.lostcities.matches.config
 
 import io.dereknelson.lostcities.common.AuthoritiesConstants
-import io.dereknelson.lostcities.common.auth.JwtConfigurer
 import io.dereknelson.lostcities.common.auth.JwtFilter
-import io.dereknelson.lostcities.common.library.TokenProvider
+import io.dereknelson.lostcities.common.auth.TokenProvider
+
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.http.HttpMethod
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.BeanIds
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
@@ -18,15 +22,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
+import org.springframework.security.web.context.SecurityContextPersistenceFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.web.filter.CorsFilter
+import org.springframework.web.filter.ForwardedHeaderFilter
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport
 import javax.servlet.Filter
 
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport::class)
 @SecurityScheme(name = "jwt_auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
@@ -36,15 +44,20 @@ class SecurityConfiguration(
     private val problemSupport: SecurityProblemSupport,
 ) : WebSecurityConfigurerAdapter() {
 
+    @Bean
+    fun forwardedHeaderFilter(): ForwardedHeaderFilter? {
+        return ForwardedHeaderFilter()
+    }
+
     override fun configure(web: WebSecurity) {
+
         web
             .ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
-            .antMatchers("/api/**")
+            //.antMatchers("/api/**")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/i18n/**")
             .antMatchers("/content/**")
-            .antMatchers("/h2-console/**")
             .antMatchers("/swagger-ui/**")
             .antMatchers("/test/**")
     }
@@ -53,11 +66,12 @@ class SecurityConfiguration(
     override fun configure(http: HttpSecurity) {
         // @formatter:off
         http
-            .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter::class.java)
+
             .cors()
             .and()
             .csrf()
             .disable()
+
             .exceptionHandling()
                 .authenticationEntryPoint(problemSupport)
                 .accessDeniedHandler(problemSupport)
@@ -80,14 +94,14 @@ class SecurityConfiguration(
                 .antMatchers("/api/account/reset-password/init").permitAll()
                 .antMatchers("/api/account/reset-password/finish").permitAll()
                 .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
-                //.antMatchers("/api/**").authenticated()
+                .antMatchers("/api/**").permitAll()
                 .antMatchers("/management/health").permitAll()
                 .antMatchers("/management/health/**").permitAll()
                 .antMatchers("/management/info").permitAll()
                 .antMatchers("/management/prometheus").permitAll()
                 .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-
-        http.headers().cacheControl();
+            .and().addFilterAfter(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
+        http.headers().cacheControl()
         // @formatter:on
     }
 
@@ -95,9 +109,4 @@ class SecurityConfiguration(
     fun encoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
     }
-
-    private fun jwtFilter(): Filter {
-        return JwtFilter(tokenProvider)
-    }
-
 }
