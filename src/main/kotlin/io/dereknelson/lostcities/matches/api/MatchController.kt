@@ -30,13 +30,6 @@ class MatchController (
 ) {
     private var random: Random = Random()
 
-    @GetMapping("/test")
-    fun test(): String {
-        println("testing")
-
-        return "asdf"
-    }
-
     @Operation(
         description = "Create and join a new match.",
         security = [ SecurityRequirement(name = "bearer-key") ]
@@ -107,16 +100,17 @@ class MatchController (
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden=true) userDetails : LostCitiesUserDetails
     ): List<MatchDto>  {
-
-        TODO("Not Implemented")
+        return matchService.getMatches()
+            .map { it.asMatchDto() }
     }
 
     private fun Match.asMatchDto(): MatchDto {
         return MatchDto(
-            this.players,
-            this.isReady,
-            this.isStarted,
-            this.isCompleted
+            id,
+            players,
+            isReady,
+            isStarted,
+            isCompleted
         )
     }
 }

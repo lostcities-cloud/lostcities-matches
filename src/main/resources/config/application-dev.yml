@@ -12,6 +12,10 @@ logging:
     org.hibernate: info
 
 spring:
+
+  rabbitmq:
+    host: 172.20.0.60
+
   config:
     use-legacy-processing: true
   profiles:

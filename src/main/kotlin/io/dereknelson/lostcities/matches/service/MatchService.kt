@@ -1,9 +1,11 @@
 package io.dereknelson.lostcities.matches.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
@@ -12,9 +14,11 @@ import java.util.*
 
 @Service
 class MatchService(
-    private var matchRepository : MatchRepository
+    private var rabbitTemplate: RabbitTemplate,
+    private var matchRepository : MatchRepository,
+    private var objectMapper: ObjectMapper
 ) {
-
+    private val createGameQueue = "create-game"
     private val random : Random = Random()
 
     fun markStarted(match: Match): Match {
@@ -61,6 +65,11 @@ class MatchService(
         }
     }
 
+    fun getMatches(): List<Match> {
+        return matchRepository.findAll()
+            .map { it.toMatch() }
+    }
+
     fun create(match: Match): Match {
         val matchEntity = match.toMatchEntity()
         matchEntity.seed = random.nextLong()
@@ -86,7 +95,11 @@ class MatchService(
         matchEntity.player2 = user
         matchEntity.isReady = true
 
-        return matchRepository.save(matchEntity).toMatch()
+        val savedMatch = matchRepository.save(matchEntity).toMatch()
+
+        rabbitTemplate.convertAndSend(createGameQueue, objectMapper.writeValueAsString(savedMatch))
+
+        return savedMatch
     }
 
     private fun MatchEntity.toMatch(): Match {
