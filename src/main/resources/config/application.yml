@@ -53,8 +53,6 @@ spring:
       thread-name-prefix: lostcities-matches-scheduling-
       pool:
         size: 2
-  thymeleaf:
-    mode: HTML
   output:
     ansi:
       console-available: true

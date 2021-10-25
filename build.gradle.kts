@@ -51,15 +51,13 @@ dependencies {
 		exclude(module="spring-boot-starter-tomcat")
 	}
 	implementation("org.springframework.boot:spring-boot-starter-undertow")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-websocket")
-	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-	//implementation("org.springframework.boot:thymeleaf-extras-springsecurity5")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hppc")
@@ -75,7 +73,6 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-ui:1.5.10")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.5.10")
 
-	implementation("org.modelmapper:modelmapper:2.4.1")
 	implementation("org.flywaydb:flyway-core")
 
 	implementation("io.jsonwebtoken:jjwt-api:0.11.2")
@@ -91,8 +88,6 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.boot:spring-boot-devtools")
-	implementation("com.h2database:h2")
-	runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

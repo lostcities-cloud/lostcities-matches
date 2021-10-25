@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.mockito.Mockito.`when`
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 
 import java.lang.RuntimeException
 
@@ -23,6 +25,12 @@ internal class MatchServiceTest {
     
     @Mock
     lateinit var matchRepository: MatchRepository
+
+    @Mock
+    lateinit var rabbitTemplate: RabbitTemplate
+
+    @Mock
+    lateinit var objectMapper: ObjectMapper
 
     @InjectMocks
     lateinit var matchService: MatchService
