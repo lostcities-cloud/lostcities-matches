@@ -13,7 +13,7 @@ plugins {
 	kotlin("plugin.allopen") version "1.4.32"
 }
 
-group = "io.dereknelson"
+group = "io.dereknelson.lostcities"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_16
 
@@ -26,6 +26,14 @@ configurations {
 repositories {
 	maven {
 		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
+		credentials {
+			username = System.getenv("GITHUB_ACTOR")
+			password = System.getenv("GITHUB_TOKEN")
+		}
+	}
+
+	maven {
+		url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-models")
 		credentials {
 			username = System.getenv("GITHUB_ACTOR")
 			password = System.getenv("GITHUB_TOKEN")
@@ -44,7 +52,8 @@ allOpen {
 extra["snippetsDir"] = file("build/generated-snippets")
 
 dependencies {
-	implementation("com.github.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
+	implementation("io.dereknelson.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
+	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
 	implementation("org.springframework.boot:spring-boot-starter-web") {
