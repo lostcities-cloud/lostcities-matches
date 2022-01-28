@@ -9,6 +9,9 @@ create table match
 
     player_1 varchar(255),
     player_2 varchar(255),
+
+    current_player varchar(255),
+
     score_1 integer,
     score_2 integer,
 

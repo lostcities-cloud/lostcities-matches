@@ -28,6 +28,9 @@ class MatchEntity (
     @Column(name="player_2")
     var player2: String? = null,
 
+    @Column(name="current_turn")
+    var currentPlayer: String? = null,
+
     @Column(name = "score_1")
     var score1: Int = 0,
 
