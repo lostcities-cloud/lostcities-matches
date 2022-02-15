@@ -1,7 +1,6 @@
 package io.dereknelson.lostcities.matches.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import io.dereknelson.lostcities.models.matches.TurnChangeEvent
 import org.springframework.amqp.core.Message
@@ -17,7 +16,7 @@ class MatchEventService(
 ) {
 
     companion object {
-        val TURN_CHANGE_EVENT = "turn-change-event"
+        const val TURN_CHANGE_EVENT = "turn-change-event"
     }
 
     @Bean
@@ -25,9 +24,8 @@ class MatchEventService(
         return Queue(TURN_CHANGE_EVENT )
     }
 
-    @RabbitListener(queues = ["create-game"])
+    @RabbitListener(queues = [TURN_CHANGE_EVENT])
     fun createGame(gameMessage: Message) {
-
         val turnChangeEvent = objectMapper.readValue(gameMessage.body, TurnChangeEvent::class.java)
 
         val match = matchRepository.findById(turnChangeEvent.matchId)
