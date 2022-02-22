@@ -1,7 +1,7 @@
 package io.dereknelson.lostcities.matches.config
 
-import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import io.dereknelson.lostcities.matches.library.cache.PrefixedKeyGenerator
+import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder
 import org.ehcache.config.builders.ResourcePoolsBuilder
@@ -15,7 +15,6 @@ import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.time.Duration
-
 
 @Configuration
 @EnableCaching
@@ -56,8 +55,8 @@ class CacheConfiguration() {
                 Any::class.java, Any::class.java,
                 ResourcePoolsBuilder.heap(maxEntries)
             )
-            .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeToLiveSeconds)))
-            .build()
+                .withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeToLiveSeconds)))
+                .build()
         )
     }
 }

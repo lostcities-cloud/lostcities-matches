@@ -9,23 +9,24 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
+@SpringBootApplication(exclude = [ErrorMvcAutoConfiguration::class])
 
-@SpringBootApplication(exclude=[ErrorMvcAutoConfiguration::class])
-
-@OpenAPIDefinition(servers = [
-	Server(url="lostcities.com"),
-	Server(url="matches.lostcities.com")
-])
+@OpenAPIDefinition(
+    servers = [
+        Server(url = "lostcities.com"),
+        Server(url = "matches.lostcities.com")
+    ]
+)
 
 @ComponentScan(
-	"io.dereknelson.lostcities.matches",
-	"io.dereknelson.lostcities.matches.library",
-	"io.dereknelson.lostcities.matches.config",
-	"io.dereknelson.lostcities.matches.persistence",
-	"io.dereknelson.lostcities.matches.api",
-	"io.dereknelson.lostcities.matches.service",
-	"io.dereknelson.lostcities.common.auth",
-	"io.dereknelson.lostcities.common.library"
+    "io.dereknelson.lostcities.matches",
+    "io.dereknelson.lostcities.matches.library",
+    "io.dereknelson.lostcities.matches.config",
+    "io.dereknelson.lostcities.matches.persistence",
+    "io.dereknelson.lostcities.matches.api",
+    "io.dereknelson.lostcities.matches.service",
+    "io.dereknelson.lostcities.common.auth",
+    "io.dereknelson.lostcities.common.library"
 )
 
 @EnableJpaRepositories
@@ -33,5 +34,5 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 class LostcitiesMatchesApplication
 
 fun main(args: Array<String>) {
-	runApplication<LostcitiesMatchesApplication>(*args)
+    runApplication<LostcitiesMatchesApplication>(*args)
 }

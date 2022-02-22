@@ -4,8 +4,7 @@ import io.dereknelson.lostcities.common.model.match.UserPair
 import java.time.LocalDateTime
 import java.util.*
 
-
-open class Match (
+open class Match(
     val id: Long? = null,
     val players: UserPair,
     val currentPlayer: String? = null,
@@ -24,9 +23,9 @@ open class Match (
     companion object {
         fun buildMatch(player: String, random: Random): Match {
             return Match(
-                players= UserPair(user1=player),
-                seed=random.nextLong(),
-                currentPlayer=player
+                players = UserPair(user1 = player),
+                seed = random.nextLong(),
+                currentPlayer = player
             )
         }
     }

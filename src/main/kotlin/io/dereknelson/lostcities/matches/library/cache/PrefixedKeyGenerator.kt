@@ -48,8 +48,8 @@ private class PrefixedSimpleKey(prefix: String, methodName: String, vararg eleme
     private var hashCode: Int
     override fun equals(other: Any?): Boolean {
         return this === other ||
-                other is PrefixedSimpleKey && prefix == other.prefix && methodName == other.methodName &&
-                Arrays.deepEquals(params, other.params)
+            other is PrefixedSimpleKey && prefix == other.prefix && methodName == other.methodName &&
+            Arrays.deepEquals(params, other.params)
     }
 
     override fun hashCode(): Int {

@@ -6,13 +6,13 @@ import javax.persistence.*
 
 @Entity
 @Table(
-    name="match",
+    name = "match",
     indexes = [
-        Index(name="player_1_index", columnList="player_1", unique=false),
-        Index(name="player_2_index", columnList="player_2", unique=false),
+        Index(name = "player_1_index", columnList = "player_1", unique = false),
+        Index(name = "player_2_index", columnList = "player_2", unique = false),
     ]
 )
-class MatchEntity (
+class MatchEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
@@ -22,13 +22,13 @@ class MatchEntity (
     @Column(name = "seed")
     var seed: Long,
 
-    @Column(name="player_1")
+    @Column(name = "player_1")
     var player1: String,
 
-    @Column(name="player_2")
+    @Column(name = "player_2")
     var player2: String? = null,
 
-    @Column(name="current_turn")
+    @Column(name = "current_turn")
     var currentPlayer: String? = null,
 
     @Column(name = "score_1")
@@ -48,7 +48,7 @@ class MatchEntity (
 
     @Column(name = "is_completed")
     var isCompleted: Boolean = false
-): AbstractAuditingEntity(), Serializable {
+) : AbstractAuditingEntity(), Serializable {
 
     companion object {
         private const val serialVersionUID = 1L

@@ -14,14 +14,14 @@ import java.util.*
 @Service
 class MatchService(
     private var rabbitTemplate: RabbitTemplate,
-    private var matchRepository : MatchRepository,
+    private var matchRepository: MatchRepository,
     private var objectMapper: ObjectMapper
 ) {
     companion object {
         const val CREATE_GAME_QUEUE = "create-game"
     }
 
-    private val random : Random = Random()
+    private val random: Random = Random()
 
     fun markStarted(match: Match): Match {
         var matchEntity = match.toMatchEntity()
@@ -84,11 +84,10 @@ class MatchService(
 
     fun deleteById(id: Long) {
         matchRepository.deleteById(id)
-
     }
 
     fun joinMatch(match: Match, user: String): Match {
-        if(match.players.contains(user) || match.players.isPopulated) {
+        if (match.players.contains(user) || match.players.isPopulated) {
             throw UnableToJoinMatchException()
         }
 
@@ -120,27 +119,27 @@ class MatchService(
             isReady = this.isReady,
             isStarted = this.isStarted,
             isCompleted = this.isCompleted,
-            createdDate = if(this.createdDate != null) {
+            createdDate = if (this.createdDate != null) {
                 LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC)
             } else {
                 null
             },
-            lastModifiedDate = if(this.lastModifiedDate != null) {
-                    LocalDateTime.ofInstant(this.lastModifiedDate, ZoneOffset.UTC)
-                } else {
-                    null
-                },
+            lastModifiedDate = if (this.lastModifiedDate != null) {
+                LocalDateTime.ofInstant(this.lastModifiedDate, ZoneOffset.UTC)
+            } else {
+                null
+            },
             createdBy = this.createdBy,
         )
     }
 
     private fun Match.toMatchEntity(): MatchEntity {
         return MatchEntity(
-            id=this.id,
-            seed=this.seed,
-            player1=this.players.user1,
-            player2=this.players.user2,
-            score1=this.players.score1,
+            id = this.id,
+            seed = this.seed,
+            player1 = this.players.user1,
+            player2 = this.players.user2,
+            score1 = this.players.score1,
             score2 = this.players.score2,
             isReady = this.isReady,
             isStarted = this.isStarted,

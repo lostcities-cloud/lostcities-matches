@@ -37,10 +37,11 @@ class AsyncConfiguration(private val taskExecutionProperties: TaskExecutionPrope
     override fun getAsyncUncaughtExceptionHandler(): AsyncUncaughtExceptionHandler {
         return SimpleAsyncUncaughtExceptionHandler()
     }
-
 }
 
-internal class ExceptionHandlingAsyncTaskExecutor(private val executor: AsyncTaskExecutor) : AsyncTaskExecutor, InitializingBean,
+internal class ExceptionHandlingAsyncTaskExecutor(private val executor: AsyncTaskExecutor) :
+    AsyncTaskExecutor,
+    InitializingBean,
     DisposableBean {
     private val log = LoggerFactory.getLogger(ExceptionHandlingAsyncTaskExecutor::class.java)
     override fun execute(task: Runnable) {

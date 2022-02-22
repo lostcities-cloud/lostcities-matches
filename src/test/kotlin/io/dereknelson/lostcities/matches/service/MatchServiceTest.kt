@@ -7,21 +7,18 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-
-import org.mockito.Mock
 import org.mockito.InjectMocks
+import org.mockito.Mock
+import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
-import org.mockito.Mockito.`when`
 import org.springframework.amqp.rabbit.core.RabbitTemplate
-
 import java.lang.RuntimeException
-
 
 @ExtendWith(MockitoExtension::class)
 internal class MatchServiceTest {
-    
+
     @Mock
     lateinit var matchRepository: MatchRepository
 

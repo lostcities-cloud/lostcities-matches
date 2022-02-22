@@ -13,16 +13,19 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     }
 
     @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
-    @Query("""
+    @Query(
+        """
         SELECT matchEntity 
         FROM MatchEntity matchEntity
         WHERE
             matchEntity.player1.id = :playerId OR 
             matchEntity.player2.id = :playerId
-    """)
+        """
+    )
     fun getGamesByPlayerId(playerId: Long): List<MatchEntity>
 
-    @Query("""
+    @Query(
+        """
         SELECT matchEntity 
         FROM MatchEntity matchEntity
         WHERE
@@ -31,24 +34,29 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
             matchEntity.player2.id = :playerId
         ) AND
         matchEntity.isCompleted = true
-    """)
+        """
+    )
     fun getCompletedGamesByPlayerId(playerId: Long): List<MatchEntity>
 
-    @Query("""
+    @Query(
+        """
         SELECT matchEntity 
         FROM MatchEntity matchEntity
         WHERE
         matchEntity.player1.id <> :playerId AND
         matchEntity.isReady = false
-    """)
+        """
+    )
     fun getAvailableGamesForPlayer(playerId: Long): List<MatchEntity>
 
-    @Query("""
+    @Query(
+        """
         SELECT matchEntity 
         FROM MatchEntity matchEntity
         WHERE
         matchEntity.player1.id <> :playerId AND
         matchEntity.isReady = false
-    """)
+        """
+    )
     fun getRecentlyCompletedGames(): List<MatchEntity>
 }

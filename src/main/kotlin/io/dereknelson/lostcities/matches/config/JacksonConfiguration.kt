@@ -16,7 +16,7 @@ class JacksonConfiguration {
 
     @Autowired
     fun updateMapper(objectMapper: ObjectMapper) {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
     }
 
     @Bean
