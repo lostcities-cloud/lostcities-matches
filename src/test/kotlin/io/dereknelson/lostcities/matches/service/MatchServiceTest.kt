@@ -1,7 +1,6 @@
 package io.dereknelson.lostcities.matches.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.assertj.core.api.Assertions.assertThat

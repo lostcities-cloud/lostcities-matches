@@ -1,8 +1,8 @@
 package io.dereknelson.lostcities.matches.api
 
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
+import io.dereknelson.lostcities.matches.service.Match
 
-import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.matches.service.MatchService
 
 import io.swagger.v3.oas.annotations.Operation
@@ -108,6 +108,7 @@ class MatchController (
         return MatchDto(
             id,
             players,
+            this.currentPlayer,
             isReady,
             isStarted,
             isCompleted

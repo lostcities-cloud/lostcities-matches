@@ -1,7 +1,6 @@
 package io.dereknelson.lostcities.matches.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.dereknelson.lostcities.common.model.match.Match
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
@@ -18,7 +17,10 @@ class MatchService(
     private var matchRepository : MatchRepository,
     private var objectMapper: ObjectMapper
 ) {
-    private val createGameQueue = "create-game"
+    companion object {
+        const val CREATE_GAME_QUEUE = "create-game"
+    }
+
     private val random : Random = Random()
 
     fun markStarted(match: Match): Match {
@@ -97,17 +99,12 @@ class MatchService(
 
         val savedMatch = matchRepository.save(matchEntity).toMatch()
 
-        rabbitTemplate.convertAndSend(createGameQueue, objectMapper.writeValueAsString(savedMatch))
+        rabbitTemplate.convertAndSend(CREATE_GAME_QUEUE, objectMapper.writeValueAsString(savedMatch))
 
         return savedMatch
     }
 
     private fun MatchEntity.toMatch(): Match {
-        val lastModifiedDate = if(this.createdDate != null) {
-            LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC)
-        } else {
-               null
-        }
 
         return Match(
             id = this.id,
@@ -118,6 +115,7 @@ class MatchService(
                 score1 = this.score1,
                 score2 = this.score2
             ),
+            currentPlayer = player1,
             concededBy = this.concededBy,
             isReady = this.isReady,
             isStarted = this.isStarted,

@@ -4,7 +4,7 @@ plugins {
 	id("org.springframework.boot") version "2.4.9"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("org.asciidoctor.convert") version "1.5.8"
-	id("com.google.cloud.tools.jib") version "3.1.4"
+	//id("com.google.cloud.tools.jib") version "3.1.4"
 	//id("com.gorylenko.gradle-git-properties") version "2.3.1-rc1"
 
 	kotlin("jvm") version "1.5.0-RC"
@@ -66,7 +66,6 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springframework.boot:spring-boot-starter-security")
-	implementation("org.springframework.boot:spring-boot-starter-websocket")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hppc")
@@ -96,7 +95,7 @@ dependencies {
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-	implementation("org.springframework.boot:spring-boot-devtools")
+
 	runtimeOnly("org.postgresql:postgresql")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")

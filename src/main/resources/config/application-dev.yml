@@ -6,13 +6,16 @@
 
 logging:
   level:
-    ROOT: info
-    io.dereknelson.lostcities: error
-    org.springframework.security.web.FilterChainProxy: debug
+    ROOT: debug
+    io.dereknelson.lostcities: debug
+    org.springframework.security.web.FilterChainProxy: error
     org.hibernate: info
+    org.springframework: debug
+    org.springframework.amqp: debug
+    org.springframework.amqp.rabbit.connection: debug
+    com.rabbitmq: debug
 
 spring:
-
   rabbitmq:
     host: 172.20.0.60
     port: 5672
@@ -27,12 +30,6 @@ spring:
       - swagger
       # Uncomment to activate TLS for the dev profile
       #- tls
-  devtools:
-    restart:
-      enabled: true
-      additional-exclude: static/**
-    livereload:
-      enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
     serialization:
       indent-output: true
