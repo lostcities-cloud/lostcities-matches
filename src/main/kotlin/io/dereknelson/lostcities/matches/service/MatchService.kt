@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import javassist.NotFoundException
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
@@ -101,6 +102,28 @@ class MatchService(
         rabbitTemplate.convertAndSend(CREATE_GAME_QUEUE, objectMapper.writeValueAsString(savedMatch))
 
         return savedMatch
+    }
+
+    fun finishGame(id: Long, finishedAt: LocalDateTime, scores: Map<String, Int>) {
+        val match = matchRepository.findById(id)
+            .orElseThrow { RuntimeException("Unable to find match for completion: $id") }
+
+        match.isCompleted = true
+        match.finishedAt = finishedAt
+
+        scores.forEach { (player, score) ->
+            updatePlayerScore(match, player, score)
+        }
+
+        matchRepository.save(match)
+    }
+
+    private fun updatePlayerScore(match: MatchEntity, player: String, score: Int) {
+        if(match.player1 === player) {
+            match.score1 = score
+        } else {
+            match.score2 = score
+        }
     }
 
     private fun MatchEntity.toMatch(): Match {

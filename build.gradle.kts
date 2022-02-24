@@ -1,3 +1,4 @@
+import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -152,6 +153,12 @@ tasks.withType<KotlinCompile> {
 		freeCompilerArgs = listOf("-Xjsr305=strict")
 		jvmTarget = "16"
 	}
+}
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
+    imageName = "dereknelson.io/library/${project.name}"
+    environment = mapOf("BP_JVM_VERSION" to "17.*")
+    builder = "paketobuildpacks/builder:base"
 }
 
 tasks.withType<Test> {

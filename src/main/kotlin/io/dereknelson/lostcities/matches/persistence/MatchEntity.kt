@@ -2,6 +2,7 @@ package io.dereknelson.lostcities.matches.persistence
 
 import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
 import java.io.Serializable
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -47,7 +48,10 @@ class MatchEntity(
     var isStarted: Boolean = false,
 
     @Column(name = "is_completed")
-    var isCompleted: Boolean = false
+    var isCompleted: Boolean = false,
+
+    @Column(name = "finished_at")
+    var finishedAt: LocalDateTime? = null
 ) : AbstractAuditingEntity(), Serializable {
 
     companion object {
