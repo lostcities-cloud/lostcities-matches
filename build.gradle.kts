@@ -2,15 +2,15 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.4.9"
+    id("org.springframework.boot") version "2.6.3"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("org.asciidoctor.convert") version "1.5.8"
 	//id("com.google.cloud.tools.jib") version "3.1.4"
 	//id("com.gorylenko.gradle-git-properties") version "2.3.1-rc1"
 
-	kotlin("jvm") version "1.5.0-RC"
-	kotlin("plugin.spring") version "1.5.0-RC"
-	kotlin("plugin.jpa") version "1.5.0-RC"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.spring") version "1.6.10"
+    kotlin("plugin.jpa") version "1.6.10"
 	kotlin("plugin.allopen") version "1.4.32"
 }
 
@@ -90,8 +90,6 @@ dependencies {
 	implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
 	implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
 
-	implementation("org.springframework.kafka:spring-kafka:2.7.2")
-
 	implementation("org.hibernate:hibernate-jcache")
 	implementation("org.ehcache.modules:ehcache-107:3.9.2")
 	implementation("org.ehcache:ehcache:3.9.2")
@@ -109,14 +107,14 @@ dependencies {
 		}
 	}
 
-	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
-	testImplementation("org.mockito:mockito-junit-jupiter:2.23.0")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
+	//testImplementation("org.mockito:mockito-junit-jupiter:4.3.1")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("org.mockito.kotlin:mockito-kotlin:3.2.0")
-	testImplementation("org.assertj:assertj-core:3.19.0")
+	testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+	testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
 tasks.bootRun {
@@ -155,10 +153,16 @@ tasks.withType<KotlinCompile> {
 	}
 }
 
-tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
+tasks.getByName<BootBuildImage>("bootBuildImage") {
     imageName = "dereknelson.io/library/${project.name}"
     environment = mapOf("BP_JVM_VERSION" to "17.*")
     builder = "paketobuildpacks/builder:base"
+    buildpacks = listOf(
+
+        "gcr.io/paketo-buildpacks/eclipse-openj9",
+        "paketo-buildpacks/java",
+        "gcr.io/paketo-buildpacks/spring-boot"
+    )
 }
 
 tasks.withType<Test> {

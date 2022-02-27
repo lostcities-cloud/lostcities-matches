@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import javassist.NotFoundException
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
