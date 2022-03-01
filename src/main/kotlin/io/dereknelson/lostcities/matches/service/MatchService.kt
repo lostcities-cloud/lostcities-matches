@@ -124,6 +124,7 @@ class MatchService(
     }
 
     private fun updatePlayerScore(match: MatchEntity, player: String, score: Int) {
+        println("Finish game: $player: $score")
         if(match.player1 === player) {
             match.score1 = score
         } else {
