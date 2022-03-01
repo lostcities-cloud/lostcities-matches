@@ -4,7 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import org.springframework.amqp.core.Queue
 import org.springframework.amqp.rabbit.core.RabbitTemplate
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
@@ -22,6 +25,9 @@ class MatchService(
     }
 
     private val random: Random = Random()
+
+    @Bean @Qualifier(CREATE_GAME_QUEUE)
+    fun createGame() = Queue(CREATE_GAME_QUEUE)
 
     fun markStarted(match: Match): Match {
         var matchEntity = match.toMatchEntity()
