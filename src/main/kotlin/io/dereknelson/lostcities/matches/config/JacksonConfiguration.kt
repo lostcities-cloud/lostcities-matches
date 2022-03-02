@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,33 +16,29 @@ import org.zalando.problem.validation.ConstraintViolationProblemModule
 @Configuration
 class JacksonConfiguration {
 
-    @Autowired
-    fun updateMapper(objectMapper: ObjectMapper) {
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL)
-    }
+    @Bean
+    fun mapper() =
+        jacksonObjectMapper()
+            .registerKotlinModule()
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)!!
 
     @Bean
-    fun javaTimeModule(): JavaTimeModule {
-        return JavaTimeModule()
-    }
+    fun javaTimeModule() = JavaTimeModule()
+
 
     @Bean
-    fun jdk8TimeModule(): Jdk8Module {
-        return Jdk8Module()
-    }
+    fun jdk8TimeModule() = Jdk8Module()
+
 
     @Bean
-    fun hibernate5Module(): Hibernate5Module {
-        return Hibernate5Module()
-    }
+    fun hibernate5Module() = Hibernate5Module()
+
 
     @Bean
-    fun problemModule(): ProblemModule {
-        return ProblemModule().withStackTraces()
-    }
+    fun problemModule() = ProblemModule().withStackTraces()!!
+
 
     @Bean
-    fun constraintViolationProblemModule(): ConstraintViolationProblemModule {
-        return ConstraintViolationProblemModule()
-    }
+    fun constraintViolationProblemModule() = ConstraintViolationProblemModule()
+
 }

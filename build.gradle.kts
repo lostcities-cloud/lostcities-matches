@@ -59,17 +59,18 @@ dependencies {
 
 	implementation("io.dereknelson.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
 	implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
+
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.20")
+
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
 	implementation("org.springframework.boot:spring-boot-starter-web") {
 		exclude(module="spring-boot-starter-tomcat")
 	}
 	implementation("org.springframework.boot:spring-boot-starter-undertow")
-	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -77,9 +78,6 @@ dependencies {
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	implementation("com.fasterxml.jackson.module:jackson-module-jaxb-annotations")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5")
-	implementation("com.fasterxml.jackson.core:jackson-annotations")
-	implementation("com.fasterxml.jackson.core:jackson-databind")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	implementation("org.zalando:problem-spring-web:0.21.0")
 	implementation("org.springdoc:springdoc-openapi-webmvc-core:1.5.10")

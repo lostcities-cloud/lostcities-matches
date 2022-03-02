@@ -6,14 +6,14 @@
 
 logging:
   level:
-    ROOT: debug
+    ROOT: error
     io.dereknelson.lostcities: debug
     org.springframework.security.web.FilterChainProxy: error
-    org.hibernate: info
-    org.springframework: debug
-    org.springframework.amqp: debug
-    org.springframework.amqp.rabbit.connection: debug
-    com.rabbitmq: debug
+    org.hibernate: error
+    org.springframework: error
+    org.springframework.amqp: error
+    org.springframework.amqp.rabbit.connection: error
+    com.rabbitmq: error
 
 spring:
   rabbitmq:
@@ -47,6 +47,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+    properties.hibernate.generate_statistics: true
 
   flyway:
     enabled: true
