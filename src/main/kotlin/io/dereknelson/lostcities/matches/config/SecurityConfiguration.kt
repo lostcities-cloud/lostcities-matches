@@ -27,7 +27,9 @@ import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Import(SecurityProblemSupport::class)
-@SecurityScheme(name = "jwt_auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer")
+@SecurityScheme(
+    name = "jwt_auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer"
+)
 class SecurityConfiguration(
     private val tokenProvider: TokenProvider,
     private val corsFilter: CorsFilter,
@@ -53,6 +55,7 @@ class SecurityConfiguration(
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
+        /* ktlint-disable max_line_length */
         // @formatter:off
         http
             .cors()
@@ -64,9 +67,11 @@ class SecurityConfiguration(
             .accessDeniedHandler(problemSupport)
             .and()
             .headers()
-            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
+            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:") /* ktlint-ignore */
             .and()
-            .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
+            .referrerPolicy(
+                ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN
+            )
             .and()
             .and()
             .sessionManagement()
@@ -82,9 +87,12 @@ class SecurityConfiguration(
             .antMatchers("/management/info").permitAll()
             .antMatchers("/management/prometheus").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
-            .and().addFilterAfter(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
+            .and().addFilterAfter(
+                JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java
+            )
         http.headers().cacheControl()
         // @formatter:on
+        /* ktlint-enable max_line_length */
     }
 
     @Bean

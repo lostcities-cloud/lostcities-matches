@@ -16,18 +16,18 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
 
     @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
     @Query(
-    """
+        """
     SELECT matchEntity
     FROM MatchEntity matchEntity
     WHERE
         matchEntity.player1 = :playerName OR
         matchEntity.player2 = :playerName
-    """
+        """
     )
     fun findActiveMatches(playerName: String, page: Pageable): Page<MatchEntity>
 
     @Query(
-    """
+        """
     SELECT matchEntity
     FROM MatchEntity matchEntity
     WHERE
@@ -35,16 +35,18 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         matchEntity.isReady = false AND
         matchEntity.isCompleted = false
 
-    """
+        """
     )
     fun findAvailableMatches(playerName: String, page: Pageable): Page<MatchEntity>
 
-    @Query("""
+    @Query(
+        """
     SELECT matchEntity
     FROM MatchEntity matchEntity
     WHERE
         ( matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName ) AND
         matchEntity.isCompleted = true
-    """)
+        """
+    )
     fun findCompletedMatches(playerName: String, page: Pageable): Page<MatchEntity>
 }

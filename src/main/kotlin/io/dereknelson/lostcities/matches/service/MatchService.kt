@@ -1,10 +1,8 @@
 package io.dereknelson.lostcities.matches.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Qualifier
@@ -14,7 +12,6 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.util.*
 
 @Service
@@ -49,14 +46,11 @@ class MatchService(
     fun findActiveMatches(player: String, page: Pageable) =
         matchRepository.findActiveMatches(player, page)
 
-
     fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> =
         matchRepository.findCompletedMatches(player, page)
 
-
     fun findAvailableMatches(player: String, page: Pageable) =
         matchRepository.findAvailableMatches(player, page)
-
 
     fun create(match: MatchEntity) =
         match.let {
@@ -74,13 +68,16 @@ class MatchService(
 
         val savedMatch = matchRepository.save(match)
 
-        rabbitTemplate.convertAndSend(CREATE_GAME_QUEUE, objectMapper.writeValueAsString(savedMatch))
+        rabbitTemplate.convertAndSend(
+            CREATE_GAME_QUEUE,
+            objectMapper.writeValueAsString(savedMatch)
+        )
 
         return savedMatch
     }
 
     fun concede(matchEntity: MatchEntity, user: String): MatchEntity {
-        if(!matchEntity.hasPlayer(user) || matchEntity.concededBy != null) {
+        if (!matchEntity.hasPlayer(user) || matchEntity.concededBy != null) {
             throw RuntimeException("Unable to concede match [${matchEntity.id}]")
         }
 
@@ -93,9 +90,9 @@ class MatchService(
         val match = matchRepository.findById(id)
             .orElseThrow { RuntimeException("Unable to find match for completion: $id") }
 
-        if(scores.size != 2) {
+        if (scores.size != 2) {
             throw RuntimeException("Unable to find match for completion: $id")
-        } else if(!(scores.containsKey(match.player1) && scores.containsKey(match.player2))) {
+        } else if (!(scores.containsKey(match.player1) && scores.containsKey(match.player2))) {
             throw RuntimeException("Incorrect players: $id")
         }
 
@@ -111,7 +108,7 @@ class MatchService(
 
     private fun updatePlayerScore(match: MatchEntity, player: String, score: Int) {
         println("Finish game: $player: $score")
-        if(match.player1 === player) {
+        if (match.player1 === player) {
             match.score1 = score
         } else {
             match.score2 = score

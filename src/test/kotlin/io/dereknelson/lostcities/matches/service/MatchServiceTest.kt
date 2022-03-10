@@ -1,20 +1,17 @@
 package io.dereknelson.lostcities.matches.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
+import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
-import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import java.lang.RuntimeException
@@ -38,7 +35,6 @@ internal class MatchServiceTest {
 
     private val user1 = "USER_1"
     private val user2 = "USER_2"
-
 
     @Test
     fun `concede is successful if not already conceded`() {
@@ -75,12 +71,10 @@ internal class MatchServiceTest {
             mapOf(user1 to 20, user2 to 15)
         )
 
-        verify(match, times(1)).let {
-            it.isCompleted = true
-            it.finishedAt = LocalDateTime.MIN
-            it.score1 = 20
-            it.score2 = 15
-        }
+        verify(match, times(1)).isCompleted = true
+        verify(match, times(1)).finishedAt = LocalDateTime.MIN
+        verify(match, times(1)).score1 = 20
+        verify(match, times(1)).score2 = 15
 
         verify(matchRepository).save(match)
     }
@@ -105,6 +99,5 @@ internal class MatchServiceTest {
             it.player2 = user2
             it.isReady = true
         }
-
     }
 }

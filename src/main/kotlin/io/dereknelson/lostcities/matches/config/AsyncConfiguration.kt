@@ -20,7 +20,9 @@ import java.util.concurrent.Future
 @Configuration
 @EnableAsync
 @EnableScheduling
-class AsyncConfiguration(private val taskExecutionProperties: TaskExecutionProperties) : AsyncConfigurer {
+class AsyncConfiguration(private val taskExecutionProperties: TaskExecutionProperties) :
+    AsyncConfigurer {
+
     private val log = LoggerFactory.getLogger(AsyncConfiguration::class.java)
 
     @Bean("taskExecutor")

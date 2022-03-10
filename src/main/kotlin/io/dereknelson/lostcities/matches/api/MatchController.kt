@@ -3,7 +3,6 @@ package io.dereknelson.lostcities.matches.api
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
-import io.dereknelson.lostcities.matches.service.Match
 import io.dereknelson.lostcities.matches.service.MatchService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
@@ -13,7 +12,6 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
@@ -97,7 +95,7 @@ class MatchController(
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page=1, size=1) page: Pageable
+        @PageableDefault(page = 1, size = 1) page: Pageable
     ) = matchService.findAvailableMatches(userDetails.login, page)
         .map { it.asMatchDto() }
 
@@ -109,19 +107,18 @@ class MatchController(
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findActiveMatches(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page=1, size=1) page: Pageable
+        @PageableDefault(page = 1, size = 1) page: Pageable
     ) = matchService.findActiveMatches(userDetails.login, page)
         .map { it.asMatchDto() }
-
 
     private fun MatchEntity.asMatchDto(): MatchDto {
         return MatchDto(
             id,
             UserPair(
-                user1=player1,
-                user2=player2,
-                score1=score1,
-                score2=score2
+                user1 = player1,
+                user2 = player2,
+                score1 = score1,
+                score2 = score2
             ),
             this.currentPlayer,
             isReady,

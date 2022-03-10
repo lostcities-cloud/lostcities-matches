@@ -6,7 +6,6 @@ import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import io.dereknelson.lostcities.models.matches.FinishMatchEvent
 import io.dereknelson.lostcities.models.matches.TurnChangeEvent
 import org.springframework.amqp.core.Message
-import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.beans.factory.annotation.Qualifier
@@ -82,4 +81,4 @@ class MatchEventService(
     }
 }
 
-class ListenerException: Exception()
+class ListenerException : Exception()
