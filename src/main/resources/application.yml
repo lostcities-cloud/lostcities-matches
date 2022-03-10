@@ -1,7 +1,5 @@
 spring:
   application.name: matches
-  mvc:
-    throw-exception-if-no-handler-found: true
   config:
     use-legacy-processing: true
   profiles:
@@ -19,49 +17,44 @@ spring:
   jpa:
     open-in-view: false
     properties:
-      hibernate.jdbc.time_zone: UTC
-      hibernate.id.new_generator_mappings: true
-      hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
-      hibernate.generate_statistics: true
-      # modify batch size as necessary
-      hibernate.jdbc.batch_size: 25
-      hibernate.order_inserts: true
-      hibernate.order_updates: true
-      hibernate.query.fail_on_pagination_over_collection_fetch: true
-      hibernate.query.in_clause_parameter_padding: true
+      hibernate:
+        jdbc.time_zone: UTC
+        cache.use_second_level_cache: true
+        cache.use_query_cache: false
+        generate_statistics: true
+        jdbc.batch_size: 25
+        order_inserts: true
+        order_updates: true
+        query.in_clause_parameter_padding: true
     hibernate:
-      ddl-auto: update
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+  datasource.hikari:
+    poolName: Hikari
+    auto-commit: false
+  flyway:
+    baseline-version: 0
+    table: SCHEMA_VERSION
+    check-location: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+    driver-class-name: org.postgresql.Driver
+
   messages:
     basename: i18n/messages
+
   main:
     allow-bean-definition-overriding: true
     lazy-initialization: true
-  task:
-    execution:
-      thread-name-prefix: lostcities-matches-task-
-      pool:
-        core-size: 2
-        max-size: 50
-        queue-capacity: 10000
-    scheduling:
-      thread-name-prefix: lostcities-matches-scheduling-
-      pool:
-        size: 2
-  output:
-    ansi:
-      console-available: true
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 
+  output.ansi.console-available: true
 
 server:
   port: 8080
   forward-headers-strategy: framework
+  servlet:
+    context-path: /api/matches
 
 springdoc:
   api-docs.enabled: true

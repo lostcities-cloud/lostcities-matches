@@ -56,5 +56,14 @@ class MatchEntity(
 
     companion object {
         private const val serialVersionUID = 1L
+
+        fun buildMatch(player: String, seed: Long): MatchEntity {
+            return MatchEntity(
+                player1 = player,
+                seed = seed
+            )
+        }
     }
+
+    fun hasPlayer(name: String) = player1 == name || player2 == name
 }

@@ -5,9 +5,12 @@ import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.springframework.amqp.core.Queue
+import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
@@ -20,98 +23,81 @@ class MatchService(
     private var matchRepository: MatchRepository,
     private var objectMapper: ObjectMapper
 ) {
+
     companion object {
         const val CREATE_GAME_QUEUE = "create-game"
+        const val CREATE_GAME_QUEUE_DLQ = "create-game-dlq"
     }
+
+    @Bean @Qualifier(CREATE_GAME_QUEUE)
+    fun createGame() = QueueBuilder
+        .durable(CREATE_GAME_QUEUE)
+        .ttl(5000)
+        .withArgument("x-dead-letter-exchange", "")
+        .withArgument("x-dead-letter-routing-key", CREATE_GAME_QUEUE_DLQ)
+        .build()!!
+
+    @Bean @Qualifier(CREATE_GAME_QUEUE_DLQ)
+    fun createGameDlQueue() = QueueBuilder
+        .durable(CREATE_GAME_QUEUE_DLQ)
+        .build()!!
 
     private val random: Random = Random()
 
-    @Bean @Qualifier(CREATE_GAME_QUEUE)
-    fun createGame() = Queue(CREATE_GAME_QUEUE)
+    fun findById(id: Long) = matchRepository.findById(id)
 
-    fun markStarted(match: Match): Match {
-        var matchEntity = match.toMatchEntity()
+    fun findActiveMatches(player: String, page: Pageable) =
+        matchRepository.findActiveMatches(player, page)
 
-        if (matchEntity.isReady && !matchEntity.isStarted) {
-            matchEntity.isStarted = true
-            matchEntity = matchRepository.save(matchEntity)
 
-            return matchEntity.toMatch()
-        } else {
-            throw RuntimeException("Unable to start match [${match.id}]")
+    fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> =
+        matchRepository.findCompletedMatches(player, page)
+
+
+    fun findAvailableMatches(player: String, page: Pageable) =
+        matchRepository.findAvailableMatches(player, page)
+
+
+    fun create(match: MatchEntity) =
+        match.let {
+            it.seed = random.nextLong()
+            matchRepository.save(match)
         }
-    }
 
-    fun markCompleted(match: Match): Match {
-        var matchEntity = match.toMatchEntity()
-
-        if (
-            !matchEntity.isStarted ||
-            !matchEntity.isReady ||
-            matchEntity.isCompleted
-        ) {
-            throw RuntimeException("Unable to complete match [${match.id}]")
-        } else {
-            matchEntity.isCompleted = true
-            matchEntity = matchRepository.save(matchEntity)
-
-            return matchEntity.toMatch()
-        }
-    }
-
-    fun concede(match: Match, user: String): Match {
-        var matchEntity = match.toMatchEntity()
-
-        if (match.players.contains(user) && matchEntity.concededBy == null) {
-            matchEntity.isCompleted = true
-            matchEntity.concededBy = user
-            matchEntity = matchRepository.save(matchEntity)
-
-            return matchEntity.toMatch()
-        } else {
-            throw RuntimeException("Unable to concede match [${match.id}]")
-        }
-    }
-
-    fun getMatches(): List<Match> {
-        return matchRepository.findAll()
-            .map { it.toMatch() }
-    }
-
-    fun create(match: Match): Match {
-        val matchEntity = match.toMatchEntity()
-        matchEntity.seed = random.nextLong()
-        return matchRepository.save(matchEntity).toMatch()
-    }
-
-    fun findById(id: Long): Optional<Match> {
-        return matchRepository.findById(id).map { it.toMatch() }
-    }
-
-    fun deleteById(id: Long) {
-        matchRepository.deleteById(id)
-    }
-
-    fun joinMatch(match: Match, user: String): Match {
-        if (match.players.contains(user) || match.players.isPopulated) {
+    fun joinMatch(match: MatchEntity, user: String): MatchEntity {
+        if (match.hasPlayer(user) || match.player2 != null) {
             throw UnableToJoinMatchException()
         }
 
-        val matchEntity = match.toMatchEntity()
+        match.player2 = user
+        match.isReady = true
 
-        matchEntity.player2 = user
-        matchEntity.isReady = true
-
-        val savedMatch = matchRepository.save(matchEntity).toMatch()
+        val savedMatch = matchRepository.save(match)
 
         rabbitTemplate.convertAndSend(CREATE_GAME_QUEUE, objectMapper.writeValueAsString(savedMatch))
 
         return savedMatch
     }
 
+    fun concede(matchEntity: MatchEntity, user: String): MatchEntity {
+        if(!matchEntity.hasPlayer(user) || matchEntity.concededBy != null) {
+            throw RuntimeException("Unable to concede match [${matchEntity.id}]")
+        }
+
+        matchEntity.isCompleted = true
+        matchEntity.concededBy = user
+        return matchRepository.save(matchEntity)
+    }
+
     fun finishGame(id: Long, finishedAt: LocalDateTime, scores: Map<String, Int>) {
         val match = matchRepository.findById(id)
             .orElseThrow { RuntimeException("Unable to find match for completion: $id") }
+
+        if(scores.size != 2) {
+            throw RuntimeException("Unable to find match for completion: $id")
+        } else if(!(scores.containsKey(match.player1) && scores.containsKey(match.player2))) {
+            throw RuntimeException("Incorrect players: $id")
+        }
 
         match.isCompleted = true
         match.finishedAt = finishedAt
@@ -130,50 +116,5 @@ class MatchService(
         } else {
             match.score2 = score
         }
-    }
-
-    private fun MatchEntity.toMatch(): Match {
-
-        return Match(
-            id = this.id,
-            seed = this.seed,
-            players = UserPair(
-                user1 = this.player1,
-                user2 = this.player2,
-                score1 = this.score1,
-                score2 = this.score2
-            ),
-            currentPlayer = player1,
-            concededBy = this.concededBy,
-            isReady = this.isReady,
-            isStarted = this.isStarted,
-            isCompleted = this.isCompleted,
-            createdDate = if (this.createdDate != null) {
-                LocalDateTime.ofInstant(this.createdDate, ZoneOffset.UTC)
-            } else {
-                null
-            },
-            lastModifiedDate = if (this.lastModifiedDate != null) {
-                LocalDateTime.ofInstant(this.lastModifiedDate, ZoneOffset.UTC)
-            } else {
-                null
-            },
-            createdBy = this.createdBy,
-        )
-    }
-
-    private fun Match.toMatchEntity(): MatchEntity {
-        return MatchEntity(
-            id = this.id,
-            seed = this.seed,
-            player1 = this.players.user1,
-            player2 = this.players.user2,
-            score1 = this.players.score1,
-            score2 = this.players.score2,
-            isReady = this.isReady,
-            isStarted = this.isStarted,
-            isCompleted = this.isCompleted,
-            concededBy = this.concededBy
-        )
     }
 }

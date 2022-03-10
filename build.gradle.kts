@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.6.3"
+    id("org.springframework.boot") version "2.5.8"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id("org.asciidoctor.convert") version "1.5.8"
 	//id("com.google.cloud.tools.jib") version "3.1.4"
@@ -73,6 +73,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
+    implementation("com.google.cloud:spring-cloud-gcp-starter:2.0.8")
+    implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager:2.0.8")
+
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hppc")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
@@ -97,7 +100,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	runtimeOnly("org.postgresql:postgresql")
+	runtimeOnly("org.postgresql:postgresql:42.2.14")
 
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
@@ -107,13 +110,13 @@ dependencies {
 		}
 	}
 
-	testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
-	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.8.2")
-	//testImplementation("org.mockito:mockito-junit-jupiter:4.3.1")
+	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
+	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
+
 	testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
@@ -154,15 +157,26 @@ tasks.withType<KotlinCompile> {
 }
 
 tasks.getByName<BootBuildImage>("bootBuildImage") {
-    imageName = "dereknelson.io/library/${project.name}"
-    environment = mapOf("BP_JVM_VERSION" to "17.*")
+    imageName = "ghcr.io/lostcities-cloud/${project.name}:$version"
+    isPublish = true
+    environment = mapOf(
+        "BP_JVM_VERSION" to "17.*",
+        "BPL_DEBUG_ENABLED" to "true"
+    )
     builder = "paketobuildpacks/builder:base"
     buildpacks = listOf(
-
         "gcr.io/paketo-buildpacks/eclipse-openj9",
         "paketo-buildpacks/java",
         "gcr.io/paketo-buildpacks/spring-boot"
     )
+
+    docker {
+        publishRegistry {
+            username = System.getenv("GITHUB_ACTOR")
+            password = System.getenv("GITHUB_TOKEN")
+            email = "lostcities@dereknelson.io"
+        }
+    }
 }
 
 tasks.withType<Test> {

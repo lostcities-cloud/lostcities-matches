@@ -1,6 +1,8 @@
 package io.dereknelson.lostcities.matches.api
 
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
+import io.dereknelson.lostcities.common.model.match.UserPair
+import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.service.Match
 import io.dereknelson.lostcities.matches.service.MatchService
 import io.swagger.v3.oas.annotations.Operation
@@ -8,6 +10,8 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
@@ -17,7 +21,6 @@ import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
 @RestController
-@RequestMapping("/api/matches", produces = [MediaType.APPLICATION_JSON_VALUE])
 class MatchController(
     private var matchService: MatchService
 ) {
@@ -34,7 +37,6 @@ class MatchController(
     )
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    // @PreAuthorize("hasAuthority('ROLE_USER')")
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
         @RequestParam("ai") ai: Boolean = false
@@ -43,11 +45,9 @@ class MatchController(
             throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)
         }
 
-        val match = matchService.create(
-            Match.buildMatch(player = userDetails.login, random)
-        )
-
-        return match.asMatchDto()
+        return matchService.create(
+            MatchEntity.buildMatch(player = userDetails.login, random.nextLong())
+        ).asMatchDto()
     }
 
     @Operation(
@@ -84,11 +84,10 @@ class MatchController(
     )
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_USER')")
-    fun findById(@PathVariable id: Long): MatchDto {
-        return matchService.findById(id)
+    fun findById(@PathVariable id: Long) =
+        matchService.findById(id)
             .map { it.asMatchDto() }
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
-    }
 
     @Operation(
         description = "Find matches available to join.",
@@ -97,16 +96,33 @@ class MatchController(
     @GetMapping
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
-        @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails
-    ): List<MatchDto> {
-        return matchService.getMatches()
-            .map { it.asMatchDto() }
-    }
+        @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
+        @PageableDefault(page=1, size=1) page: Pageable
+    ) = matchService.findAvailableMatches(userDetails.login, page)
+        .map { it.asMatchDto() }
 
-    private fun Match.asMatchDto(): MatchDto {
+    @Operation(
+        description = "Find active matches for player.",
+        security = [ SecurityRequirement(name = "bearer-key") ]
+    )
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    fun findActiveMatches(
+        @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
+        @PageableDefault(page=1, size=1) page: Pageable
+    ) = matchService.findActiveMatches(userDetails.login, page)
+        .map { it.asMatchDto() }
+
+
+    private fun MatchEntity.asMatchDto(): MatchDto {
         return MatchDto(
             id,
-            players,
+            UserPair(
+                user1=player1,
+                user2=player2,
+                score1=score1,
+                score2=score2
+            ),
             this.currentPlayer,
             isReady,
             isStarted,

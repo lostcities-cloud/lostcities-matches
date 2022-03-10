@@ -20,13 +20,5 @@ open class Match(
     val createdBy: String? = null,
     var lastModifiedBy: String? = null
 ) {
-    companion object {
-        fun buildMatch(player: String, random: Random): Match {
-            return Match(
-                players = UserPair(user1 = player),
-                seed = random.nextLong(),
-                currentPlayer = player
-            )
-        }
-    }
+
 }

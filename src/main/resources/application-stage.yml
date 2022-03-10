@@ -1,0 +1,21 @@
+spring:
+  application.name: matches-dev
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: ${sm://matches_database_url}
+    username: ${sm://matches_database_user}
+    password: ${sm://matches_database_password}
+  flyway:
+    enabled: false
+    url: ${sm://matches_database_url}
+    user: ${sm://matches_database_user}
+    password: ${sm://matches_database_password}
+
+  rabbitmq:
+      addresses: ${sm://lostcities_event_queue_url}
+      port: 1883
