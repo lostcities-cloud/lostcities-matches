@@ -11,6 +11,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.web.servlet.config.annotation.PathMatchConfigurer
 
 @SpringBootApplication(exclude = [ErrorMvcAutoConfiguration::class])
 
@@ -41,4 +42,9 @@ fun mapper() = jacksonObjectMapper().registerKotlinModule()
 
 fun main(args: Array<String>) {
     runApplication<LostcitiesMatchesApplication>(*args)
+}
+
+@Bean
+fun configureMatcher(configurer: PathMatchConfigurer) {
+    configurer.setUseTrailingSlashMatch(false)
 }

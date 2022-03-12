@@ -14,14 +14,17 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         const val MATCHES_BY_PLAYER_CACHE: String = "usersByPlayer"
     }
 
-    @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
+    //@Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
     @Query(
         """
     SELECT matchEntity
     FROM MatchEntity matchEntity
     WHERE
-        matchEntity.player1 = :playerName OR
-        matchEntity.player2 = :playerName
+        (
+            matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
+        ) AND
+        matchEntity.isReady IS TRUE
+    ORDER BY matchEntity.lastModifiedDate
         """
     )
     fun findActiveMatches(playerName: String, page: Pageable): Page<MatchEntity>
@@ -32,8 +35,8 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     FROM MatchEntity matchEntity
     WHERE
         (matchEntity.player1 <> :playerName AND matchEntity.player2 IS NULL) AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
+        matchEntity.isReady IS FALSE AND
+        matchEntity.isCompleted IS FALSE
 
         """
     )
@@ -45,7 +48,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     FROM MatchEntity matchEntity
     WHERE
         ( matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName ) AND
-        matchEntity.isCompleted = true
+        matchEntity.isCompleted IS TRUE
         """
     )
     fun findCompletedMatches(playerName: String, page: Pageable): Page<MatchEntity>

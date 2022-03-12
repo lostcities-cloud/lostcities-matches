@@ -1,3 +1,9 @@
+logging:
+    level:
+        ROOT: error
+        io.dereknelson.lostcities: debug
+        org.springframework.web: debug
+
 spring:
   application.name: matches-dev
   jpa:
@@ -21,3 +27,6 @@ spring:
     port: 5672
     username: guest
     password: guest
+
+server:
+  port: 8091
