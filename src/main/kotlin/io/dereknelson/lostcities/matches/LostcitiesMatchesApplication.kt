@@ -27,7 +27,6 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer
     "io.dereknelson.lostcities.matches.library",
     "io.dereknelson.lostcities.matches.config",
     "io.dereknelson.lostcities.matches.persistence",
-    "io.dereknelson.lostcities.matches.api",
     "io.dereknelson.lostcities.matches.service",
     "io.dereknelson.lostcities.common.auth",
     "io.dereknelson.lostcities.common.library"

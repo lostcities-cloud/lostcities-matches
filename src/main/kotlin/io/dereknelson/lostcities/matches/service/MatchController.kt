@@ -1,9 +1,8 @@
-package io.dereknelson.lostcities.matches.api
+package io.dereknelson.lostcities.matches.service
 
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
-import io.dereknelson.lostcities.matches.service.MatchService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -114,6 +113,12 @@ class MatchController(
         val x = matchService.findActiveMatches(userDetails.login, page)
 
         return x.map { it.asMatchDto() }
+    }
+
+    @GetMapping("/resend")
+    @PreAuthorize("hasAuthority('ROLE_USER')")
+    fun resendMatchesToGamestate() {
+        matchService.recreateMatches()
     }
 
     private fun MatchEntity.asMatchDto(): MatchDto {

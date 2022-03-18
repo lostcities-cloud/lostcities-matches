@@ -76,6 +76,17 @@ class MatchService(
         return savedMatch
     }
 
+    fun recreateMatches() {
+        matchRepository.findAll().filter {
+            it.isReady && !it.isCompleted
+        }.forEach {
+            rabbitTemplate.convertAndSend(
+                CREATE_GAME_QUEUE,
+                objectMapper.writeValueAsString(it)
+            )
+        }
+    }
+
     fun concede(matchEntity: MatchEntity, user: String): MatchEntity {
         if (!matchEntity.hasPlayer(user) || matchEntity.concededBy != null) {
             throw RuntimeException("Unable to concede match [${matchEntity.id}]")
