@@ -1,5 +1,7 @@
 spring:
+
   application.name: matches
+  output.ansi.enabled: DETECT
   config:
     use-legacy-processing: true
   profiles:
