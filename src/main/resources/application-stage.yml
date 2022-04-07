@@ -21,5 +21,4 @@ spring:
       port: 1883
 
   cloud:
-    consul:
-      enabled: false
+    consul.enabled: false
