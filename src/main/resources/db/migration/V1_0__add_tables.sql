@@ -25,8 +25,6 @@ create table match
     last_modified_date timestamp
 );
 
-alter table match owner to matches;
-
 create index player_1_index
     on match (player_1);
 
