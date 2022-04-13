@@ -32,16 +32,17 @@ pipeline {
                 }
             }
         }
-        post {
-            always {
-                junit 'build/test-results/test/**/*.xml'
-            }
-        }
         stage('Publish') {
             steps {
                 withGradle {
                     sh './gradlew jib'
                 }
+            }
+        }
+
+        post {
+            always {
+                junit 'build/test-results/test/**/*.xml'
             }
         }
     }
