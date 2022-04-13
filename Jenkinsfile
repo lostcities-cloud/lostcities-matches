@@ -28,8 +28,13 @@ pipeline {
         stage('Test') {
             steps {
                 withGradle {
-                    sh './gradlew test'
+                    sh './gradlew check'
                 }
+            }
+        }
+        post {
+            always {
+                junit 'build/test-results/test/**/*.xml'
             }
         }
         stage('Publish') {

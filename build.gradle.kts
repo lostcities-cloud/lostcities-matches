@@ -172,14 +172,11 @@ jib {
     }
 }
 
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
-
 val snippetsDir by extra { file("build/generated-snippets") }
 
-tasks.test {
-	outputs.dir(snippetsDir)
+tasks.withType<Test> {
+	useJUnitPlatform()
+    // outputs.dir(snippetsDir)
 }
 
 tasks.asciidoctor {
