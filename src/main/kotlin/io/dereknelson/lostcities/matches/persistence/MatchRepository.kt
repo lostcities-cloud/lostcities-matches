@@ -1,6 +1,5 @@
 package io.dereknelson.lostcities.matches.persistence
 
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -14,7 +13,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         const val MATCHES_BY_PLAYER_CACHE: String = "usersByPlayer"
     }
 
-    //@Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
+    // @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
     @Query(
         """
     SELECT matchEntity
