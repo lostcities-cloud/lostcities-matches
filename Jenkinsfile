@@ -28,7 +28,7 @@ pipeline {
         stage('Test') {
             steps {
                 withGradle {
-                    sh './gradlew check'
+                    sh './gradlew test'
                 }
             }
         }
@@ -39,11 +39,11 @@ pipeline {
                 }
             }
         }
+    }
 
-        post {
-            always {
-                junit 'build/test-results/test/**/*.xml'
-            }
+    post {
+        always {
+            junit 'build/test-results/test/**/*.xml'
         }
     }
 }
