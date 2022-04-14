@@ -113,14 +113,13 @@ dependencies {
 	}
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
 
+    testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
 	testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
     testImplementation("org.mockito.kotlin:mockito-kotlin:4.0.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
 	testImplementation("org.springframework.security:spring-security-test")
-
-	testImplementation("org.assertj:assertj-core:3.22.0")
 }
 
 tasks.bootRun {
@@ -172,14 +171,10 @@ jib {
     }
 }
 
-val snippetsDir by extra { file("build/generated-snippets") }
-
 tasks.withType<Test> {
 	useJUnitPlatform()
-    // outputs.dir(snippetsDir)
 }
 
 tasks.asciidoctor {
-	inputs.dir(snippetsDir)
 	dependsOn(tasks.test)
 }
