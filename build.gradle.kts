@@ -160,7 +160,7 @@ tasks.withType<KotlinCompile> {
 
 jib {
     from {
-        image = "registry://eclipse-temurin:16-jdk-alpine"
+        image = "registry://adoptopenjdk/openjdk16-openj9:alpine-jre-nightly"
     }
     to {
         image = "ghcr.io/lostcities-cloud/${project.name}:latest"
