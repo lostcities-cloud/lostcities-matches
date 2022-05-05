@@ -66,10 +66,7 @@ dependencies {
 
 	implementation("org.apache.commons:commons-lang3:3.12.0")
 
-	implementation("org.springframework.boot:spring-boot-starter-web") {
-		exclude(module="spring-boot-starter-tomcat")
-	}
-
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
