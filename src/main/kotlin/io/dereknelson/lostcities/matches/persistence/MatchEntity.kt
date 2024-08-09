@@ -3,11 +3,11 @@ package io.dereknelson.lostcities.matches.persistence
 import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
 import java.io.Serializable
 import java.time.LocalDateTime
-import javax.persistence.*
+import jakarta.persistence.*
 
 @Entity
 @Table(
-    name = "match",
+    name = "MatchEntity",
     indexes = [
         Index(name = "player_1_index", columnList = "player_1", unique = false),
         Index(name = "player_2_index", columnList = "player_2", unique = false),

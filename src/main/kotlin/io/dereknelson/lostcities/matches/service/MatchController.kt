@@ -8,7 +8,9 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import jakarta.annotation.security.RolesAllowed
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
-@RestController
+@RestController("/matches")
 class MatchController(
     private var matchService: MatchService
 ) {
@@ -33,7 +35,7 @@ class MatchController(
             ApiResponse(responseCode = "201", description = "Match created."),
         ]
     )
-    @PostMapping("")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
@@ -95,7 +97,7 @@ class MatchController(
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: Pageable
+        @PageableDefault(page = 0, size = 10) page: PageRequest
     ) = matchService.findAvailableMatches(userDetails.login, page)
         .map { it.asMatchDto() }
 
@@ -107,7 +109,7 @@ class MatchController(
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findActiveMatches(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: Pageable
+        @PageableDefault(page = 0, size = 10) page: PageRequest
     ): Page<MatchDto> {
         val x = matchService.findActiveMatches(userDetails.login, page)
 

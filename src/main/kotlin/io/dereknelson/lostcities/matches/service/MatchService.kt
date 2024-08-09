@@ -8,6 +8,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
@@ -43,13 +44,13 @@ class MatchService(
 
     fun findById(id: Long) = matchRepository.findById(id)
 
-    fun findActiveMatches(player: String, page: Pageable) =
+    fun findActiveMatches(player: String, page: PageRequest) =
         matchRepository.findActiveMatches(player, page)
 
-    fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> =
+    fun findCompletedMatches(player: String, page: PageRequest): Page<MatchEntity> =
         matchRepository.findCompletedMatches(player, page)
 
-    fun findAvailableMatches(player: String, page: Pageable) =
+    fun findAvailableMatches(player: String, page: PageRequest) =
         matchRepository.findAvailableMatches(player, page)
 
     fun create(match: MatchEntity) =

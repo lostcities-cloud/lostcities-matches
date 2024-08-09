@@ -7,13 +7,14 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 import org.springframework.web.servlet.i18n.CookieLocaleResolver
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor
+import java.util.Locale
 
 @Configuration
 class LocaleConfiguration : WebMvcConfigurer {
     @Bean
     fun localeResolver(): LocaleResolver {
-        val cookieLocaleResolver = CookieLocaleResolver()
-        cookieLocaleResolver.cookieName = "LANG_KEY"
+        val cookieLocaleResolver = CookieLocaleResolver("LANG_KEY")
+        cookieLocaleResolver.setDefaultLocale(Locale.ENGLISH)
         return cookieLocaleResolver
     }
 

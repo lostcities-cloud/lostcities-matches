@@ -2,23 +2,23 @@ spring:
   application.name: matches
   devtools.restart.enabled: true
   jpa:
-    hibernate.ddl-auto: update
+    hibernate.ddl-auto: create
     show-sql: true
   jackson.serialization.indent-output: true
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
+    #type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://matches-database:5432/lostcities-matches
+    url: jdbc:postgresql://127.0.0.1:5433/lostcities-matches
     username: matches
     password: example
   flyway:
     enabled: false
-    url: jdbc:postgresql://matches-database:5432/lostcities-matches
+    url: jdbc:postgresql://127.0.0.1:5433/lostcities-matches
     user: matches
     password: example
 
   rabbitmq:
-    addresses: rabbitmq
+    addresses: 127.0.0.1
     port: 5672
     username: guest
     password: guest
