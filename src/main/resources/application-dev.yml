@@ -8,17 +8,17 @@ spring:
   datasource:
     #type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://127.0.0.1:5433/lostcities-matches
+    url: jdbc:postgresql://192.168.1.233:5432/lostcities-matches
     username: matches
     password: example
   flyway:
     enabled: false
-    url: jdbc:postgresql://127.0.0.1:5433/lostcities-matches
+    url: jdbc:postgresql://192.168.1.233:5432/lostcities-matches
     user: matches
     password: example
 
   rabbitmq:
-    addresses: 127.0.0.1
+    addresses: 192.168.1.233
     port: 5672
     username: guest
     password: guest

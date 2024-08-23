@@ -18,7 +18,7 @@ import java.time.Duration
 
 @Configuration
 @EnableCaching
-class CacheConfiguration() {
+class CacheConfiguration {
     companion object {
         var maxEntries: Long = 100
         var timeToLiveSeconds: Long = 3600
@@ -30,7 +30,17 @@ class CacheConfiguration() {
     @Autowired(required = false)
     var buildProperties: BuildProperties? = null
 
-    private val jcacheConfiguration: javax.cache.configuration.Configuration<Any, Any>
+    private val jcacheConfiguration: javax.cache.configuration.Configuration<Any, Any> =
+        Eh107Configuration.fromEhcacheCacheConfiguration(
+            CacheConfigurationBuilder.newCacheConfigurationBuilder(
+                Any::class.java, Any::class.java,
+                ResourcePoolsBuilder.heap(maxEntries)
+            )
+                .withExpiry(
+                    ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeToLiveSeconds))
+                )
+                .build()
+        )
 
     val cacheManagerCustomizer: JCacheManagerCustomizer
         @Bean
@@ -47,18 +57,5 @@ class CacheConfiguration() {
         if (cache == null) {
             cm.createCache(cacheName, jcacheConfiguration)
         }
-    }
-
-    init {
-        jcacheConfiguration = Eh107Configuration.fromEhcacheCacheConfiguration(
-            CacheConfigurationBuilder.newCacheConfigurationBuilder(
-                Any::class.java, Any::class.java,
-                ResourcePoolsBuilder.heap(maxEntries)
-            )
-                .withExpiry(
-                    ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeToLiveSeconds))
-                )
-                .build()
-        )
     }
 }

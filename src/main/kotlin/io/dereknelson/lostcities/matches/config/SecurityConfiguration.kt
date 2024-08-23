@@ -55,23 +55,24 @@ class SecurityConfiguration(
     fun securityFilterChain(http: HttpSecurity): DefaultSecurityFilterChain {
         /* ktlint-disable max_line_length */
         // @formatter:off
-        http
-            .cors()
-            .and()
-            .csrf()
-            .disable()
-            .headers()
-            .contentSecurityPolicy("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:") /* ktlint-ignore */
-            .and()
-            .referrerPolicy(
-                ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN
-            )
-            .and()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeHttpRequests{ requests ->
+
+        http.csrf { it.init(http) }
+            .cors { it.configure(http) }
+            .addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
+            .exceptionHandling {}
+            .headers { headersConfigurer ->
+                headersConfigurer.contentSecurityPolicy {
+                    it.policyDirectives("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
+                }.referrerPolicy {
+                    it.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
+                }.cacheControl {  }
+
+            }
+
+            .sessionManagement {
+                it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }
+            .authorizeHttpRequests { requests ->
                 requests
                     .requestMatchers(AntPathRequestMatcher("/api/account/reset-password/init")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/api/account/reset-password/finish")).permitAll()
@@ -83,10 +84,6 @@ class SecurityConfiguration(
                     .requestMatchers(AntPathRequestMatcher("/management/prometheus")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
             }
-            .addFilterAfter(
-                JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java
-            )
-        http.headers().cacheControl()
         // @formatter:on
         /* ktlint-enable max_line_length */
         return http.build()
