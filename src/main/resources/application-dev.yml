@@ -1,6 +1,17 @@
 spring:
   application.name: matches
   devtools.restart.enabled: true
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+        healthCheckInterval: 15s
+        metadata:
+          application: ${spring.application.name}
+        tags: urlprefix-${server.servlet.context-path}
+
   jpa:
     hibernate.ddl-auto: create
     show-sql: true
@@ -22,8 +33,7 @@ spring:
     port: 5672
     username: guest
     password: guest
-  cloud:
-    consul.enabled: false
+
 
 server:
   port: 8091
