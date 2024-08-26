@@ -54,6 +54,13 @@ extra["snippetsDir"] = file("build/generated-snippets")
 
 val ktlint by configurations.creating
 
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.5")
+    }
+}
+
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
@@ -72,8 +79,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
-    implementation("org.springframework.cloud:spring-cloud-dependencies")
     implementation("org.springframework.cloud:spring-cloud-starter-consul-discovery")
+    implementation("org.springframework.cloud:spring-cloud-starter-consul-config")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hppc")

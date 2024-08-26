@@ -1,16 +1,6 @@
 spring:
   application.name: matches
   devtools.restart.enabled: true
-  cloud:
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        healthCheckPath: ${server.servlet.context-path}/actuator/health
-        healthCheckInterval: 15s
-        metadata:
-          application: ${spring.application.name}
-        tags: urlprefix-${server.servlet.context-path}
 
   jpa:
     hibernate.ddl-auto: create
@@ -43,6 +33,7 @@ logging:
     ROOT: error
     io.dereknelson.lostcities: debug
     org.springframework.web: error
+
     org.springframework.aop.interceptor.PerformanceMonitorInterceptor: TRACE
   pattern:
     console: "%d %-5level %logger : %msg%n"
@@ -54,3 +45,6 @@ logging:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 10
+management:
+  server:
+    port: 4452
