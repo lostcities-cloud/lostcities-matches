@@ -6,7 +6,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.+"
 	id("org.asciidoctor.convert") version "1.5.8"
     id("org.jetbrains.dokka") version "1.6.10"
-    id("com.google.cloud.tools.jib") version "3.4.3"
+    id("com.google.cloud.tools.jib") version "3.4.2"
 	//id("com.gorylenko.gradle-git-properties") version "2.3.1-rc1"
 
     kotlin("jvm") version "2.0.+"
@@ -86,8 +86,9 @@ dependencies {
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5")
 
 	implementation("org.zalando:problem-spring-web:0.21.0")
-	implementation("org.springdoc:springdoc-openapi-ui:1.7.0")
-	implementation("org.springdoc:springdoc-openapi-kotlin:1.7.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0")
+    implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")
 
 	implementation("org.flywaydb:flyway-core")
 

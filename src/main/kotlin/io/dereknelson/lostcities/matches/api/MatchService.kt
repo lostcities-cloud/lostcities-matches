@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.matches.service
+package io.dereknelson.lostcities.matches.api
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.matches.persistence.MatchEntity

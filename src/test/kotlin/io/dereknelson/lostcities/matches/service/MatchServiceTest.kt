@@ -1,6 +1,7 @@
 package io.dereknelson.lostcities.matches.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import io.dereknelson.lostcities.matches.api.MatchService
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
 import org.junit.jupiter.api.Assertions.assertThrows

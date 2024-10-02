@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.matches.service
+package io.dereknelson.lostcities.matches.api
 
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.swagger.v3.oas.annotations.media.Schema

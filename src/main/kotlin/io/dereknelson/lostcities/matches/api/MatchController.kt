@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.matches.service
+package io.dereknelson.lostcities.matches.api
 
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import io.dereknelson.lostcities.common.model.match.UserPair

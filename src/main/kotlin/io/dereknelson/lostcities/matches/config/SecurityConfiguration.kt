@@ -43,6 +43,7 @@ class SecurityConfiguration(
         return WebSecurityCustomizer {
             it
                 .ignoring()
+                .requestMatchers(AntPathRequestMatcher("/management/health"))
                 .requestMatchers(antMatcher(HttpMethod.OPTIONS,"/**"))
                 .requestMatchers(antMatcher("/app/**/*.{js,html}"))
                 .requestMatchers(antMatcher("/i18n/**"))
@@ -74,15 +75,16 @@ class SecurityConfiguration(
             }
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers(AntPathRequestMatcher("/api/account/reset-password/init")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/api/account/reset-password/finish")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(AntPathRequestMatcher("/api/**")).hasAuthority(AuthoritiesConstants.USER)
-                    .requestMatchers(AntPathRequestMatcher("/management/health")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/management/health/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/management/info")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/management/prometheus")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+                    .requestMatchers(AntPathRequestMatcher("/actuator/swagger-ui/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/openapi/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/health")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/health/**")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/info")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/prometheus")).permitAll()
+                    //.requestMatchers(AntPathRequestMatcher("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
             }
         // @formatter:on
         /* ktlint-enable max_line_length */
