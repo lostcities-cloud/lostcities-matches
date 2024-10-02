@@ -9,20 +9,31 @@ spring:
   datasource:
     #type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://postgres.service.consul:5432/lostcities-matches
+    url: jdbc:postgresql://${POSTGRES_IP}:5432/lostcities-matches
     username: matches
     password: example
   flyway:
     enabled: false
-    url: jdbc:postgresql://postgres.service.consul/lostcities-matches
+    url: jdbc:postgresql://${POSTGRES_IP}/lostcities-matches
     user: matches
     password: example
 
   rabbitmq:
-    addresses: rabbitmq.service.consul
+    addresses: ${RABBITMQ_IP}
     port: 5672
     username: guest
     password: guest
+  cloud:
+    consul:
+      enabled: false
+      host: 127.0.0.1
+      port: 8500
+      discovery:
+        healthCheckPath: ${server.servlet.context-path}/actuator/health
+        healthCheckInterval: 15s
+        metadata:
+          application: ${spring.application.name}
+        tags: urlprefix-${server.servlet.context-path}
 
 
 server:
