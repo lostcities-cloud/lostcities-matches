@@ -73,8 +73,12 @@ application:
         token-validity-in-seconds-for-remember-me: 2592000
 
 management:
-    endpoints:
-      web.exposure.include: metrics, prometheus, health
-    metrics:
-        tags:
-            application: ${spring.application.name}
+  metrics.tags:
+    application: ${spring.application.name}
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  server:
+    port: 4452
+

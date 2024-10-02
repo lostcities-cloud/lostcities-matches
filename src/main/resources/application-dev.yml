@@ -44,6 +44,13 @@ logging:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 10
+
 management:
+  metrics.tags:
+    application: ${spring.application.name}
+  endpoints:
+    web:
+      exposure:
+        include: "*"
   server:
     port: 4452
