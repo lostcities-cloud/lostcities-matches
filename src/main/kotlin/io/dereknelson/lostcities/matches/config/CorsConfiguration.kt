@@ -19,8 +19,8 @@ class CorsConfiguration {
 
         if (allowedOrigins.isNotEmpty()) {
             source.registerCorsConfiguration("/swagger-ui/**", corsConfiguration())
-            source.registerCorsConfiguration("/api/**", corsConfiguration())
-            source.registerCorsConfiguration("/management/**", corsConfiguration())
+            source.registerCorsConfiguration("/matches/**", corsConfiguration())
+            source.registerCorsConfiguration("/actuator/**", corsConfiguration())
             source.registerCorsConfiguration("/v3/api-docs", corsConfiguration())
         }
 
