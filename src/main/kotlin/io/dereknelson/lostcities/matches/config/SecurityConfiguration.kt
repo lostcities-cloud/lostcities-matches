@@ -57,7 +57,7 @@ class SecurityConfiguration(
         /* ktlint-disable max_line_length */
         // @formatter:off
 
-        http.csrf { it.init(http) }
+        http.csrf { it.disable() }
             .cors { it.configure(http) }
             .addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
             .exceptionHandling {}
@@ -77,18 +77,21 @@ class SecurityConfiguration(
                 requests
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
-                    .requestMatchers(AntPathRequestMatcher("/actuator/swagger-ui/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/openapi/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/health")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/health/**")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/info")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/prometheus")).permitAll()
-                    //.requestMatchers(AntPathRequestMatcher("/management/**")).hasAuthority(AuthoritiesConstants.ADMIN)
+
+                    .requestMatchers(
+                        "/actuator/swagger-ui/**",
+                        "/actuator/openapi/**",
+                        "/actuator/**",
+                        "/actuator/health",
+                        "/actuator/health/**",
+                        "/actuator/info",
+                        "/actuator/prometheus"
+                    ).permitAll()
+                    .anyRequest().authenticated()
             }
-        // @formatter:on
+
         /* ktlint-enable max_line_length */
-        return http.build()
+        return http.build()!!
     }
 
     @Bean
