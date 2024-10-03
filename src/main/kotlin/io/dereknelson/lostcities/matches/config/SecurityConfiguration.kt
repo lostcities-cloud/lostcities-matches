@@ -43,12 +43,12 @@ class SecurityConfiguration(
         return WebSecurityCustomizer {
             it
                 .ignoring()
-                .requestMatchers(AntPathRequestMatcher("/management/health"))
                 .requestMatchers(antMatcher(HttpMethod.OPTIONS,"/**"))
-                .requestMatchers(antMatcher("/app/**/*.{js,html}"))
-                .requestMatchers(antMatcher("/i18n/**"))
-                .requestMatchers(antMatcher("/content/**"))
-                .requestMatchers(antMatcher("/swagger-ui/**"))
+                .requestMatchers(
+                    "/i18n/**",
+                    "/content/**",
+                    "/swagger-ui/**",
+                )
         }
     }
 
@@ -76,7 +76,7 @@ class SecurityConfiguration(
             .authorizeHttpRequests { requests ->
                 requests
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
-                    .requestMatchers(AntPathRequestMatcher("/api/**")).hasAuthority(AuthoritiesConstants.USER)
+                    .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
                     .requestMatchers(AntPathRequestMatcher("/actuator/swagger-ui/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/actuator/openapi/**")).permitAll()
                     .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
