@@ -1,13 +1,14 @@
 package io.dereknelson.lostcities.matches.config
 
+
 import io.dereknelson.lostcities.common.AuthoritiesConstants
+import io.dereknelson.lostcities.common.WebConfigProperties
 import io.dereknelson.lostcities.common.auth.JwtFilter
 import io.dereknelson.lostcities.common.auth.TokenProvider
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -22,7 +23,8 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 import org.springframework.web.filter.ForwardedHeaderFilter
-
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -43,12 +45,28 @@ class SecurityConfiguration(
         return WebSecurityCustomizer {
             it
                 .ignoring()
-                .requestMatchers(antMatcher(HttpMethod.OPTIONS,"/**"))
+                .requestMatchers(HttpMethod.OPTIONS,"/**")
                 .requestMatchers(
+                    "/health",
                     "/i18n/**",
                     "/content/**",
                     "/swagger-ui/**",
                 )
+        }
+    }
+
+    @Bean
+    fun corsMappingConfigurer(webConfigProperties: WebConfigProperties): WebMvcConfigurer {
+        return object : WebMvcConfigurer {
+            override fun addCorsMappings(registry: CorsRegistry) {
+                val cors: WebConfigProperties.Cors = webConfigProperties.cors
+                registry.addMapping("/**")
+                    .allowedOrigins(*cors.allowedOrigins)
+                    .allowedMethods(*cors.allowedMethods)
+                    .maxAge(cors.maxAge)
+                    .allowedHeaders(*cors.allowedHeaders)
+                    .exposedHeaders(*cors.exposedHeaders)
+            }
         }
     }
 
@@ -79,10 +97,10 @@ class SecurityConfiguration(
                     .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
 
                     .requestMatchers(
-                        "/actuator/swagger-ui/**",
-                        "/actuator/openapi/**",
+                        "/swagger-ui/**",
+                        "/openapi/**",
                         "/actuator/**",
-                        "/actuator/health",
+                        "/health",
                         "/actuator/health/**",
                         "/actuator/info",
                         "/actuator/prometheus"

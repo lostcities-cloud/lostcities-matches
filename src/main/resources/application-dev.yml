@@ -3,7 +3,7 @@ spring:
   devtools.restart.enabled: true
 
   jpa:
-    hibernate.ddl-auto: create
+    hibernate.ddl-auto: update
     show-sql: true
   jackson.serialization.indent-output: true
   datasource:
@@ -46,7 +46,7 @@ logging:
   level:
     ROOT: error
     io.dereknelson.lostcities: debug
-    org.springframework.web: error
+    org.springframework.web: info
 
     org.springframework.aop.interceptor.PerformanceMonitorInterceptor: TRACE
   pattern:

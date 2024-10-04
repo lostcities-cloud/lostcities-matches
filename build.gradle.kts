@@ -85,7 +85,6 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-jaxb-annotations")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5")
 
-	implementation("org.zalando:problem-spring-web:0.21.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0")
     implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")

@@ -44,13 +44,14 @@ class MatchService(
 
     fun findById(id: Long) = matchRepository.findById(id)
 
-    fun findActiveMatches(player: String, page: PageRequest) =
-        matchRepository.findActiveMatches(player, page)
+    fun findActiveMatches(player: String, page: Pageable): Page<MatchEntity> {
+        return matchRepository.findActiveMatches(player, page)
+    }
 
-    fun findCompletedMatches(player: String, page: PageRequest): Page<MatchEntity> =
+    fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> =
         matchRepository.findCompletedMatches(player, page)
 
-    fun findAvailableMatches(player: String, page: PageRequest) =
+    fun findAvailableMatches(player: String, page: Pageable) =
         matchRepository.findAvailableMatches(player, page)
 
     fun create(match: MatchEntity) =

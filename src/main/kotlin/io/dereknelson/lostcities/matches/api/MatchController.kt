@@ -20,7 +20,14 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
-@RestController()
+@RestController
+@CrossOrigin(
+    "http://localhost:8080",
+    "http://192.168.1.241:8080",
+    "http://192.168.1.231:8091",
+    "*"
+)
+@RequestMapping("/matches")
 class MatchController(
     private var matchService: MatchService
 ) {
@@ -35,7 +42,7 @@ class MatchController(
             ApiResponse(responseCode = "201", description = "Match created."),
         ]
     )
-    @PostMapping
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
@@ -45,9 +52,11 @@ class MatchController(
             throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)
         }
 
-        return matchService.create(
+        val match = matchService.create(
             MatchEntity.buildMatch(player = userDetails.login, random.nextLong())
-        ).asMatchDto()
+        )
+
+        return match.asMatchDto()
     }
 
     @Operation(
@@ -97,23 +106,23 @@ class MatchController(
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: PageRequest
-    ) = matchService.findAvailableMatches(userDetails.login, page)
-        .map { it.asMatchDto() }
+        @PageableDefault(page = 0, size = 10) page: Pageable
+    ): Page<MatchDto> {
+        return matchService.findAvailableMatches(userDetails.login, page)
+            .map { it.asMatchDto() }
+    }
 
     @Operation(
         description = "Find active matches for player.",
         security = [ SecurityRequirement(name = "bearer-key") ]
     )
     @GetMapping("/active")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findActiveMatches(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: PageRequest
+        @PageableDefault(page = 0, size = 10) page: Pageable
     ): Page<MatchDto> {
-        val x = matchService.findActiveMatches(userDetails.login, page)
-
-        return x.map { it.asMatchDto() }
+        return matchService.findActiveMatches(userDetails.login, page)
+            .map { it.asMatchDto() }
     }
 
     @GetMapping("/resend")

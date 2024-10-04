@@ -51,7 +51,7 @@ server:
   port: 8080
   forward-headers-strategy: framework
   servlet:
-    contextPath: /api/matches
+    contextPath: /api
 
 springdoc:
   api-docs.enabled: true
@@ -71,6 +71,15 @@ application:
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
+
+web:
+  cors:
+    allowed-origins: http://192.168.1.241:8080, 192.168.1.201:8091, *
+    allowed-methods: GET, POST, PATCH, PUT, DELETE, OPTIONS, HEAD
+    max-age: 3600
+    allowed-headers: "*"
+    exposed-headers: "*"
+
 
 management:
   metrics.tags:

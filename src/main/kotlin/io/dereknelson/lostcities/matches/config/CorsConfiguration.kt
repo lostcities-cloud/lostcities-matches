@@ -10,7 +10,7 @@ import org.springframework.web.filter.CorsFilter
 class CorsConfiguration {
 
     companion object {
-        const val allowedOrigins = "*"
+        const val allowedOrigins = "http://192.168.1.241:8080, http://192.168.1.231:8091, 192.168.1.201:8091, *"
     }
 
     @Bean
@@ -19,7 +19,7 @@ class CorsConfiguration {
 
         if (allowedOrigins.isNotEmpty()) {
             source.registerCorsConfiguration("/swagger-ui/**", corsConfiguration())
-            source.registerCorsConfiguration("/matches/**", corsConfiguration())
+            source.registerCorsConfiguration("/api/matches/**", corsConfiguration())
             source.registerCorsConfiguration("/actuator/**", corsConfiguration())
             source.registerCorsConfiguration("/v3/api-docs", corsConfiguration())
         }
