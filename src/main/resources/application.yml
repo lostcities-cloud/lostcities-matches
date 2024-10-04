@@ -82,6 +82,8 @@ web:
 
 
 management:
+  endpoint.health:
+    show-details: "ALWAYS"
   metrics.tags:
     application: ${spring.application.name}
   endpoints:
@@ -90,4 +92,5 @@ management:
         include: "*"
   server:
     port: 4452
+    base-path: /management/${spring.application.name}
 

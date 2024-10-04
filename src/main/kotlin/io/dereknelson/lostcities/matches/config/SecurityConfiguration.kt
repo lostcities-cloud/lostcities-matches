@@ -100,10 +100,7 @@ class SecurityConfiguration(
                         "/swagger-ui/**",
                         "/openapi/**",
                         "/actuator/**",
-                        "/health",
-                        "/actuator/health/**",
-                        "/actuator/info",
-                        "/actuator/prometheus"
+
                     ).permitAll()
                     .anyRequest().authenticated()
             }
