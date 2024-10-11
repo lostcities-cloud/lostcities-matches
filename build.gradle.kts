@@ -63,7 +63,7 @@ dependencyManagement {
 
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
+    implementation("io.micrometer:micrometer-registry-elastic:latest.release")
     implementation(project(":lostcities-common"))
     implementation(project(":lostcities-models"))
 

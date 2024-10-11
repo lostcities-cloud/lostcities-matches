@@ -3,7 +3,9 @@ spring:
   devtools.restart.enabled: true
 
   jpa:
-    hibernate.ddl-auto: update
+    hibernate:
+      ddl-auto: update
+
     show-sql: true
   jackson.serialization.indent-output: true
   datasource:

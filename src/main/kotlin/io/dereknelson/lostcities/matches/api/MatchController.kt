@@ -42,7 +42,7 @@ class MatchController(
             ApiResponse(responseCode = "201", description = "Match created."),
         ]
     )
-    @PostMapping()
+    @PostMapping("", "/")
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
