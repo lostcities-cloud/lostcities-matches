@@ -63,7 +63,7 @@ dependencyManagement {
 
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
+    implementation("io.micrometer:micrometer-registry-elastic:latest.release")
     implementation(project(":lostcities-common"))
     implementation(project(":lostcities-models"))
 
@@ -80,6 +80,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+
+    implementation("io.micrometer:micrometer-registry-otlp")
+    implementation("io.micrometer:micrometer-tracing-bridge-otel")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hppc")
