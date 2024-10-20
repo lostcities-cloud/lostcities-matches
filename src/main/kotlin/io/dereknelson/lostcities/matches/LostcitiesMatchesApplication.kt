@@ -13,8 +13,6 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer
-import org.springframework.web.util.pattern.PathPatternParser
 
 @SpringBootApplication(exclude = [ErrorMvcAutoConfiguration::class])
 
@@ -26,7 +24,6 @@ import org.springframework.web.util.pattern.PathPatternParser
 )
 @EnableConfigurationProperties(WebConfigProperties::class)
 @ComponentScan(
-
     "io.dereknelson.lostcities.matches",
     "io.dereknelson.lostcities.matches.library",
     "io.dereknelson.lostcities.matches.config",
@@ -34,9 +31,7 @@ import org.springframework.web.util.pattern.PathPatternParser
     "io.dereknelson.lostcities.matches.api",
     "io.dereknelson.lostcities.common",
 )
-
 @EnableJpaRepositories
-@EnableRabbit
 class LostcitiesMatchesApplication
 
 @Bean

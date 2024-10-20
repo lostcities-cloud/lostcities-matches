@@ -1,14 +1,8 @@
 package io.dereknelson.lostcities.matches.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
-import org.springframework.amqp.core.QueueBuilder
-import org.springframework.amqp.rabbit.core.RabbitTemplate
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.context.annotation.Bean
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
@@ -17,28 +11,9 @@ import java.util.*
 
 @Service
 class MatchService(
-    private var rabbitTemplate: RabbitTemplate,
     private var matchRepository: MatchRepository,
-    private var objectMapper: ObjectMapper
+    private var eventService: MatchEventAmqpService
 ) {
-
-    companion object {
-        const val CREATE_GAME_QUEUE = "create-game"
-        const val CREATE_GAME_QUEUE_DLQ = "create-game-dlq"
-    }
-
-    @Bean @Qualifier(CREATE_GAME_QUEUE)
-    fun createGame() = QueueBuilder
-        .durable(CREATE_GAME_QUEUE)
-        .ttl(5000)
-        .withArgument("x-dead-letter-exchange", "")
-        .withArgument("x-dead-letter-routing-key", CREATE_GAME_QUEUE_DLQ)
-        .build()!!
-
-    @Bean @Qualifier(CREATE_GAME_QUEUE_DLQ)
-    fun createGameDlQueue() = QueueBuilder
-        .durable(CREATE_GAME_QUEUE_DLQ)
-        .build()!!
 
     private val random: Random = Random()
 
@@ -70,9 +45,9 @@ class MatchService(
 
         val savedMatch = matchRepository.save(match)
 
-        rabbitTemplate.convertAndSend(
-            CREATE_GAME_QUEUE,
-            objectMapper.writeValueAsString(savedMatch)
+        eventService.convertAndSend(
+            MatchEventAmqpListener.CREATE_GAME_QUEUE,
+            savedMatch
         )
 
         return savedMatch
@@ -82,9 +57,9 @@ class MatchService(
         matchRepository.findAll().filter {
             it.isReady && !it.isCompleted
         }.forEach {
-            rabbitTemplate.convertAndSend(
-                CREATE_GAME_QUEUE,
-                objectMapper.writeValueAsString(it)
+            eventService.convertAndSend(
+                MatchEventAmqpListener.CREATE_GAME_QUEUE,
+                it
             )
         }
     }

@@ -1,0 +1,65 @@
+spring:
+  application.name: matches
+  devtools.restart.enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  jackson.serialization.indent-output: true
+  datasource:
+    #type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.h2.Driver
+
+    url: jdbc:h2:./h2/match-db
+  flyway:
+    enabled: false
+    url: jdbc:h2:./h2/match-db
+
+  rabbitmq:
+    addresses: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+application:
+  security:
+    authentication:
+      jwt:
+        #      # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        base64-secret: ZmNhZmUyNzNkNTE1ZTdiZDA2MmJjNWY4MWE2NzFlMTRkMmViNGE3M2E0YTRiYjg1ZGMxMDY1NGZkNjhhMTdmMjI4OTA5NTUzMzkyZjI1NDUyNjFlY2M3MjBkY2Y2OTAwMGU3NDQwYWMxNmZiNTJjZmZjMzkxMmU1OGZmYzQxOGU=
+        #      # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+        token-validity-in-seconds-for-remember-me: 2592000
+
+server:
+  port: 8091
+
+management:
+  server:
+    port: 4451
+
+springdoc:
+  use-management-port: true
+  api-docs.enabled: true
+  packagesToScan: io.dereknelson.lostcities.matches.api
+
+logging:
+  level:
+    ROOT: error
+    io.dereknelson.lostcities: debug
+    org.springframework.web: info
+    org.apache.activemq: info
+    org.springframework.aop.interceptor.PerformanceMonitorInterceptor: TRACE
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: '%d{"yyyy-MM-dd''T''HH:mm:ss,SSS"} application=${spring.application.name} profiles=${spring.profiles.active} %-5level [%thread] %logger : %msg%n'
+    dateformat: yyyy-MM-dd'T'HH:mm:ssxxx
+  file:
+    name: ${user.home}/Logs/${spring.application.name}-dev.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 10
+

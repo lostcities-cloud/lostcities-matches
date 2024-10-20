@@ -5,7 +5,7 @@ plugins {
     // id("org.graalvm.buildtools.native") version "0.10.2"
     id("io.spring.dependency-management") version "1.1.+"
 	id("org.asciidoctor.convert") version "1.5.8"
-    id("org.jetbrains.dokka") version "1.6.10"
+    id("org.jetbrains.dokka") version "2.0.0-Beta"
     id("com.google.cloud.tools.jib") version "3.4.2"
 	//id("com.gorylenko.gradle-git-properties") version "2.3.1-rc1"
 
@@ -75,7 +75,9 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
-	implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
@@ -102,7 +104,8 @@ dependencies {
     implementation("org.ehcache:ehcache:3.9.2")
     runtimeOnly("org.flywaydb:flyway-core:10.8.1")
     runtimeOnly("org.flywaydb:flyway-database-postgresql:10.8.1")
-    runtimeOnly("org.postgresql:postgresql:42.3.8")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("com.h2database:h2")
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -114,7 +117,7 @@ dependencies {
 			attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
 		}
 	}
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.6.10")
+    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0-Beta")
 
     testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
