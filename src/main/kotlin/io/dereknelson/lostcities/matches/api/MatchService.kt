@@ -12,7 +12,7 @@ import java.util.*
 @Service
 class MatchService(
     private var matchRepository: MatchRepository,
-    private var eventService: MatchEventAmqpService
+    private var eventService: MatchEventAmqpService,
 ) {
 
     private val random: Random = Random()
@@ -47,7 +47,7 @@ class MatchService(
 
         eventService.convertAndSend(
             MatchEventAmqpListener.CREATE_GAME_QUEUE,
-            savedMatch
+            savedMatch,
         )
 
         return savedMatch
@@ -59,7 +59,7 @@ class MatchService(
         }.forEach {
             eventService.convertAndSend(
                 MatchEventAmqpListener.CREATE_GAME_QUEUE,
-                it
+                it,
             )
         }
     }

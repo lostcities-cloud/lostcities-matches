@@ -33,13 +33,14 @@ class CacheConfiguration {
     private val jcacheConfiguration: javax.cache.configuration.Configuration<Any, Any> =
         Eh107Configuration.fromEhcacheCacheConfiguration(
             CacheConfigurationBuilder.newCacheConfigurationBuilder(
-                Any::class.java, Any::class.java,
-                ResourcePoolsBuilder.heap(maxEntries)
+                Any::class.java,
+                Any::class.java,
+                ResourcePoolsBuilder.heap(maxEntries),
             )
                 .withExpiry(
-                    ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeToLiveSeconds))
+                    ExpiryPolicyBuilder.timeToLiveExpiration(Duration.ofSeconds(timeToLiveSeconds)),
                 )
-                .build()
+                .build(),
         )
 
     val cacheManagerCustomizer: JCacheManagerCustomizer

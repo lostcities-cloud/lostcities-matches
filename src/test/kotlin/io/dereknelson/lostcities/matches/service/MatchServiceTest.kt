@@ -64,7 +64,7 @@ internal class MatchServiceTest {
         matchService.finishGame(
             1,
             LocalDateTime.MIN,
-            mapOf(user1 to 20, user2 to 15)
+            mapOf(user1 to 20, user2 to 15),
         )
 
         verify(match, times(1)).isCompleted = true

@@ -12,17 +12,13 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Lazy
-import org.springframework.context.annotation.Primary
-import org.springframework.context.annotation.Profile
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Service
 class MatchEventAmqpListener(
     val objectMapper: ObjectMapper,
     val matchRepository: MatchRepository,
-    val matchService: MatchService
+    val matchService: MatchService,
 ) {
 
     companion object {
@@ -34,7 +30,8 @@ class MatchEventAmqpListener(
         const val CREATE_GAME_QUEUE_DLQ = "create-game-dlq"
     }
 
-    @Bean @Qualifier(CREATE_GAME_QUEUE)
+    @Bean
+    @Qualifier(CREATE_GAME_QUEUE)
     fun createGame() = QueueBuilder
         .durable(CREATE_GAME_QUEUE)
         .ttl(5000)
@@ -42,12 +39,14 @@ class MatchEventAmqpListener(
         .withArgument("x-dead-letter-routing-key", CREATE_GAME_QUEUE_DLQ)
         .build()!!
 
-    @Bean @Qualifier(CREATE_GAME_QUEUE_DLQ)
+    @Bean
+    @Qualifier(CREATE_GAME_QUEUE_DLQ)
     fun createGameDlQueue() = QueueBuilder
         .durable(CREATE_GAME_QUEUE_DLQ)
         .build()!!
 
-    @Bean @Qualifier(TURN_CHANGE_EVENT)
+    @Bean
+    @Qualifier(TURN_CHANGE_EVENT)
     fun turnChangeEventQueue() = QueueBuilder
         .durable(TURN_CHANGE_EVENT)
         .ttl(5000)
@@ -55,12 +54,14 @@ class MatchEventAmqpListener(
         .withArgument("x-dead-letter-routing-key", TURN_CHANGE_EVENT_DLQ)
         .build()!!
 
-    @Bean @Qualifier(TURN_CHANGE_EVENT_DLQ)
+    @Bean
+    @Qualifier(TURN_CHANGE_EVENT_DLQ)
     fun turnChangeEventDLQueue() = QueueBuilder
         .durable(TURN_CHANGE_EVENT_DLQ)
         .build()!!
 
-    @Bean @Qualifier(END_GAME_EVENT)
+    @Bean
+    @Qualifier(END_GAME_EVENT)
     fun endGameEventQueue() = QueueBuilder
         .durable(END_GAME_EVENT)
         .ttl(5000)
@@ -68,7 +69,8 @@ class MatchEventAmqpListener(
         .withArgument("x-dead-letter-routing-key", END_GAME_EVENT_DLQ)
         .build()!!
 
-    @Bean @Qualifier(END_GAME_EVENT_DLQ)
+    @Bean
+    @Qualifier(END_GAME_EVENT_DLQ)
     fun endGameEventDLQueue() = QueueBuilder
         .durable(END_GAME_EVENT_DLQ)
         .build()!!

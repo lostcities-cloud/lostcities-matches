@@ -19,9 +19,8 @@ class PrefixedKeyGenerator(gitProperties: GitProperties?, buildProperties: Build
     val prefix: String
     private fun generatePrefix(
         gitProperties: GitProperties?,
-        buildProperties: BuildProperties?
+        buildProperties: BuildProperties?,
     ): String {
-
         var shortCommitId: String? = null
         if (gitProperties != null) {
             shortCommitId = gitProperties.shortCommitId
@@ -33,7 +32,10 @@ class PrefixedKeyGenerator(gitProperties: GitProperties?, buildProperties: Build
             version = buildProperties.version
         }
         val p: Any = ObjectUtils.firstNonNull(
-            shortCommitId, time, version, RandomStringUtils.randomAlphanumeric(12)
+            shortCommitId,
+            time,
+            version,
+            RandomStringUtils.randomAlphanumeric(12),
         )!!
         return if (p is Instant) {
             DateTimeFormatter.ISO_INSTANT.format(p)
@@ -71,7 +73,7 @@ private class PrefixedSimpleKey(prefix: String, methodName: String, vararg eleme
     override fun toString(): String {
         return prefix + " " + javaClass.simpleName + methodName + " [" +
             StringUtils.arrayToCommaDelimitedString(
-                params
+                params,
             ) + "]"
     }
 

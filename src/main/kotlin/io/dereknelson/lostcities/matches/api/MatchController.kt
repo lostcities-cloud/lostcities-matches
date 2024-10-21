@@ -8,9 +8,7 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
 import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import jakarta.annotation.security.RolesAllowed
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
@@ -25,35 +23,35 @@ import java.util.*
     "http://localhost:8080",
     "http://192.168.1.241:8080",
     "http://192.168.1.231:8091",
-    "*"
+    "*",
 )
 @RequestMapping("/matches")
 class MatchController(
-    private var matchService: MatchService
+    private var matchService: MatchService,
 ) {
     private var random: Random = Random()
 
     @Operation(
         description = "Create and join a new match.",
-        security = [ SecurityRequirement(name = "bearer-key") ]
+        security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "201", description = "Match created."),
-        ]
+        ],
     )
     @PostMapping("", "/")
     @ResponseStatus(HttpStatus.CREATED)
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @RequestParam("ai") ai: Boolean = false
+        @RequestParam("ai") ai: Boolean = false,
     ): MatchDto {
         if (ai) {
             throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)
         }
 
         val match = matchService.create(
-            MatchEntity.buildMatch(player = userDetails.login, random.nextLong())
+            MatchEntity.buildMatch(player = userDetails.login, random.nextLong()),
         )
 
         return match.asMatchDto()
@@ -61,19 +59,19 @@ class MatchController(
 
     @Operation(
         description = "Join an existing match.",
-        security = [ SecurityRequirement(name = "bearer-key") ]
+        security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "Match joined."),
-            ApiResponse(responseCode = "409", description = "This match is already started.")
-        ]
+            ApiResponse(responseCode = "409", description = "This match is already started."),
+        ],
     )
     @PatchMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun joinMatch(
         @PathVariable id: Long,
-        @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails
+        @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
     ) {
         val match = matchService.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
@@ -83,13 +81,13 @@ class MatchController(
 
     @Operation(
         description = "Find an existing match.",
-        security = [ SecurityRequirement(name = "bearer-key") ]
+        security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @ApiResponses(
         value = [
             ApiResponse(responseCode = "200", description = "Match found."),
-            ApiResponse(responseCode = "404", description = "Match not found.")
-        ]
+            ApiResponse(responseCode = "404", description = "Match not found."),
+        ],
     )
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('ROLE_USER')")
@@ -100,13 +98,13 @@ class MatchController(
 
     @Operation(
         description = "Find matches available to join.",
-        security = [ SecurityRequirement(name = "bearer-key") ]
+        security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @GetMapping("/available")
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: Pageable
+        @PageableDefault(page = 0, size = 10) page: Pageable,
     ): Page<MatchDto> {
         return matchService.findAvailableMatches(userDetails.login, page)
             .map { it.asMatchDto() }
@@ -114,12 +112,12 @@ class MatchController(
 
     @Operation(
         description = "Find active matches for player.",
-        security = [ SecurityRequirement(name = "bearer-key") ]
+        security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @GetMapping("/active")
     fun findActiveMatches(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: Pageable
+        @PageableDefault(page = 0, size = 10) page: Pageable,
     ): Page<MatchDto> {
         return matchService.findActiveMatches(userDetails.login, page)
             .map { it.asMatchDto() }
@@ -138,12 +136,12 @@ class MatchController(
                 user1 = player1,
                 user2 = player2,
                 score1 = score1,
-                score2 = score2
+                score2 = score2,
             ),
             this.currentPlayer,
             isReady,
             isStarted,
-            isCompleted
+            isCompleted,
         )
     }
 }

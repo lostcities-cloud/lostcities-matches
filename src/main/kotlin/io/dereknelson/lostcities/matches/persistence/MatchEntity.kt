@@ -1,9 +1,9 @@
 package io.dereknelson.lostcities.matches.persistence
 
 import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
+import jakarta.persistence.*
 import java.io.Serializable
 import java.time.LocalDateTime
-import jakarta.persistence.*
 
 @Entity
 @Table(
@@ -11,7 +11,7 @@ import jakarta.persistence.*
     indexes = [
         Index(name = "player_1_index", columnList = "player_1", unique = false),
         Index(name = "player_2_index", columnList = "player_2", unique = false),
-    ]
+    ],
 )
 class MatchEntity(
 
@@ -51,7 +51,7 @@ class MatchEntity(
     var isCompleted: Boolean = false,
 
     @Column(name = "finished_at")
-    var finishedAt: LocalDateTime? = null
+    var finishedAt: LocalDateTime? = null,
 ) : AbstractAuditingEntity(), Serializable {
 
     companion object {
@@ -60,7 +60,7 @@ class MatchEntity(
         fun buildMatch(player: String, seed: Long): MatchEntity {
             return MatchEntity(
                 player1 = player,
-                seed = seed
+                seed = seed,
             )
         }
     }

@@ -1,6 +1,5 @@
 package io.dereknelson.lostcities.matches.config
 
-
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.common.WebConfigProperties
 import io.dereknelson.lostcities.common.auth.JwtFilter
@@ -21,7 +20,6 @@ import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 import org.springframework.web.filter.ForwardedHeaderFilter
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -30,7 +28,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @EnableWebSecurity(debug = true)
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 @SecurityScheme(
-    name = "jwt_auth", type = SecuritySchemeType.HTTP, bearerFormat = "JWT", scheme = "bearer"
+    name = "jwt_auth",
+    type = SecuritySchemeType.HTTP,
+    bearerFormat = "JWT",
+    scheme = "bearer",
 )
 class SecurityConfiguration(
     private val tokenProvider: TokenProvider,
@@ -45,7 +46,7 @@ class SecurityConfiguration(
         return WebSecurityCustomizer {
             it
                 .ignoring()
-                .requestMatchers(HttpMethod.OPTIONS,"/**")
+                .requestMatchers(HttpMethod.OPTIONS, "/**")
                 .requestMatchers(
                     "/health",
                     "/i18n/**",
@@ -72,7 +73,6 @@ class SecurityConfiguration(
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): DefaultSecurityFilterChain {
-        /* ktlint-disable max_line_length */
         // @formatter:off
 
         http.csrf { it.disable() }
@@ -84,10 +84,8 @@ class SecurityConfiguration(
                     it.policyDirectives("default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
                 }.referrerPolicy {
                     it.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
-                }.cacheControl {  }
-
+                }.cacheControl { }
             }
-
             .sessionManagement {
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
@@ -95,7 +93,6 @@ class SecurityConfiguration(
                 requests
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
-
                     .requestMatchers(
                         "/swagger-ui/**",
                         "/openapi/**",
@@ -105,7 +102,6 @@ class SecurityConfiguration(
                     .anyRequest().authenticated()
             }
 
-        /* ktlint-enable max_line_length */
         return http.build()!!
     }
 
