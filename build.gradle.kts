@@ -32,8 +32,8 @@ repositories {
     maven {
         url = uri("https://maven.pkg.github.com/lostcities-cloud/lostcities-common")
         credentials {
-            username = System.getenv("GITHUB_ACTOR")
-            password = System.getenv("GITHUB_TOKEN")
+            username = System.getenv("GH_USER")
+            password = System.getenv("GH_TOKEN")
         }
     }
     mavenCentral()
@@ -64,8 +64,8 @@ dependencyManagement {
 dependencies {
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
     implementation("io.micrometer:micrometer-registry-elastic:latest.release")
-    implementation(project(":lostcities-common"))
-    implementation(project(":lostcities-models"))
+    implementation("io.dereknelson.lostcities-cloud:lostcities-common:1.0-SNAPSHOT")
+    implementation("io.dereknelson.lostcities-cloud:lostcities-models:1.0-SNAPSHOT")
 
     implementation("org.springframework.boot:spring-boot-devtools")
 
