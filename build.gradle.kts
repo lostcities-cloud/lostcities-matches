@@ -19,9 +19,6 @@ plugins {
 group = "io.dereknelson.lostcities"
 version = project.property("version")!!
 
-
-
-
 configurations {
 	compileOnly {
 		extendsFrom(configurations.annotationProcessor.get())
@@ -152,6 +149,10 @@ val ktlintFormat by tasks.creating(JavaExec::class) {
 	mainClass.set("com.pinterest.ktlint.Main")
 	args = listOf("-F", "src/**/*.kt")
 	jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
+}
+
+semver {
+    noGitPush = false
 }
 
 tasks.withType<KotlinCompile>() {
