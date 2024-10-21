@@ -17,7 +17,7 @@ plugins {
 }
 
 group = "io.dereknelson.lostcities"
-version = "0.0.1-SNAPSHOT"
+version = project.property("version")!!
 
 
 
