@@ -168,15 +168,18 @@ tasks.withType<KotlinCompile>() {
 
 jib {
     from {
-        image = "registry://bellsoft/liberica-openjdk-alpine:21.0.4-9-cds"
+        image = "registry://ghcr.io/bell-sw/liberica-openjdk-alpine:21"
     }
+
     to {
         image = "ghcr.io/lostcities-cloud/${project.name}:latest"
+
         auth {
-            username = System.getenv("GH_ACTOR")
+            username = System.getenv("GH_USER")
             password = System.getenv("GH_TOKEN")
         }
     }
+
 }
 
 //  docker inspect -f "{{ .Size }}" bellsoft/liberica-openjdk-alpine:21
