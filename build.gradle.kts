@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("org.springframework.boot") version "3.1.+"
-    // id("org.graalvm.buildtools.native") version "0.10.2"
+    id("com.github.rising3.semver") version "0.8.2"
     id("io.spring.dependency-management") version "1.1.+"
 	id("org.asciidoctor.convert") version "1.5.8"
     id("org.jetbrains.dokka") version "2.0.0-Beta"
