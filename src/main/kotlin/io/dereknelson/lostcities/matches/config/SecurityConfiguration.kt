@@ -20,6 +20,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
 import org.springframework.web.filter.ForwardedHeaderFilter
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
@@ -47,6 +48,7 @@ class SecurityConfiguration(
             it
                 .ignoring()
                 .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .requestMatchers(antMatcher(HttpMethod.GET, "/actuator/**"))
                 .requestMatchers(
                     "/health",
                     "/i18n/**",
