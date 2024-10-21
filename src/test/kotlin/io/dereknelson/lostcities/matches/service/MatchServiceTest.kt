@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.service
 
+import io.dereknelson.lostcities.matches.api.MatchEventAmqpService
 import io.dereknelson.lostcities.matches.api.MatchService
 import io.dereknelson.lostcities.matches.persistence.MatchEntity
 import io.dereknelson.lostcities.matches.persistence.MatchRepository
@@ -24,7 +25,7 @@ internal class MatchServiceTest {
     lateinit var matchRepository: MatchRepository
 
     @Mock
-    lateinit var eventService: IEventService
+    lateinit var eventAmqpService: MatchEventAmqpService
 
     @InjectMocks
     lateinit var matchService: MatchService
