@@ -27,7 +27,7 @@ class MatchEntity(
     var matchRank: Int = 0,
 
     @Column(name = "match_make_count")
-    var matchMakingCount: Int = 0,
+    var matchMakingCount: Int? = 0,
 
     @Column(name = "player_1")
     var player1: String,
