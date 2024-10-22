@@ -18,10 +18,12 @@ class Matchmaker(
     val matchService: MatchService,
     val matchRepository: MatchRepository,
 ) {
-    @Scheduled(fixedRate = 6, timeUnit = TimeUnit.HOURS)
+    @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
     fun retryMaxAttemptMatches() {
         var pageable: Pageable = PageRequest.of(
-            0, 100, Sort.by(Sort.Direction.ASC, "createdDate")
+            0,
+            100,
+            Sort.by(Sort.Direction.ASC, "createdDate"),
         )
 
         var page: Page<MatchEntity>? = null
