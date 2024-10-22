@@ -1,9 +1,9 @@
 package io.dereknelson.lostcities.matches.service
 
-import io.dereknelson.lostcities.matches.api.MatchEventAmqpService
-import io.dereknelson.lostcities.matches.api.MatchService
-import io.dereknelson.lostcities.matches.persistence.MatchEntity
-import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.match.MatchEntity
+import io.dereknelson.lostcities.matches.match.MatchEventAmqpService
+import io.dereknelson.lostcities.matches.match.MatchRepository
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

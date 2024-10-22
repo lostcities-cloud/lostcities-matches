@@ -12,6 +12,7 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication(exclude = [ErrorMvcAutoConfiguration::class])
 @OpenAPIDefinition(
@@ -22,14 +23,16 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 )
 @EnableConfigurationProperties(WebConfigProperties::class)
 @ComponentScan(
+    "io.dereknelson.lostcities.matches.rank",
     "io.dereknelson.lostcities.matches",
     "io.dereknelson.lostcities.matches.library",
     "io.dereknelson.lostcities.matches.config",
-    "io.dereknelson.lostcities.matches.persistence",
-    "io.dereknelson.lostcities.matches.api",
+    "io.dereknelson.lostcities.matches",
+    "io.dereknelson.lostcities.matches",
     "io.dereknelson.lostcities.common",
 )
 @EnableJpaRepositories
+@EnableScheduling
 class LostcitiesMatchesApplication
 
 @Bean

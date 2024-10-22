@@ -1,4 +1,4 @@
-package io.dereknelson.lostcities.matches.persistence
+package io.dereknelson.lostcities.matches.match
 
 import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
 import jakarta.persistence.*

@@ -1,7 +1,10 @@
-package io.dereknelson.lostcities.matches.api
+package io.dereknelson.lostcities.matches
 
-import io.dereknelson.lostcities.matches.persistence.MatchEntity
-import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import io.dereknelson.lostcities.matches.match.MatchEntity
+import io.dereknelson.lostcities.matches.match.MatchEventAmqpListener
+import io.dereknelson.lostcities.matches.match.MatchEventAmqpService
+import io.dereknelson.lostcities.matches.match.MatchRepository
+import io.dereknelson.lostcities.matches.match.UnableToJoinMatchException
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -26,8 +29,21 @@ class MatchService(
     fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> =
         matchRepository.findCompletedMatches(player, page)
 
-    fun findAvailableMatches(player: String, page: Pageable) =
-        matchRepository.findAvailableMatches(player, page)
+    fun findAvailableMatches(player: String, page: Pageable): Page<MatchEntity> {
+        return matchRepository.findAvailableMatches(player, page)
+    }
+
+    fun findMatchMakingMatch(): Optional<MatchEntity> {
+        val matches = matchRepository.findAvailableMatch()
+
+        return Optional.ofNullable(matches.first())
+    }
+
+    fun findMatchMakingMatch(match: MatchEntity): Optional<MatchEntity> {
+        val matches = matchRepository.findAvailableMatch(match.player1)
+
+        return Optional.ofNullable(matches.first())
+    }
 
     fun create(match: MatchEntity) =
         match.let {

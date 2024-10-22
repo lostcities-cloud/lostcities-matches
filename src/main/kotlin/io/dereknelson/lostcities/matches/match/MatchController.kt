@@ -1,8 +1,8 @@
-package io.dereknelson.lostcities.matches.api
+package io.dereknelson.lostcities.matches.match
 
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import io.dereknelson.lostcities.common.model.match.UserPair
-import io.dereknelson.lostcities.matches.persistence.MatchEntity
+import io.dereknelson.lostcities.matches.MatchService
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse

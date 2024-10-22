@@ -1,7 +1,7 @@
 package io.dereknelson.lostcities.matches.config
 
 import io.dereknelson.lostcities.matches.library.cache.PrefixedKeyGenerator
-import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import io.dereknelson.lostcities.matches.match.MatchRepository
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder
 import org.ehcache.config.builders.ResourcePoolsBuilder

@@ -1,9 +1,9 @@
-package io.dereknelson.lostcities.matches.api
+package io.dereknelson.lostcities.matches.match
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import io.dereknelson.lostcities.matches.persistence.MatchEntity
-import io.dereknelson.lostcities.matches.persistence.MatchRepository
+import io.dereknelson.lostcities.matches.FinishGameScore
+import io.dereknelson.lostcities.matches.MatchService
 import io.dereknelson.lostcities.models.matches.FinishMatchEvent
 import io.dereknelson.lostcities.models.matches.TurnChangeEvent
 import org.springframework.amqp.core.Message
@@ -11,11 +11,13 @@ import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Service
 
 @Service
 class MatchEventAmqpListener(
+    val events: ApplicationEventPublisher,
     val objectMapper: ObjectMapper,
     val matchRepository: MatchRepository,
     val matchService: MatchService,
@@ -93,6 +95,30 @@ class MatchEventAmqpListener(
     fun endMatchEvent(matchEvent: Message) {
         try {
             val finishMatch = objectMapper.readValue<FinishMatchEvent>(matchEvent.body)
+
+            var player1Name: String? = null
+            var player1Score: Int? = null
+            var player2Name: String? = null
+            var player2Score: Int? = null
+
+            finishMatch.scores.forEach { (id, score) ->
+                if (player1Name === null) {
+                    player1Name = id
+                    player1Score = score
+                } else {
+                    player2Name = id
+                    player2Score = score
+                }
+            }
+
+            val scoreEvent = FinishGameScore(
+                player1Name = player1Name!!,
+                player1Score = player1Score!!,
+                player2Name = player2Name!!,
+                player2Score = player2Score!!,
+            ).asEvent()
+
+            events.publishEvent(scoreEvent)
 
             println("Finished: $finishMatch")
 
