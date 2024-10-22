@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>RankRepository</title>
+    <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
+    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<link href="../../../ui-kit/ui-kit.min.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer="defer"></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async="async"></script>
+<script type="text/javascript" src="../../../ui-kit/ui-kit.min.js" async="async"></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer="defer"></script>
+</head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+                    <a class="library-name--link" href="../../../index.html">
+                            lostcities-matches
+                    </a>
+            </div>
+            <div class="library-version">
+0.0.11            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">jvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageIds="lostcities-matches::io.dereknelson.lostcities.matches.rank/RankRepository///PointingToDeclaration//769193423">
+  <div class="breadcrumbs"><a href="../../../index.html">lostcities-matches</a><span class="delimiter">/</span><a href="../index.html">io.dereknelson.lostcities.matches.rank</a><span class="delimiter">/</span><span class="current">RankRepository</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Rank</span><wbr></wbr><span><span>Repository</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.springframework.stereotype/Repository///PointingToDeclaration/"><span class="token annotation builtin">Repository</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">interface </span><a href="index.html">RankRepository</a><span class="token keyword"> implements </span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository///PointingToDeclaration/">JpaRepository</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token punctuation">, </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator">&gt;</span></div></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="107855409%2FFunctions%2F769193423" anchor-label="count" id="107855409%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1134212705%2FFunctions%2F769193423"><span><span>count</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="107855409%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> <a href="index.html#-1134212705%2FFunctions%2F769193423"><span class="token function">count</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> <a href="index.html#-987701702%2FFunctions%2F769193423"><span class="token function">count</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/count/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="303512041%2FFunctions%2F769193423" anchor-label="delete" id="303512041%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#303512041%2FFunctions%2F769193423"><span><span>delete</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="303512041%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#303512041%2FFunctions%2F769193423"><span class="token function">delete</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a> entity</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1710910216%2FFunctions%2F769193423" anchor-label="deleteAll" id="1710910216%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#63362072%2FFunctions%2F769193423"><span>delete</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1710910216%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#63362072%2FFunctions%2F769193423"><span class="token function">deleteAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#-1058095236%2FFunctions%2F769193423"><span class="token function">deleteAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> entities</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-686505825%2FFunctions%2F769193423" anchor-label="deleteAllById" id="-686505825%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-686505825%2FFunctions%2F769193423"><span>delete</span><wbr></wbr><span>All</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-686505825%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#-686505825%2FFunctions%2F769193423"><span class="token function">deleteAllById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a><span class="token operator">&gt;</span> ids</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="310565433%2FFunctions%2F769193423" anchor-label="deleteAllByIdInBatch" id="310565433%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#310565433%2FFunctions%2F769193423"><span>delete</span><wbr></wbr><span>All</span><wbr></wbr><span>By</span><wbr></wbr><span>Id</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Batch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="310565433%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#310565433%2FFunctions%2F769193423"><span class="token function">deleteAllByIdInBatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a><span class="token operator">&gt;</span> ids</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-265025684%2FFunctions%2F769193423" anchor-label="deleteAllInBatch" id="-265025684%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1973842330%2FFunctions%2F769193423"><span>delete</span><wbr></wbr><span>All</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Batch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-265025684%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#1973842330%2FFunctions%2F769193423"><span class="token function">deleteAllInBatch</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#-885927750%2FFunctions%2F769193423"><span class="token function">deleteAllInBatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> entities</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2096046858%2FFunctions%2F769193423" anchor-label="deleteById" id="2096046858%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#2096046858%2FFunctions%2F769193423"><span>delete</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2096046858%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#2096046858%2FFunctions%2F769193423"><span class="token function">deleteById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> id</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1095641565%2FFunctions%2F769193423" anchor-label="deleteInBatch" id="1095641565%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1095641565%2FFunctions%2F769193423"><span>delete</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Batch</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1095641565%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-deprecated/index.html"><span class="token annotation builtin">Deprecated</span></a><span class="token punctuation">(</span><span>message<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;Deprecated in Java&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#1095641565%2FFunctions%2F769193423"><span class="token function"><strike>deleteInBatch</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> entities</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-419006697%2FFunctions%2F769193423" anchor-label="exists" id="-419006697%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-419006697%2FFunctions%2F769193423"><span><span>exists</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-419006697%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a> <a href="index.html#-419006697%2FFunctions%2F769193423"><span class="token function">exists</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/exists/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1578742597%2FFunctions%2F769193423" anchor-label="existsById" id="-1578742597%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1578742597%2FFunctions%2F769193423"><span>exists</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1578742597%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html">Boolean</a> <a href="index.html#-1578742597%2FFunctions%2F769193423"><span class="token function">existsById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> id</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="273099253%2FFunctions%2F769193423" anchor-label="findAll" id="273099253%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-358056742%2FFunctions%2F769193423"><span>find</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="273099253%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/findAll/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> <a href="index.html#-358056742%2FFunctions%2F769193423"><span class="token function">findAll</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/findAll/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/findAll/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#org.springframework.data.domain.Sort/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> <a href="index.html#-287239526%2FFunctions%2F769193423"><span class="token function">findAll</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/findAll/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#org.springframework.data.domain.Sort/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Sort///PointingToDeclaration/">Sort</span> sort</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> <a href="index.html#-988449946%2FFunctions%2F769193423"><span class="token function">findAll</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> <a href="index.html#2016164208%2FFunctions%2F769193423"><span class="token function">findAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span> pageable</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> <a href="index.html#-1523809125%2FFunctions%2F769193423"><span class="token function">findAll</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Sort///PointingToDeclaration/">Sort</span> sort</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findAll/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#org.springframework.data.domain.Pageable/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> <a href="index.html#1612077224%2FFunctions%2F769193423"><span class="token function">findAll</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findAll/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#org.springframework.data.domain.Pageable/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span> pageable</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-18429295%2FFunctions%2F769193423" anchor-label="findAllById" id="-18429295%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-18429295%2FFunctions%2F769193423"><span>find</span><wbr></wbr><span>All</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-18429295%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> <a href="index.html#-18429295%2FFunctions%2F769193423"><span class="token function">findAllById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a><span class="token operator">&gt;</span> ids</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1081026432%2FFunctions%2F769193423" anchor-label="findBy" id="1081026432%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1081026432%2FFunctions%2F769193423"><span>find</span><wbr></wbr><span><span>By</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1081026432%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findBy/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#java.util.function.Function[org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])],TypeParam(bounds=[kotlin.Any])]/PointingToGenericParameters(1)/">R</span> <a href="index.html#1081026432%2FFunctions%2F769193423"><span class="token function">findBy</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token punctuation">, </span>R<span class="token keyword"> extends </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findBy/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#java.util.function.Function[org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])],TypeParam(bounds=[kotlin.Any])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/Function.html">Function</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/FluentQuery.FetchableFluentQuery///PointingToDeclaration/">FluentQuery.FetchableFluentQuery</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findBy/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#java.util.function.Function[org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])],TypeParam(bounds=[kotlin.Any])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span><span class="token punctuation">, </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findBy/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]#java.util.function.Function[org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])],TypeParam(bounds=[kotlin.Any])]/PointingToGenericParameters(1)/">R</span><span class="token operator">&gt;</span> queryFunction</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-969720488%2FFunctions%2F769193423" anchor-label="findById" id="-969720488%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-969720488%2FFunctions%2F769193423"><span>find</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-969720488%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> <a href="index.html#-969720488%2FFunctions%2F769193423"><span class="token function">findById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> id</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1775399076%2FFunctions%2F769193423" anchor-label="findOne" id="-1775399076%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-1775399076%2FFunctions%2F769193423"><span>find</span><wbr></wbr><span><span>One</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1775399076%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findOne/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> <a href="index.html#-1775399076%2FFunctions%2F769193423"><span class="token function">findOne</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Example///PointingToDeclaration/">Example</span><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository.query/QueryByExampleExecutor/findOne/#org.springframework.data.domain.Example[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> example</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="951101208%2FFunctions%2F769193423" anchor-label="findPlayerRankEntityByPlayer" id="951101208%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="find-player-rank-entity-by-player.html"><span>find</span><wbr></wbr><span>Player</span><wbr></wbr><span>Rank</span><wbr></wbr><span>Entity</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Player</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="951101208%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">Optional</a><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span> <a href="find-player-rank-entity-by-player.html"><span class="token function">findPlayerRankEntityByPlayer</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> player</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="705962365%2FFunctions%2F769193423" anchor-label="flush" id="705962365%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#705962365%2FFunctions%2F769193423"><span><span>flush</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="705962365%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html">Unit</a> <a href="index.html#705962365%2FFunctions%2F769193423"><span class="token function">flush</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1856254432%2FFunctions%2F769193423" anchor-label="getById" id="1856254432%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1856254432%2FFunctions%2F769193423"><span>get</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1856254432%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-deprecated/index.html"><span class="token annotation builtin">Deprecated</span></a><span class="token punctuation">(</span><span>message<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;Deprecated in Java&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a> <a href="index.html#1856254432%2FFunctions%2F769193423"><span class="token function"><strike>getById</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> id</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-874627888%2FFunctions%2F769193423" anchor-label="getOne" id="-874627888%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-874627888%2FFunctions%2F769193423"><span>get</span><wbr></wbr><span><span>One</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-874627888%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-deprecated/index.html"><span class="token annotation builtin">Deprecated</span></a><span class="token punctuation">(</span><span>message<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;Deprecated in Java&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a> <a href="index.html#-874627888%2FFunctions%2F769193423"><span class="token function"><strike>getOne</strike></span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> id</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-700602585%2FFunctions%2F769193423" anchor-label="getReferenceById" id="-700602585%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#-700602585%2FFunctions%2F769193423"><span>get</span><wbr></wbr><span>Reference</span><wbr></wbr><span>By</span><wbr></wbr><span><span>Id</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-700602585%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a> <a href="index.html#-700602585%2FFunctions%2F769193423"><span class="token function">getReferenceById</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Long.html">Long</a> id</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1276896119%2FFunctions%2F769193423" anchor-label="save" id="1276896119%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1276896119%2FFunctions%2F769193423"><span><span>save</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1276896119%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository/CrudRepository/save/#TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])/PointingToGenericParameters(0)/">S</span> <a href="index.html#1276896119%2FFunctions%2F769193423"><span class="token function">save</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository/CrudRepository/save/#TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])/PointingToGenericParameters(0)/">S</span> entity</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1111643438%2FFunctions%2F769193423" anchor-label="saveAll" id="1111643438%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1111643438%2FFunctions%2F769193423"><span>save</span><wbr></wbr><span><span>All</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1111643438%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository/ListCrudRepository/saveAll/#kotlin.collections.MutableIterable[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> <a href="index.html#1111643438%2FFunctions%2F769193423"><span class="token function">saveAll</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.repository/ListCrudRepository/saveAll/#kotlin.collections.MutableIterable[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> entities</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="44885992%2FFunctions%2F769193423" anchor-label="saveAllAndFlush" id="44885992%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#44885992%2FFunctions%2F769193423"><span>save</span><wbr></wbr><span>All</span><wbr></wbr><span>And</span><wbr></wbr><span><span>Flush</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="44885992%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html">List</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/saveAllAndFlush/#kotlin.collections.MutableIterable[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> <a href="index.html#44885992%2FFunctions%2F769193423"><span class="token function">saveAllAndFlush</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Iterable.html">Iterable</a><span class="token operator">&lt;</span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/saveAllAndFlush/#kotlin.collections.MutableIterable[TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])]/PointingToGenericParameters(0)/">S</span><span class="token operator">&gt;</span> entities</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1947829239%2FFunctions%2F769193423" anchor-label="saveAndFlush" id="1947829239%2FFunctions%2F769193423" data-filterable-set=":dokkaHtml/main"></a>
+          <div class="table-row" data-filterable-current=":dokkaHtml/main" data-filterable-set=":dokkaHtml/main">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="index.html#1947829239%2FFunctions%2F769193423"><span>save</span><wbr></wbr><span>And</span><wbr></wbr><span><span>Flush</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1947829239%2FFunctions%2F769193423"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/saveAndFlush/#TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])/PointingToGenericParameters(0)/">S</span> <a href="index.html#1947829239%2FFunctions%2F769193423"><span class="token function">saveAndFlush</span></a><span class="token operator">&lt;</span>S<span class="token keyword"> extends </span><a href="../-player-rank-entity/index.html">PlayerRankEntity</a><span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.jpa.repository/JpaRepository/saveAndFlush/#TypeParam(bounds=[io.dereknelson.lostcities.matches.rank.PlayerRankEntity])/PointingToGenericParameters(0)/">S</span> entity</span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="footer">
+        <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
+        <span>© 2024 Copyright</span>
+        <span class="pull-right">
+            <span>Generated by </span>
+            <a class="footer--link footer--link_external" href="https://github.com/Kotlin/dokka">
+                <span>dokka</span>
+            </a>
+        </span>
+    </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
