@@ -1,6 +1,7 @@
 package io.dereknelson.lostcities.matches.service
 
 import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.RankService
 import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.dereknelson.lostcities.matches.match.MatchEventAmqpService
 import io.dereknelson.lostcities.matches.match.MatchRepository
@@ -23,6 +24,9 @@ internal class MatchServiceTest {
 
     @Mock
     lateinit var matchRepository: MatchRepository
+
+    @Mock
+    lateinit var rankService: RankService
 
     @Mock
     lateinit var eventAmqpService: MatchEventAmqpService
