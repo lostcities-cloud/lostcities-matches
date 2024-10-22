@@ -65,7 +65,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     """,
     )
     fun findAvailableMatch(
-        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "created_date")),
+        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
     ): Page<MatchEntity>
 
     @Query(
@@ -81,6 +81,6 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     )
     fun findAvailableMatch(
         player: String,
-        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "created_date")),
+        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
     ): Page<MatchEntity>
 }

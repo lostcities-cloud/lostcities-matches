@@ -36,13 +36,13 @@ class MatchService(
     fun findMatchMakingMatch(): Optional<MatchEntity> {
         val matches = matchRepository.findAvailableMatch()
 
-        return Optional.ofNullable(matches.first())
+        return Optional.ofNullable(matches.firstOrNull())
     }
 
     fun findMatchMakingMatch(match: MatchEntity): Optional<MatchEntity> {
         val matches = matchRepository.findAvailableMatch(match.player1)
 
-        return Optional.ofNullable(matches.first())
+        return Optional.ofNullable(matches.firstOrNull())
     }
 
     fun create(match: MatchEntity) =
