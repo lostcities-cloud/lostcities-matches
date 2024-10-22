@@ -15,6 +15,7 @@ import java.util.*
 @Service
 class MatchService(
     private var matchRepository: MatchRepository,
+    private var rankService: RankService,
     private var eventService: MatchEventAmqpService,
 ) {
 
@@ -33,23 +34,41 @@ class MatchService(
         return matchRepository.findAvailableMatches(player, page)
     }
 
-    fun findMatchMakingMatch(): Optional<MatchEntity> {
-        val matches = matchRepository.findAvailableMatch()
+    fun findUnrankedMatch(): Optional<MatchEntity> {
+        val matches = matchRepository.findOpenMatch()
 
         return Optional.ofNullable(matches.firstOrNull())
     }
 
-    fun findMatchMakingMatch(match: MatchEntity): Optional<MatchEntity> {
-        val matches = matchRepository.findAvailableMatch(match.player1)
+    fun findUnrankedMatch(match: MatchEntity): Optional<MatchEntity> {
+        val matches = matchRepository.findOpenMatch(match.player1)
 
         return Optional.ofNullable(matches.firstOrNull())
     }
 
-    fun create(match: MatchEntity) =
-        match.let {
+    fun findMatchMakingMatchInRange(match: MatchEntity, range: Int): Optional<MatchEntity> {
+        val matches = matchRepository.findOpenMatchInRange(match.player1, match.matchRank, range)
+
+        return Optional.ofNullable(matches.firstOrNull())
+    }
+
+    fun create(match: MatchEntity) {
+        return match.let {
             it.seed = random.nextLong()
+            it.matchRank = rankService.getPlayerRank(match.player1)
             matchRepository.save(match)
         }
+    }
+
+    fun increment(match: MatchEntity) {
+        match.matchMakingCount++
+
+        if (match.matchMakingCount > 100000) {
+            match.matchMakingCount = 0
+        }
+
+        matchRepository.save(match)
+    }
 
     fun joinMatch(match: MatchEntity, user: String): MatchEntity {
         if (match.hasPlayer(user) || match.player2 != null) {

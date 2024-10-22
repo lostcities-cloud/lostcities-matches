@@ -1,10 +1,12 @@
 package io.dereknelson.lostcities.matches.matchmaking
 
 import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.dereknelson.lostcities.matches.match.MatchRepository
 import jakarta.transaction.Transactional
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import java.util.Optional
 
 @Component
 class Matchmaker(
@@ -15,17 +17,18 @@ class Matchmaker(
     @Scheduled(fixedDelay = 2000)
     @Transactional
     fun matchMake() {
-        val toMatch = matchService.findMatchMakingMatch()
+        val toMatch = matchService.findUnrankedMatch()
         if (toMatch.isEmpty) {
             println("No matches available")
             return
         }
 
         val match1 = toMatch.get()
-        val matching = matchService.findMatchMakingMatch(match1)
+        val matching = findMatchPair(match1)
 
         if (matching.isEmpty) {
             println("Unable to find match for ${match1.id}")
+            matchService.increment(match1)
             return
         }
 
@@ -33,5 +36,13 @@ class Matchmaker(
         matchService.joinMatch(match1, match2.player1)
 
         matchRepository.delete(match2)
+    }
+
+    fun findMatchPair(match: MatchEntity): Optional<MatchEntity> {
+        if (match.matchMakingCount > 1000) {
+            return matchService.findUnrankedMatch(match)
+        }
+
+        return matchService.findMatchMakingMatchInRange(match, 100)
     }
 }

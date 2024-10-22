@@ -57,29 +57,48 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     @Query(
         """
         SELECT matchEntity
-    FROM MatchEntity matchEntity
-    WHERE
+        FROM MatchEntity matchEntity
+        WHERE
         matchEntity.player2 = null AND
         matchEntity.isReady = false AND
         matchEntity.isCompleted = false
     """,
     )
-    fun findAvailableMatch(
+    fun findOpenMatch(
         page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
     ): Page<MatchEntity>
 
     @Query(
         """
         SELECT matchEntity
-    FROM MatchEntity matchEntity
-    WHERE
+        FROM MatchEntity matchEntity
+        WHERE
+        matchEntity.player1 != :player AND
+        (matchEntity.matchRank between (:rank - :range) and (:rank + :range)) and
+        matchEntity.player2 = null AND
+        matchEntity.isReady = false AND
+        matchEntity.isCompleted = false
+    """,
+    )
+    fun findOpenMatchInRange(
+        player: String,
+        rank: Int,
+        range: Int,
+        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
+    ): Page<MatchEntity>
+
+    @Query(
+        """
+        SELECT matchEntity
+        FROM MatchEntity matchEntity
+        WHERE
         matchEntity.player1 != :player AND
         matchEntity.player2 = null AND
         matchEntity.isReady = false AND
         matchEntity.isCompleted = false
     """,
     )
-    fun findAvailableMatch(
+    fun findOpenMatch(
         player: String,
         page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
     ): Page<MatchEntity>
