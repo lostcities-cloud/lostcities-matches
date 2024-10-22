@@ -6,6 +6,7 @@ import io.dereknelson.lostcities.common.WebConfigProperties
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.servers.Server
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
@@ -33,6 +34,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 )
 @EnableJpaRepositories
 @EnableScheduling
+@EntityScan("io.dereknelson.lostcities.matches")
 class LostcitiesMatchesApplication
 
 @Bean
