@@ -2,7 +2,7 @@
 <html class="no-js">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
-    <title>findAvailableMatch</title>
+    <title>findOpenMatchInRange</title>
     <link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">
     <script>var pathToRoot = "../../../";</script>
     <script>document.documentElement.classList.replace("no-js","js");</script>
@@ -47,7 +47,7 @@
                     </a>
             </div>
             <div class="library-version">
-0.0.14            </div>
+0.0.15            </div>
         </div>
         <div class="filter-section" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">jvm</button>
@@ -63,27 +63,22 @@
                 <div class="sidebar--inner" id="sideMenu"></div>
             </div>
             <div id="main">
-<div class="main-content" data-page-type="member" id="content" pageIds="lostcities-matches::io.dereknelson.lostcities.matches.match/MatchRepository/findAvailableMatch/#org.springframework.data.domain.PageRequest/PointingToDeclaration//769193423">
-  <div class="breadcrumbs"><a href="../../../index.html">lostcities-matches</a><span class="delimiter">/</span><a href="../index.html">io.dereknelson.lostcities.matches.match</a><span class="delimiter">/</span><a href="index.html">MatchRepository</a><span class="delimiter">/</span><span class="current">findAvailableMatch</span></div>
+<div class="main-content" data-page-type="member" id="content" pageIds="lostcities-matches::io.dereknelson.lostcities.matches.match/MatchRepository/findOpenMatchInRange/#kotlin.String#kotlin.Int#kotlin.Int#org.springframework.data.domain.PageRequest/PointingToDeclaration//769193423">
+  <div class="breadcrumbs"><a href="../../../index.html">lostcities-matches</a><span class="delimiter">/</span><a href="../index.html">io.dereknelson.lostcities.matches.match</a><span class="delimiter">/</span><a href="index.html">MatchRepository</a><span class="delimiter">/</span><span class="current">findOpenMatchInRange</span></div>
   <div class="cover ">
-    <h1 class="cover"><span>find</span><wbr></wbr><span>Available</span><wbr></wbr><span><span>Match</span></span></h1>
+    <h1 class="cover"><span>find</span><wbr></wbr><span>Open</span><wbr></wbr><span>Match</span><wbr></wbr><span>In</span><wbr></wbr><span><span>Range</span></span></h1>
   </div>
   <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":dokkaHtml/main"><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.springframework.data.jpa.repository/Query///PointingToDeclaration/"><span class="token annotation builtin">Query</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;
         SELECT matchEntity
-    FROM MatchEntity matchEntity
-    WHERE
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
-    &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-available-match.html"><span class="token function">findAvailableMatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/PageRequest///PointingToDeclaration/">PageRequest</span> page</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.springframework.data.jpa.repository/Query///PointingToDeclaration/"><span class="token annotation builtin">Query</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;
-        SELECT matchEntity
-    FROM MatchEntity matchEntity
-    WHERE
+        FROM MatchEntity matchEntity
+        WHERE
         matchEntity.player1 != :player AND
+        (matchEntity.matchRank between (:rank - :range) and (:rank + :range)) and
         matchEntity.player2 = null AND
         matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
-    &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-available-match.html"><span class="token function">findAvailableMatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> player<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/PageRequest///PointingToDeclaration/">PageRequest</span> page</span></span><span class="token punctuation">)</span></div></div></div>
+        matchEntity.isCompleted = false AND
+        matchEntity.matchMakingCount &lt; 10
+    &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-open-match-in-range.html"><span class="token function">findOpenMatchInRange</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> player<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> rank<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> range<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/PageRequest///PointingToDeclaration/">PageRequest</span> page</span></span><span class="token punctuation">)</span></div></div></div>
 </div>
     <div class="footer">
         <a href="#content" id="go-to-top-link" class="footer--button footer--button_go-to-top"></a>
