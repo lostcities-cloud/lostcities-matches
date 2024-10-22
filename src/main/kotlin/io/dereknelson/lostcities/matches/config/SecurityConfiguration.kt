@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer
 import org.springframework.security.config.http.SessionCreationPolicy
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.DefaultSecurityFilterChain
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher
@@ -44,15 +46,16 @@ class SecurityConfiguration(
 
     @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer {
-        return WebSecurityCustomizer {
-            it
+        return WebSecurityCustomizer { web: WebSecurity ->
+            web
                 .ignoring()
-                .requestMatchers(HttpMethod.OPTIONS, "/**")
+                .requestMatchers(antMatcher(HttpMethod.OPTIONS, "/**"))
                 .requestMatchers(antMatcher(HttpMethod.GET, "/actuator/**"))
                 .requestMatchers(
                     "/health",
                     "/i18n/**",
                     "/content/**",
+                    "/accounts/**",
                     "/swagger-ui/**",
                 )
         }
@@ -79,7 +82,7 @@ class SecurityConfiguration(
 
         http.csrf { it.disable() }
             .cors { it.configure(http) }
-            .addFilterBefore(JwtFilter(tokenProvider), AnonymousAuthenticationFilter::class.java)
+            .addFilterBefore(JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling {}
             .headers { headersConfigurer ->
                 headersConfigurer.contentSecurityPolicy {
@@ -95,22 +98,10 @@ class SecurityConfiguration(
                 requests
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
-                    .requestMatchers(AntPathRequestMatcher("/management/matches")).permitAll()
-                    .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
-                    .requestMatchers(
-                        "/swagger-ui/**",
-                        "/openapi/**",
-                        "/actuator/**",
-
-                    ).permitAll()
+                    .requestMatchers("/actuator/**").permitAll()
                     .anyRequest().authenticated()
             }
 
         return http.build()!!
-    }
-
-    @Bean
-    fun encoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
     }
 }

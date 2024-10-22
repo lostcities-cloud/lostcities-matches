@@ -33,18 +33,6 @@ application:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
 
-server:
-  port: 8091
-
-management:
-  server:
-    port: 4451
-
-springdoc:
-  use-management-port: true
-  api-docs.enabled: true
-  packagesToScan: io.dereknelson.lostcities.matches.api
-
 logging:
   level:
     ROOT: error

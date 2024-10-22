@@ -25,7 +25,7 @@ job "matches" {
             mode = "bridge"
 
             port "service-port" {
-                to = 8091
+                to = 8080
             }
 
             port "management-port" {
