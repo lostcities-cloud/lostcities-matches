@@ -96,6 +96,7 @@ class SecurityConfiguration(
                     .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
                     .requestMatchers(AntPathRequestMatcher("/management/matches")).permitAll()
+                    .requestMatchers(AntPathRequestMatcher("/actuator/**")).permitAll()
                     .requestMatchers(
                         "/swagger-ui/**",
                         "/openapi/**",
