@@ -103,7 +103,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     )
     fun findOpenMatch(
         player: String,
-        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "lastModifiedDate")),
+        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "lastModifiedDate")),
     ): Page<MatchEntity>
 
     @Query(
@@ -118,7 +118,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         page: Pageable = PageRequest.of(
             0,
             100,
-            Sort.by(Sort.Direction.ASC, "lastModifiedDate"),
+            Sort.by(Sort.Direction.DESC, "lastModifiedDate"),
         ),
     ): Page<MatchEntity>
 }
