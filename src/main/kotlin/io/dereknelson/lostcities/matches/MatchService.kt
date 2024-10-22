@@ -52,12 +52,10 @@ class MatchService(
         return Optional.ofNullable(matches.firstOrNull())
     }
 
-    fun create(match: MatchEntity) {
-        return match.let {
-            it.seed = random.nextLong()
-            it.matchRank = rankService.getPlayerRank(match.player1)
-            matchRepository.save(match)
-        }
+    fun create(match: MatchEntity): MatchEntity {
+        match.seed = random.nextLong()
+        match.matchRank = rankService.getPlayerRank(match.player1)
+        return matchRepository.save(match)
     }
 
     fun findMaxAttemptMatches(page: Pageable): Page<MatchEntity> {
