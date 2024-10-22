@@ -63,9 +63,12 @@ class MatchService(
     }
 
     fun increment(match: MatchEntity) {
-        match.matchMakingCount++
+        if (match.matchMakingCount == null) {
+            return
+        }
+        match.matchMakingCount = match.matchMakingCount!! + 1
 
-        if (match.matchMakingCount > 100000) {
+        if (match.matchMakingCount!! > 100000) {
             match.matchMakingCount = 0
         }
 

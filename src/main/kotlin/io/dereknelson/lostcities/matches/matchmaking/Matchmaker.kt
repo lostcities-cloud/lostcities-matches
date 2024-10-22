@@ -68,7 +68,7 @@ class Matchmaker(
     }
 
     fun findMatchPair(match: MatchEntity): Optional<MatchEntity> {
-        if (match.matchMakingCount > 1000) {
+        if (match.matchMakingCount != null && match.matchMakingCount!! > 1000) {
             return matchService.findUnrankedMatch(match)
         }
 
