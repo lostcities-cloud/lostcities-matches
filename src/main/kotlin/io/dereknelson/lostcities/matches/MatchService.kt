@@ -60,6 +60,10 @@ class MatchService(
         }
     }
 
+    fun findMaxAttemptMatches(page: Pageable): Page<MatchEntity> {
+        return matchRepository.findMaxAttemptMatches(page)
+    }
+
     fun increment(match: MatchEntity) {
         match.matchMakingCount++
 

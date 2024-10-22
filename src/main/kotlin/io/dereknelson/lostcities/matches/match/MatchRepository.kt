@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.match
 
+import io.dereknelson.lostcities.matches.Constants
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -77,7 +78,8 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         (matchEntity.matchRank between (:rank - :range) and (:rank + :range)) and
         matchEntity.player2 = null AND
         matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
+        matchEntity.isCompleted = false AND
+        matchEntity.matchMakingCount < ${Constants.MAX_MATCH_ATTEMPTS}
     """,
     )
     fun findOpenMatchInRange(
@@ -95,11 +97,28 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         matchEntity.player1 != :player AND
         matchEntity.player2 = null AND
         matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
+        matchEntity.isCompleted = false and
+        matchEntity.matchMakingCount < ${Constants.MAX_MATCH_ATTEMPTS}
     """,
     )
     fun findOpenMatch(
         player: String,
         page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
+    ): Page<MatchEntity>
+
+    @Query(
+        """
+        SELECT matchEntity
+        FROM MatchEntity matchEntity
+        WHERE
+        matchEntity.matchMakingCount >= ${Constants.MAX_MATCH_ATTEMPTS}
+    """,
+    )
+    fun findMaxAttemptMatches(
+        page: Pageable = PageRequest.of(
+            0,
+            100,
+            Sort.by(Sort.Direction.ASC, "createdDate"),
+        ),
     ): Page<MatchEntity>
 }
