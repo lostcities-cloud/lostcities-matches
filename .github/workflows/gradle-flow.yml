@@ -53,6 +53,8 @@ jobs:
           CLEAN: true
           FOLDER: build/dokka/html
           TARGET_FOLDER: javadoc
+      - name: Check tree
+        run: git status
       - name: Semver
         run: ./gradlew semver --patch
       - name: Build docker
