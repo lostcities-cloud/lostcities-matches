@@ -181,6 +181,23 @@ jib {
 
 }
 
+dependencyCheck {
+    failBuildOnCVSS = 11f
+    failOnError = false
+    formats = mutableListOf("JUNIT", "HTML", "JSON")
+    data {
+        directory = "${rootDir}/owasp"
+    }
+    //suppressionFiles = ['shared-owasp-suppressions.xml']
+    analyzers {
+        assemblyEnabled = false
+    }
+    nvd {
+        apiKey = System.getenv("NVD_KEY")
+        delay = 16000
+    }
+}
+
 //  docker inspect -f "{{ .Size }}" bellsoft/liberica-openjdk-alpine:21
 
 tasks.withType<Test> {
