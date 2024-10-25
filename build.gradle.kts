@@ -79,10 +79,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hppc")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-	implementation("com.fasterxml.jackson.module:jackson-module-jaxb-annotations")
-	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5")
+	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate6")
 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0")
