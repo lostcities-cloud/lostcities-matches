@@ -20,7 +20,13 @@ variable count {
 
 variable max_parallel {
     type = number
-    default = 6
+    default = 2
+}
+
+variable profile {
+    type = string
+    default = "dev"
+
 }
 
 job "matches" {
@@ -96,7 +102,7 @@ job "matches" {
             driver = "podman"
 
             env {
-                SPRING_PROFILES_ACTIVE = "dev"
+                SPRING_PROFILES_ACTIVE = var.profile
             }
 
             resources {
