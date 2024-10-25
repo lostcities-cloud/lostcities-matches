@@ -111,7 +111,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         SELECT matchEntity
         FROM MatchEntity matchEntity
         WHERE
-        matchEntity.matchMakingCount >= ${Constants.MAX_MATCH_ATTEMPTS}
+        matchEntity.matchMakingCount < ${Constants.MAX_MATCH_ATTEMPTS}
     """,
     )
     fun findMaxAttemptMatches(
