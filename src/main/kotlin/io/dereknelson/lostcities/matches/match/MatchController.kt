@@ -18,14 +18,13 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
 
-@RestController
+@RestController("/matches")
 @CrossOrigin(
     "http://localhost:8080",
     "http://192.168.1.241:8080",
     "http://192.168.1.231:8091",
     "*",
 )
-@RequestMapping("/matches")
 class MatchController(
     private var matchService: MatchService,
 ) {
