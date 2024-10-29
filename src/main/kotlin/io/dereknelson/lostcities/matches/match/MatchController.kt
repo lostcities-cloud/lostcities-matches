@@ -104,7 +104,7 @@ class MatchController(
     @PreAuthorize("hasAuthority('ROLE_USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: Pageable,
+        @PageableDefault(page = 0, size = 100) page: Pageable,
     ): Page<MatchDto> {
         return matchService.findAvailableMatches(userDetails.login, page)
             .map { it.asMatchDto() }
@@ -117,7 +117,7 @@ class MatchController(
     @GetMapping("/active")
     fun findActiveMatches(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @PageableDefault(page = 0, size = 10) page: Pageable,
+        @PageableDefault(page = 0, size = 500) page: Pageable,
     ): Page<MatchDto> {
         return matchService.findActiveMatches(userDetails.login, page)
             .map { it.asMatchDto() }
