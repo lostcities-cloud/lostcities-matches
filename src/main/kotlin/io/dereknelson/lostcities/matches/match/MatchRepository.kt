@@ -27,7 +27,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
             matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
         ) AND matchEntity.isReady = TRUE
     ORDER BY
-        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END,
+        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END asc,
         matchEntity.lastModifiedDate asc
         """,
     )
@@ -51,7 +51,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     FROM MatchEntity matchEntity
     WHERE
         ( matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName ) AND
-        matchEntity.isCompleted = TRUE
+        matchEntity.isCompleted
         """,
     )
     fun findCompletedMatches(playerName: String, page: Pageable): Page<MatchEntity>
@@ -61,9 +61,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         SELECT matchEntity
         FROM MatchEntity matchEntity
         WHERE
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
+        matchEntity.player2 is null
     """,
     )
     fun findOpenMatch(
@@ -77,9 +75,9 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         WHERE
         matchEntity.player1 != :player AND
         (matchEntity.matchRank between (:rank - :range) and (:rank + :range)) and
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false AND
+        matchEntity.player2 is null AND
+        matchEntity.isReady is false AND
+        matchEntity.isCompleted is false AND
         matchEntity.matchMakingCount < ${Constants.MAX_MATCH_ATTEMPTS}
     """,
     )
@@ -96,9 +94,9 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         FROM MatchEntity matchEntity
         WHERE
         matchEntity.player1 != :player AND
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false and
+        matchEntity.player2 is null AND
+        matchEntity.isReady is false AND
+        matchEntity.isCompleted is false and
         matchEntity.matchMakingCount < ${Constants.MAX_MATCH_ATTEMPTS}
     """,
     )
