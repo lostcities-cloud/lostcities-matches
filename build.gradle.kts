@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    jacoco
     id("org.springframework.boot") version "3.3.+"
     id("org.owasp.dependencycheck") version "11.0.0"
     id("com.github.rising3.semver") version "0.8.2"
@@ -219,3 +220,12 @@ tasks.withType<Test> {
 tasks.asciidoctor {
 	dependsOn(tasks.test)
 }
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport) // report is always generated after tests run
+}
+tasks.jacocoTestReport {
+    dependsOn(tasks.test) // tests are required to run before generating the report
+}
+
+
