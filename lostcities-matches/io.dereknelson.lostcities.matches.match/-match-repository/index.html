@@ -47,7 +47,7 @@
                     </a>
             </div>
             <div class="library-version">
-0.0.34            </div>
+0.0.35            </div>
         </div>
         <div class="filter-section" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">jvm</button>
@@ -261,7 +261,7 @@
             matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
         ) AND matchEntity.isReady = TRUE
     ORDER BY
-        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END,
+        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END asc,
         matchEntity.lastModifiedDate asc
         &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-active-matches.html"><span class="token function">findActiveMatches</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> playerName<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span> page</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
@@ -365,7 +365,7 @@
     FROM MatchEntity matchEntity
     WHERE
         ( matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName ) AND
-        matchEntity.isCompleted = TRUE
+        matchEntity.isCompleted
         &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-completed-matches.html"><span class="token function">findCompletedMatches</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> playerName<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span> page</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
               </div>
@@ -420,17 +420,15 @@
         SELECT matchEntity
         FROM MatchEntity matchEntity
         WHERE
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
+        matchEntity.player2 is null
     &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-open-match.html"><span class="token function">findOpenMatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/PageRequest///PointingToDeclaration/">PageRequest</span> page</span></span><span class="token punctuation">)</span></div><div class="symbol monospace block"><div class="block"><div class="block"><span class="token annotation builtin">@</span><span data-unresolved-link="org.springframework.data.jpa.repository/Query///PointingToDeclaration/"><span class="token annotation builtin">Query</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;
         SELECT matchEntity
         FROM MatchEntity matchEntity
         WHERE
         matchEntity.player1 != :player AND
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false and
+        matchEntity.player2 is null AND
+        matchEntity.isReady is false AND
+        matchEntity.isCompleted is false and
         matchEntity.matchMakingCount &lt; 10
     &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-open-match.html"><span class="token function">findOpenMatch</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> player<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/PageRequest///PointingToDeclaration/">PageRequest</span> page</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>
@@ -453,9 +451,9 @@
         WHERE
         matchEntity.player1 != :player AND
         (matchEntity.matchRank between (:rank - :range) and (:rank + :range)) and
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false AND
+        matchEntity.player2 is null AND
+        matchEntity.isReady is false AND
+        matchEntity.isCompleted is false AND
         matchEntity.matchMakingCount &lt; 10
     &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-open-match-in-range.html"><span class="token function">findOpenMatchInRange</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> player<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> rank<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html">Integer</a> range<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/PageRequest///PointingToDeclaration/">PageRequest</span> page</span></span><span class="token punctuation">)</span></div></div></div>
                 </div>

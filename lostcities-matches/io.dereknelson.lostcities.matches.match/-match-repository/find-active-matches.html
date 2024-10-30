@@ -47,7 +47,7 @@
                     </a>
             </div>
             <div class="library-version">
-0.0.34            </div>
+0.0.35            </div>
         </div>
         <div class="filter-section" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">jvm</button>
@@ -76,7 +76,7 @@
             matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
         ) AND matchEntity.isReady = TRUE
     ORDER BY
-        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END,
+        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END asc,
         matchEntity.lastModifiedDate asc
         &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-active-matches.html"><span class="token function">findActiveMatches</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> playerName<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span> page</span></span><span class="token punctuation">)</span></div></div></div>
 </div>
