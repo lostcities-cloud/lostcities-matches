@@ -89,6 +89,7 @@ internal class MatchServiceTest {
     @Test
     fun joinMatch() {
         val match = mock(MatchEntity::class.java)
+        `when`(match.player1).thenReturn("player1")
         `when`(match.player2).thenReturn(null)
         `when`(matchRepository.save(match)).thenReturn(match)
 
