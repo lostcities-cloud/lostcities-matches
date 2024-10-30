@@ -47,7 +47,7 @@
                     </a>
             </div>
             <div class="library-version">
-0.0.35            </div>
+0.0.36            </div>
         </div>
         <div class="filter-section" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">jvm</button>
@@ -74,7 +74,7 @@
     WHERE
         (
             matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
-        ) AND matchEntity.isReady = TRUE
+        ) AND matchEntity.isReady is true
     ORDER BY
         CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END asc,
         matchEntity.lastModifiedDate asc

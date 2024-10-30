@@ -47,7 +47,7 @@
                     </a>
             </div>
             <div class="library-version">
-0.0.35            </div>
+0.0.36            </div>
         </div>
         <div class="filter-section" id="filter-section">
                 <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":dokkaHtml/main">jvm</button>
@@ -72,9 +72,9 @@
     FROM MatchEntity matchEntity
     WHERE
         matchEntity.player1 &lt;&gt; :playerName AND
-        matchEntity.player2 = null AND
-        matchEntity.isReady = false AND
-        matchEntity.isCompleted = false
+        matchEntity.player2 is null AND
+        matchEntity.isReady is false AND
+        matchEntity.isCompleted is false
     &quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span></div></div><span class="token keyword">public </span><span class="token keyword">abstract </span><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Page///PointingToDeclaration/">Page</span><span class="token operator">&lt;</span><span class="token keyword"></span><a href="../-match-entity/index.html">MatchEntity</a><span class="token operator">&gt;</span> <a href="find-available-matches.html"><span class="token function">findAvailableMatches</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span><span class="token annotation builtin">@</span><span data-unresolved-link="org.springframework.data.repository.query/Param///PointingToDeclaration/"><span class="token annotation builtin">Param</span></span><span class="token punctuation">(</span><span>value<span class="token operator"> = </span><span class="breakable-word"><span class="token string">&quot;playerName&quot;</span></span></span><wbr></wbr><span class="token punctuation">)</span> </span><span class="token keyword"></span><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html">String</a> playerName<span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword"></span><span data-unresolved-link="org.springframework.data.domain/Pageable///PointingToDeclaration/">Pageable</span> page</span></span><span class="token punctuation">)</span></div></div></div>
 </div>
     <div class="footer">
