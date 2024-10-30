@@ -6,6 +6,7 @@ import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.dereknelson.lostcities.matches.match.MatchEventAmqpService
 import io.dereknelson.lostcities.matches.match.MatchRepository
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
@@ -14,7 +15,9 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
+import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
+import org.springframework.test.util.AssertionErrors.assertEquals
 import java.lang.RuntimeException
 import java.time.LocalDateTime
 import java.util.Optional
@@ -88,18 +91,14 @@ internal class MatchServiceTest {
 
     @Test
     fun joinMatch() {
-        val match = mock(MatchEntity::class.java)
-        `when`(match.player1).thenReturn("player1")
-        `when`(match.player2).thenReturn(null)
-        `when`(matchRepository.save(match)).thenReturn(match)
+        val match = MatchEntity(seed = 1L, player1 = "player1")
+        `when`(matchRepository.save(any())).thenReturn(match)
 
         matchService.joinMatch(match, user2)
 
         verify(matchRepository).save(match)
 
-        verify(match).let {
-            it.player2 = user2
-            it.isReady = true
-        }
+        assertEquals("User 2 is set", user2, match.player2)
+        assertTrue(match.isReady)
     }
 }
