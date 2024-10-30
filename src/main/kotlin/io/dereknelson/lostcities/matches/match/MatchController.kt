@@ -77,6 +77,10 @@ class MatchController(
         val match = matchService.findById(id)
             .orElseThrow { ResponseStatusException(HttpStatus.NOT_FOUND) }
 
+        if (match.player2 == null) {
+            throw ResponseStatusException(HttpStatus.NOT_MODIFIED)
+        }
+
         matchService.joinMatch(match, userDetails.login)
     }
 

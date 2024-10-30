@@ -5,6 +5,8 @@ import io.dereknelson.lostcities.matches.match.MatchEventAmqpListener
 import io.dereknelson.lostcities.matches.match.MatchEventAmqpService
 import io.dereknelson.lostcities.matches.match.MatchRepository
 import io.dereknelson.lostcities.matches.match.UnableToJoinMatchException
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -18,7 +20,7 @@ class MatchService(
     private var rankService: RankService,
     private var eventService: MatchEventAmqpService,
 ) {
-
+    val logger: Logger = LoggerFactory.getLogger(MatchService::class.java)
     private val random: Random = Random()
 
     fun findById(id: Long) = matchRepository.findById(id)
@@ -27,8 +29,9 @@ class MatchService(
         return matchRepository.findActiveMatches(player, page)
     }
 
-    fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> =
-        matchRepository.findCompletedMatches(player, page)
+    fun findCompletedMatches(player: String, page: Pageable): Page<MatchEntity> {
+        return matchRepository.findCompletedMatches(player, page)
+    }
 
     fun findAvailableMatches(player: String, page: Pageable): Page<MatchEntity> {
         return matchRepository.findAvailableMatches(player, page)
@@ -83,6 +86,8 @@ class MatchService(
         match.player2 = user
         match.isReady = true
 
+        match.currentPlayer = listOf(match.player1, match.player2).shuffled().first()!!
+
         val savedMatch = matchRepository.save(match)
 
         eventService.convertAndSend(
@@ -135,7 +140,7 @@ class MatchService(
     }
 
     private fun updatePlayerScore(match: MatchEntity, player: String, score: Int) {
-        println("Finish game: $player: $score")
+        logger.info("Finish game: $player: $score")
         if (match.player1 === player) {
             match.score1 = score
         } else {

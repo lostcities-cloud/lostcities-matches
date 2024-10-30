@@ -25,9 +25,10 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     WHERE
         (
             matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
-        ) AND
-        matchEntity.isReady = TRUE
-    ORDER BY matchEntity.lastModifiedDate
+        ) AND matchEntity.isReady = TRUE
+    ORDER BY
+        CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END,
+        matchEntity.lastModifiedDate asc
         """,
     )
     fun findActiveMatches(playerName: String, page: Pageable): Page<MatchEntity>

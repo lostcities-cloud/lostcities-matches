@@ -4,6 +4,8 @@ import io.dereknelson.lostcities.matches.MatchService
 import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.dereknelson.lostcities.matches.match.MatchRepository
 import jakarta.transaction.Transactional
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
@@ -18,6 +20,8 @@ class Matchmaker(
     val matchService: MatchService,
     val matchRepository: MatchRepository,
 ) {
+    val logger: Logger = LoggerFactory.getLogger(Matchmaker::class.java)
+
     @Scheduled(fixedDelay = 30, timeUnit = TimeUnit.MINUTES)
     fun retryMaxAttemptMatches() {
         var pageable: Pageable = PageRequest.of(
@@ -39,7 +43,7 @@ class Matchmaker(
     fun matchMake() {
         val toMatch = matchService.findUnrankedMatch()
         if (toMatch.isEmpty) {
-            println("No matches available")
+            logger.info("No matches available")
             return
         }
 
@@ -47,7 +51,7 @@ class Matchmaker(
         val matching = findMatchPair(match1)
 
         if (matching.isEmpty) {
-            println("Unable to find match for ${match1.id}")
+            logger.info("Unable to find match for ${match1.id}")
             matchService.increment(match1)
             return
         }

@@ -6,6 +6,8 @@ import io.dereknelson.lostcities.matches.FinishGameScore
 import io.dereknelson.lostcities.matches.MatchService
 import io.dereknelson.lostcities.models.matches.FinishMatchEvent
 import io.dereknelson.lostcities.models.matches.TurnChangeEvent
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.amqp.core.Message
 import org.springframework.amqp.core.QueueBuilder
 import org.springframework.amqp.rabbit.annotation.RabbitListener
@@ -22,7 +24,7 @@ class MatchEventAmqpListener(
     val matchRepository: MatchRepository,
     val matchService: MatchService,
 ) {
-
+    val logger: Logger = LoggerFactory.getLogger(MatchEventAmqpListener::class.java)
     companion object {
         const val TURN_CHANGE_EVENT = "turn-change"
         const val TURN_CHANGE_EVENT_DLQ = "turn-change-dlq"
@@ -81,7 +83,7 @@ class MatchEventAmqpListener(
     fun gameEvent(gameMessage: Message) {
         val turnChangeEvent = objectMapper.readValue(gameMessage.body, TurnChangeEvent::class.java)
 
-        println(turnChangeEvent.toString())
+        logger.info(turnChangeEvent.toString())
 
         val match = matchRepository.findById(turnChangeEvent.matchId)
 
@@ -120,7 +122,7 @@ class MatchEventAmqpListener(
 
             events.publishEvent(scoreEvent)
 
-            println("Finished: $finishMatch")
+            logger.info("Finished: $finishMatch")
 
             matchService.finishGame(finishMatch.id, finishMatch.finishedAt, finishMatch.scores)
         } catch (e: RuntimeException) {
