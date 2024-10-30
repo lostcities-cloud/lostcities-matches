@@ -20,7 +20,7 @@ variable count {
 
 variable max_parallel {
     type = number
-    default = 2
+    default = 6
 }
 
 variable profile {
