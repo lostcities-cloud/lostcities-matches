@@ -89,7 +89,7 @@ class MatchEventAmqpListener(
     fun gameEvent(gameMessage: Message) {
         val turnChangeEvent = objectMapper.readValue(gameMessage.body, TurnChangeEvent::class.java)
 
-        logger.info(turnChangeEvent.toString())
+        logger.debug(TURN_CHANGE_EVENT, turnChangeEvent.toString())
 
         val match = matchRepository.findById(turnChangeEvent.matchId)
 
