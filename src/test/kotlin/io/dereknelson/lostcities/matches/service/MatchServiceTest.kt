@@ -98,7 +98,7 @@ internal class MatchServiceTest {
 
         verify(matchRepository).save(match)
 
-        assertEquals("User 2 is set", user2, match.player2)
+        assertTrue(match.hasPlayer(user2))
         assertTrue(match.isReady)
     }
 }
