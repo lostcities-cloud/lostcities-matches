@@ -26,10 +26,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @ComponentScan(
     "io.dereknelson.lostcities.matches.rank",
     "io.dereknelson.lostcities.matches",
-    "io.dereknelson.lostcities.matches.library",
-    "io.dereknelson.lostcities.matches.config",
-    "io.dereknelson.lostcities.matches",
-    "io.dereknelson.lostcities.matches",
     "io.dereknelson.lostcities.common",
 )
 @EnableJpaRepositories
