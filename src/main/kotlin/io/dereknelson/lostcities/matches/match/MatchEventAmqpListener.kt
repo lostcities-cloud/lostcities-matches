@@ -38,6 +38,7 @@ class MatchEventAmqpListener(
     @Qualifier(CREATE_GAME_QUEUE)
     fun createGame() = QueueBuilder
         .durable(CREATE_GAME_QUEUE)
+        .quorum()
         .ttl(5000)
         .withArgument("x-dead-letter-exchange", "")
         .withArgument("x-dead-letter-routing-key", CREATE_GAME_QUEUE_DLQ)
@@ -47,12 +48,14 @@ class MatchEventAmqpListener(
     @Qualifier(CREATE_GAME_QUEUE_DLQ)
     fun createGameDlQueue() = QueueBuilder
         .durable(CREATE_GAME_QUEUE_DLQ)
+        .quorum()
         .build()!!
 
     @Bean
     @Qualifier(TURN_CHANGE_EVENT)
     fun turnChangeEventQueue() = QueueBuilder
         .durable(TURN_CHANGE_EVENT)
+        .quorum()
         .ttl(5000)
         .withArgument("x-dead-letter-exchange", "")
         .withArgument("x-dead-letter-routing-key", TURN_CHANGE_EVENT_DLQ)
@@ -62,12 +65,14 @@ class MatchEventAmqpListener(
     @Qualifier(TURN_CHANGE_EVENT_DLQ)
     fun turnChangeEventDLQueue() = QueueBuilder
         .durable(TURN_CHANGE_EVENT_DLQ)
+        .quorum()
         .build()!!
 
     @Bean
     @Qualifier(END_GAME_EVENT)
     fun endGameEventQueue() = QueueBuilder
         .durable(END_GAME_EVENT)
+        .quorum()
         .ttl(5000)
         .withArgument("x-dead-letter-exchange", "")
         .withArgument("x-dead-letter-routing-key", END_GAME_EVENT_DLQ)
@@ -77,6 +82,7 @@ class MatchEventAmqpListener(
     @Qualifier(END_GAME_EVENT_DLQ)
     fun endGameEventDLQueue() = QueueBuilder
         .durable(END_GAME_EVENT_DLQ)
+        .quorum()
         .build()!!
 
     @RabbitListener(queues = [TURN_CHANGE_EVENT], exclusive = true)
