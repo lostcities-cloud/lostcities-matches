@@ -82,7 +82,7 @@ class MatchService(
         if (match.hasPlayer(user) || match.player2 != null) {
             throw UnableToJoinMatchException()
         }
-
+        match.player2 = user
         match.randomizePlayers()
         match.isReady = true
 
