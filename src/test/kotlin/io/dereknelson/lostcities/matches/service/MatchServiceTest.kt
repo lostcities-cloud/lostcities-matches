@@ -17,7 +17,6 @@ import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import org.mockito.kotlin.any
 import org.mockito.kotlin.verify
-import org.springframework.test.util.AssertionErrors.assertEquals
 import java.lang.RuntimeException
 import java.time.LocalDateTime
 import java.util.Optional
