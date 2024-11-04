@@ -38,6 +38,9 @@ class MatchEntity(
     @Column(name = "current_turn")
     var currentPlayer: String? = null,
 
+    @Column(name = "turns")
+    var turns: Int = 0,
+
     @Column(name = "score_1")
     var score1: Int = 0,
 
@@ -59,7 +62,6 @@ class MatchEntity(
     @Column(name = "finished_at")
     var finishedAt: LocalDateTime? = null,
 ) : AbstractAuditingEntity(), Serializable {
-
     companion object {
         private const val serialVersionUID = 1L
 
@@ -69,6 +71,22 @@ class MatchEntity(
                 seed = seed,
             )
         }
+    }
+
+    fun randomizePlayers() {
+        if (isReady) {
+            throw RuntimeException("Cannot randomize players after game has started.")
+        }
+
+        if (player2 == null) {
+            throw RuntimeException("Cannot randomize a game without 2 players.")
+        }
+
+        val players = listOf(player1, player2).shuffled()
+
+        player1 = players[0]!!
+        player2 = players[1]!!
+        currentPlayer = player1
     }
 
     fun hasPlayer(name: String) = player1 == name || player2 == name

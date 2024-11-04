@@ -83,10 +83,8 @@ class MatchService(
             throw UnableToJoinMatchException()
         }
 
-        match.player2 = user
+        match.randomizePlayers()
         match.isReady = true
-
-        match.currentPlayer = listOf(match.player1, match.player2).shuffled().first()!!
 
         val savedMatch = matchRepository.save(match)
 

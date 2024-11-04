@@ -24,7 +24,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 )
 @EnableConfigurationProperties(WebConfigProperties::class)
 @ComponentScan(
-    "io.dereknelson.lostcities.matches.rank",
     "io.dereknelson.lostcities.matches",
     "io.dereknelson.lostcities.common",
 )
