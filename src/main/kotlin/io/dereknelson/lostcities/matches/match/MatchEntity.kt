@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.match
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
 import jakarta.persistence.*
 import java.io.Serializable
@@ -23,9 +24,11 @@ class MatchEntity(
     @Column(name = "seed")
     var seed: Long,
 
+    @JsonIgnore
     @Column(name = "match_rank")
     var matchRank: Int = 0,
 
+    @JsonIgnore
     @Column(name = "match_make_count")
     var matchMakingCount: Int? = 0,
 
@@ -38,6 +41,7 @@ class MatchEntity(
     @Column(name = "current_turn")
     var currentPlayer: String? = null,
 
+    @JsonIgnore
     @Column(name = "turns")
     var turns: Int = 0,
 
@@ -47,18 +51,23 @@ class MatchEntity(
     @Column(name = "score_2")
     var score2: Int = 0,
 
+    @JsonIgnore
     @Column(name = "conceded_by")
     var concededBy: String? = null,
 
+    @JsonIgnore
     @Column(name = "is_ready")
     var isReady: Boolean = false,
 
+    @JsonIgnore
     @Column(name = "is_started")
     var isStarted: Boolean = false,
 
+    @JsonIgnore
     @Column(name = "is_completed")
     var isCompleted: Boolean = false,
 
+    @JsonIgnore
     @Column(name = "finished_at")
     var finishedAt: LocalDateTime? = null,
 ) : AbstractAuditingEntity(), Serializable {
