@@ -112,11 +112,13 @@ job "matches" {
                 ports = ["service-port", "management-port"]
 
                 logging {
-                  type = "journald"
-                  config {
-                    mode            = "non-blocking"
-                    max-buffer-size = "16m"
-                  }
+                    driver = "journald"
+                    options = [
+                        {
+                            "job" = "lostcities-matches"
+                        }
+                    ]
+
                 }
             }
 
