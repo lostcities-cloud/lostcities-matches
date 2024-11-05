@@ -43,7 +43,7 @@ class MatchEntity(
 
     @JsonIgnore
     @Column(name = "turns")
-    var turns: Int = 0,
+    var turns: Long = 0,
 
     @Column(name = "score_1")
     var score1: Int = 0,
