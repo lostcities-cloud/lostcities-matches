@@ -96,6 +96,7 @@ class MatchEventAmqpListener(
         match.ifPresent {
             it.currentPlayer = turnChangeEvent.nextPlayer
             it.turns = turnChangeEvent.turns
+            it.isStarted = true
             matchRepository.save(it)
         }
     }
