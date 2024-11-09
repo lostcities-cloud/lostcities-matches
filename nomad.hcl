@@ -142,7 +142,7 @@ job "matches" {
           driver = "journald"
           options = [
             {
-              "job" = "lostcities-matches"
+              "tag" = "redis"
             }
           ]
 
