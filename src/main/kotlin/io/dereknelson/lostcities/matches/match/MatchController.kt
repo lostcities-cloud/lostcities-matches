@@ -48,7 +48,7 @@ class MatchController(
     @Transactional
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @RequestParam("ai") ai: Boolean = false,
+        @ModelAttribute("isAi") ai: Boolean = false,
     ): MatchDto {
         val matchEntity = MatchEntity.buildMatch(player = userDetails.login, random.nextLong())
 
