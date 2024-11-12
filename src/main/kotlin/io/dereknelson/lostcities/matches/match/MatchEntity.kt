@@ -99,7 +99,7 @@ class MatchEntity(
 
         val players = listOf(
             PlayerObj(player1, isPlayer1Ai),
-            PlayerObj(player2!!, isPlayer2Ai)
+            PlayerObj(player2!!, isPlayer2Ai),
         ).shuffled()
 
         player1 = players[0].player
@@ -112,6 +112,5 @@ class MatchEntity(
 
     fun hasPlayer(name: String) = player1 == name || player2 == name
 }
-
 
 data class PlayerObj(val player: String, val aiPlayer: Boolean)
