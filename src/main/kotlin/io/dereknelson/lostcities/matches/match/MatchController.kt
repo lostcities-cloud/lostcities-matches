@@ -156,4 +156,3 @@ class MatchController(
 }
 
 data class AiPlayer(val isAi: Boolean = false)
-
