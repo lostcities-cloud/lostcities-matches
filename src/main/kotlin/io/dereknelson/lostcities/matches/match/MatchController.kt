@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.match
 
+import io.dereknelson.lostcities.common.Constants.AI_USER_NAMES
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
 import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.MatchService
@@ -14,6 +15,7 @@ import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import java.util.*
@@ -43,17 +45,18 @@ class MatchController(
     )
     @PostMapping("", "/")
     @ResponseStatus(HttpStatus.CREATED)
+    @Transactional
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
         @RequestParam("ai") ai: Boolean = false,
     ): MatchDto {
-        if (ai) {
-            throw ResponseStatusException(HttpStatus.NOT_IMPLEMENTED)
-        }
+        val matchEntity = MatchEntity.buildMatch(player = userDetails.login, random.nextLong())
 
-        val match = matchService.create(
-            MatchEntity.buildMatch(player = userDetails.login, random.nextLong()),
-        )
+        val match = matchService.create(matchEntity)
+
+        if (ai) {
+            return matchService.joinMatch(match, AI_USER_NAMES.random(), true).asMatchDto()
+        }
 
         return match.asMatchDto()
     }

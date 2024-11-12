@@ -78,7 +78,7 @@ class MatchService(
         matchRepository.save(match)
     }
 
-    fun joinMatch(match: MatchEntity, user: String): MatchEntity {
+    fun joinMatch(match: MatchEntity, user: String, isAiPlayer: Boolean = false): MatchEntity {
         if (match.hasPlayer(user) || match.player2 != null) {
             throw UnableToJoinMatchException()
         }

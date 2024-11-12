@@ -38,6 +38,12 @@ class MatchEntity(
     @Column(name = "player_2")
     var player2: String? = null,
 
+    @Column(name = "player_1_ai")
+    var isPlayer1Ai: Boolean = false,
+
+    @Column(name = "player_2_ai")
+    var isPlayer2Ai: Boolean = false,
+
     @Column(name = "current_turn")
     var currentPlayer: String? = null,
 
