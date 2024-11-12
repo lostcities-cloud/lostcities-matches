@@ -97,12 +97,21 @@ class MatchEntity(
             throw RuntimeException("Cannot randomize a game without 2 players.")
         }
 
-        val players = listOf(player1, player2).shuffled()
+        val players = listOf(
+            PlayerObj(player1, isPlayer1Ai),
+            PlayerObj(player2!!, isPlayer2Ai)
+        ).shuffled()
 
-        player1 = players[0]!!
-        player2 = players[1]!!
+        player1 = players[0].player
+        isPlayer1Ai = players[0].aiPlayer
+        player2 = players[1].player
+        isPlayer2Ai = players[1].aiPlayer
+
         currentPlayer = player1
     }
 
     fun hasPlayer(name: String) = player1 == name || player2 == name
 }
+
+
+data class PlayerObj(val player: String, val aiPlayer: Boolean)

@@ -83,6 +83,8 @@ class MatchService(
             throw UnableToJoinMatchException()
         }
         match.player2 = user
+        match.isPlayer2Ai = isAiPlayer
+
         match.randomizePlayers()
         match.isReady = true
 
