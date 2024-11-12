@@ -49,6 +49,7 @@ class MatchController(
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
         @RequestParam("isAi") ai: Boolean = false,
+        @RequestBody aiPlayer: AiPlayer = AiPlayer(false),
     ): MatchDto {
         val matchEntity = MatchEntity.buildMatch(player = userDetails.login, random.nextLong())
 
@@ -153,3 +154,6 @@ class MatchController(
         )
     }
 }
+
+data class AiPlayer(val isAi: Boolean = false)
+
