@@ -39,10 +39,10 @@ class MatchEntity(
     var player2: String? = null,
 
     @Column(name = "player_1_ai")
-    var isPlayer1Ai: Boolean = false,
+    var isPlayer1Ai: Boolean? = false,
 
     @Column(name = "player_2_ai")
-    var isPlayer2Ai: Boolean = false,
+    var isPlayer2Ai: Boolean? = false,
 
     @Column(name = "current_turn")
     var currentPlayer: String? = null,
@@ -98,8 +98,8 @@ class MatchEntity(
         }
 
         val players = listOf(
-            PlayerObj(player1, isPlayer1Ai),
-            PlayerObj(player2!!, isPlayer2Ai),
+            PlayerObj(player1, if (isPlayer1Ai != null) isPlayer1Ai!! else false),
+            PlayerObj(player2!!, if (isPlayer2Ai != null) isPlayer2Ai!! else false),
         ).shuffled()
 
         player1 = players[0].player

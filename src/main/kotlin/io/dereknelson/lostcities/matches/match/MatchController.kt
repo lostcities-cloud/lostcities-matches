@@ -2,8 +2,9 @@ package io.dereknelson.lostcities.matches.match
 
 import io.dereknelson.lostcities.common.Constants.AI_USER_NAMES
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
-import io.dereknelson.lostcities.common.model.match.UserPair
 import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.models.state.MatchDto
+import io.dereknelson.lostcities.models.state.UserPair
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -55,7 +56,7 @@ class MatchController(
         val match = matchService.create(matchEntity)
 
         if (aiPlayer.isAi) {
-            return matchService.joinMatch(match, AI_USER_NAMES.random(), true).asMatchDto()
+            return matchService.joinMatch(match, AI_USER_NAMES.random(), isAiPlayer = true).asMatchDto()
         }
 
         return match.asMatchDto()
@@ -143,6 +144,8 @@ class MatchController(
             UserPair(
                 user1 = player1,
                 user2 = player2,
+                isPlayer1Ai = isPlayer1Ai!!,
+                isPlayer2Ai = isPlayer2Ai!!,
                 score1 = score1,
                 score2 = score2,
             ),
