@@ -101,7 +101,12 @@ job "matches" {
     service {
       name = "matches-management"
       port = "management-port"
-      tags = ["urlprefix-/management/matches/actuator"]
+      tags = [
+        "prometheus",
+        "urlprefix-/management/matches/actuator",
+        "metricspath-/management/matches/actuator/prometheus"
+      ]
+
       #address_mode = "alloc"
 
       check {
