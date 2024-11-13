@@ -9,7 +9,7 @@ plugins {
 	id("org.asciidoctor.convert") version "1.5.8"
     id("org.jetbrains.dokka") version "2.0.0-Beta"
     id("com.google.cloud.tools.jib") version "3.4.4"
-	//id("com.gorylenko.gradle-git-properties") version "2.3.1-rc1"
+    id("org.openrewrite.rewrite") version "6.27.0"
 
     kotlin("jvm") version "2.0.+"
     kotlin("plugin.spring") version "2.0.+"
@@ -68,7 +68,15 @@ configurations.matching { it.name.startsWith("dokka") }.configureEach {
     }
 }
 
+rewrite {
+    activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
+    //exportDatatables = true
+}
+
 dependencies {
+    rewrite("org.openrewrite:rewrite-kotlin:1.21.2")
+    rewrite("org.openrewrite.recipe:rewrite-spring:5.22.0")
+
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
 
     if(  rootProject.hasProperty("debug")){
