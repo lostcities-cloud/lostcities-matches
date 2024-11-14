@@ -125,6 +125,7 @@ job "matches" {
 
       env {
         SPRING_PROFILES_ACTIVE = var.profile
+        JAVA_OPTS="-XX:+UseSerialGC -Xss512k -XX:MaxRAM=72m"
       }
 
       resources {
