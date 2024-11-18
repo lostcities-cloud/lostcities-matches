@@ -11,10 +11,6 @@ spring:
       dev: dev
   jmx:
     enabled: false
-  data:
-    jpa:
-      repositories:
-        bootstrap-mode: deferred
   jpa:
     open-in-view: false
     properties:
@@ -45,10 +41,8 @@ spring:
     basename: i18n/messages
   main:
     allow-bean-definition-overriding: true
-  output.ansi:
-    enabled: DETECT
-    console-available: true
-
+  output.ansi.enabled: DETECT
+  threads.virtual.enabled: true
 server:
   port: 8080
   forward-headers-strategy: framework
