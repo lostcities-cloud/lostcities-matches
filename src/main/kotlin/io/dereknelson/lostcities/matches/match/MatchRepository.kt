@@ -25,7 +25,9 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     WHERE
         (
             matchEntity.player1 = :playerName OR matchEntity.player2 = :playerName
-        ) AND matchEntity.isReady is true
+        ) AND
+        matchEntity.isReady is true AND
+        matchEntity.isCompleted is false
     ORDER BY
         CASE WHEN matchEntity.currentPlayer = :playerName THEN 1 ELSE 2 END asc,
         matchEntity.lastModifiedDate asc
