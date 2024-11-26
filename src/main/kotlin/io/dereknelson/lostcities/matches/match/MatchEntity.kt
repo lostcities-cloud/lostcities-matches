@@ -1,7 +1,7 @@
 package io.dereknelson.lostcities.matches.match
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import io.dereknelson.lostcities.common.library.AbstractAuditingEntity
+import io.dereknelson.lostcities.common.auditing.AbstractAuditingEntity
 import jakarta.persistence.*
 import java.io.Serializable
 import java.time.LocalDateTime
