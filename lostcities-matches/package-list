@@ -1,5 +1,9 @@
 $dokka.format:html-v1
 $dokka.linkExtension:html
+$dokka.location:io.dereknelson.lostcities.matches.admin////PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.admin/index.html
+$dokka.location:io.dereknelson.lostcities.matches.admin/AdminController///PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.admin/-admin-controller/index.html
+$dokka.location:io.dereknelson.lostcities.matches.admin/AdminController/AdminController/#io.dereknelson.lostcities.matches.MatchService/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.admin/-admin-controller/-admin-controller.html
+$dokka.location:io.dereknelson.lostcities.matches.admin/AdminController/createAndJoin/#io.dereknelson.lostcities.common.auth.LostCitiesUserDetails#io.dereknelson.lostcities.matches.match.AiPlayer/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.admin/-admin-controller/create-and-join.html
 $dokka.location:io.dereknelson.lostcities.matches.archive////PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.archive/index.html
 $dokka.location:io.dereknelson.lostcities.matches.archive/MatchArchiveAmqpListener///PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.archive/-match-archive-amqp-listener/index.html
 $dokka.location:io.dereknelson.lostcities.matches.archive/MatchArchiveAmqpListener/MatchArchiveAmqpListener/#/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.archive/-match-archive-amqp-listener/-match-archive-amqp-listener.html
@@ -59,8 +63,10 @@ $dokka.location:io.dereknelson.lostcities.matches.library.cache/PrefixedKeyGener
 $dokka.location:io.dereknelson.lostcities.matches.library.cache/PrefixedKeyGenerator/getPrefix/#/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.library.cache/-prefixed-key-generator/get-prefix.html
 $dokka.location:io.dereknelson.lostcities.matches.match////PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/index.html
 $dokka.location:io.dereknelson.lostcities.matches.match/AiPlayer///PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-ai-player/index.html
-$dokka.location:io.dereknelson.lostcities.matches.match/AiPlayer/AiPlayer/#kotlin.Boolean/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-ai-player/-ai-player.html
+$dokka.location:io.dereknelson.lostcities.matches.match/AiPlayer/AiPlayer/#kotlin.Boolean#kotlin.Int/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-ai-player/-ai-player.html
+$dokka.location:io.dereknelson.lostcities.matches.match/AiPlayer/getCount/#/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-ai-player/get-count.html
 $dokka.location:io.dereknelson.lostcities.matches.match/AiPlayer/isAi/#/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-ai-player/is-ai.html
+$dokka.location:io.dereknelson.lostcities.matches.match/AiPlayer/setCount/#kotlin.Int/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-ai-player/set-count.html
 $dokka.location:io.dereknelson.lostcities.matches.match/ListenerException///PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-listener-exception/index.html
 $dokka.location:io.dereknelson.lostcities.matches.match/ListenerException/ListenerException/#/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-listener-exception/-listener-exception.html
 $dokka.location:io.dereknelson.lostcities.matches.match/MatchController///PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches.match/-match-controller/index.html
@@ -216,6 +222,7 @@ $dokka.location:io.dereknelson.lostcities.matches/RankService/RankService/#io.de
 $dokka.location:io.dereknelson.lostcities.matches/RankService/getPlayerRank/#kotlin.String/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches/-rank-service/get-player-rank.html
 $dokka.location:io.dereknelson.lostcities.matches/RankService/getRankRepository/#/PointingToDeclaration/lostcities-matches/io.dereknelson.lostcities.matches/-rank-service/get-rank-repository.html
 io.dereknelson.lostcities.matches
+io.dereknelson.lostcities.matches.admin
 io.dereknelson.lostcities.matches.archive
 io.dereknelson.lostcities.matches.config
 io.dereknelson.lostcities.matches.library.cache
