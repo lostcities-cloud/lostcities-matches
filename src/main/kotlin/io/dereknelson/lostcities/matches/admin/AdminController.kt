@@ -30,7 +30,7 @@ import java.util.Random
     "http://192.168.1.233:80",
     "*",
 )
-@RequestMapping("/admin")
+@RequestMapping("/matches/admin")
 class AdminController(
     private var matchService: MatchService,
 ) {
