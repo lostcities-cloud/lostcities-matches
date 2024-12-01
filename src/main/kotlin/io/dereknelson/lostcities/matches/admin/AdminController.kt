@@ -40,7 +40,7 @@ class AdminController (
     private var random: Random = Random()
 
     @Operation(
-        description = "Create and join a new match.",
+        description = "Create bulk ai matches.",
         security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @ApiResponses(
