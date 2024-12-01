@@ -1,13 +1,10 @@
 package io.dereknelson.lostcities.matches.admin
 
-
 import io.dereknelson.lostcities.common.Constants.AI_USER_NAMES
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
-
 import io.dereknelson.lostcities.matches.MatchService
 import io.dereknelson.lostcities.matches.match.AiPlayer
 import io.dereknelson.lostcities.matches.match.MatchEntity
-
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -34,7 +31,7 @@ import java.util.Random
     "*",
 )
 @RequestMapping("/admin")
-class AdminController (
+class AdminController(
     private var matchService: MatchService,
 ) {
     private var random: Random = Random()
@@ -54,13 +51,12 @@ class AdminController (
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     fun createAndJoin(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
-        @RequestBody aiPlayer: AiPlayer = AiPlayer(true,  count = 1000),
+        @RequestBody aiPlayer: AiPlayer = AiPlayer(true, count = 1000),
     ) {
         while (aiPlayer.count-- > 0) {
             val matchEntity = MatchEntity.buildMatch(player = AI_USER_NAMES.random(), random.nextLong())
 
             val match = matchService.create(matchEntity)
-
 
             val player2 = AI_USER_NAMES.filter { it != matchEntity.player1 }.random()
             matchService.joinMatch(match, player2, isAiPlayer = true)
