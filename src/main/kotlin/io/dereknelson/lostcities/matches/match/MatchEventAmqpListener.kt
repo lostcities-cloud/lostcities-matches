@@ -56,7 +56,7 @@ class MatchEventAmqpListener(
     fun turnChangeEventQueue() = QueueBuilder
         .durable(TURN_CHANGE_EVENT)
         .quorum()
-        .ttl(5000)
+        .ttl(30000)
         .withArgument("x-dead-letter-exchange", "")
         .withArgument("x-dead-letter-routing-key", TURN_CHANGE_EVENT_DLQ)
         .build()!!
