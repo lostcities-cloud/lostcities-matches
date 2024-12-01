@@ -55,6 +55,7 @@ class AdminController(
     ) {
         while (aiPlayer.count-- > 0) {
             val matchEntity = MatchEntity.buildMatch(player = AI_USER_NAMES.random(), random.nextLong())
+            matchEntity.isPlayer1Ai = true
 
             val match = matchService.create(matchEntity)
 
