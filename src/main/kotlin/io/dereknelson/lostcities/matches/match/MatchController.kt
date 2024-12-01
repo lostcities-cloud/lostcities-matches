@@ -157,4 +157,7 @@ class MatchController(
     }
 }
 
-data class AiPlayer(val isAi: Boolean = false)
+data class AiPlayer(
+    val isAi: Boolean = false,
+    var count: Int = 0
+)

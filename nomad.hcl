@@ -90,7 +90,7 @@ job "matches" {
     service {
       name = "matches-service"
       port = "service-port"
-      tags = ["urlprefix-/api/matches"]
+      tags = ["urlprefix-lostcities.app/api/matches"]
       #address_mode = "alloc"
 
       check {
@@ -109,7 +109,7 @@ job "matches" {
       port = "management-port"
       tags = [
         "prometheus",
-        "urlprefix-/management/matches/actuator",
+        "urlprefix-lostcities.app/management/matches/actuator",
         "metricspath-/management/matches/actuator/prometheus"
       ]
 
