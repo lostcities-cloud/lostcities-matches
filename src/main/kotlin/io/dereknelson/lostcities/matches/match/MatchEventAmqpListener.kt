@@ -85,7 +85,7 @@ class MatchEventAmqpListener(
         .quorum()
         .build()!!
 
-    @RabbitListener(queues = [TURN_CHANGE_EVENT], exclusive = true)
+    @RabbitListener(queues = [TURN_CHANGE_EVENT], exclusive = false, concurrency = "1-8")
     fun gameEvent(gameMessage: Message) {
         val turnChangeEvent = objectMapper.readValue(gameMessage.body, TurnChangeEvent::class.java)
 
