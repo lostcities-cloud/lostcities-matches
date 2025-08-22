@@ -6,6 +6,6 @@ import java.util.Optional
 
 @Repository
 interface RankRepository : JpaRepository<PlayerRankEntity, Long> {
-    // @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
+
     fun findPlayerRankEntityByPlayer(player: String): Optional<PlayerRankEntity>
 }

@@ -5,26 +5,23 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
   jackson.serialization.indent-output: true
   datasource:
     #type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${POSTGRES_IP}:5432/lostcities-matches
-    username: matches
-    password: example
+    url: jdbc:postgresql://${POSTGRES_IP:matches-database}:${POSTGRES_PORT:5432}/lostcities-matches
+    username: ${POSTGRES_USER:matches}
+    password: ${POSTGRES_PASSWORD:example}
   flyway:
     enabled: false
-    url: jdbc:postgresql://${POSTGRES_IP}/lostcities-matches
-    user: matches
-    password: example
 
   rabbitmq:
-    addresses: ${RABBITMQ_IP}
+    addresses: ${RABBITMQ_IP:rabbitmq}
     port: 5672
-    username: guest
-    password: guest
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
 
 application:
   security:

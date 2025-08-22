@@ -13,11 +13,6 @@ import org.springframework.stereotype.Repository
 @Repository
 interface MatchRepository : JpaRepository<MatchEntity, Long> {
 
-    companion object {
-        const val MATCHES_BY_PLAYER_CACHE: String = "usersByPlayer"
-    }
-
-    // @Cacheable(cacheNames = [MATCHES_BY_PLAYER_CACHE])
     @Query(
         """
     SELECT matchEntity
@@ -67,7 +62,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     """,
     )
     fun findOpenMatch(
-        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
+        page: Pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
     ): Page<MatchEntity>
 
     @Query(
@@ -87,7 +82,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
         player: String,
         rank: Int,
         range: Int,
-        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
+        page: Pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.ASC, "createdDate")),
     ): Page<MatchEntity>
 
     @Query(
@@ -104,7 +99,7 @@ interface MatchRepository : JpaRepository<MatchEntity, Long> {
     )
     fun findOpenMatch(
         player: String,
-        page: PageRequest = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "lastModifiedDate")),
+        page: Pageable = PageRequest.of(0, 1, Sort.by(Sort.Direction.DESC, "lastModifiedDate")),
     ): Page<MatchEntity>
 
     @Query(

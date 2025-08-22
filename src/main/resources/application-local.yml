@@ -22,6 +22,12 @@ spring:
     username: guest
     password: guest
 
+server:
+  port: 8081
+
+management:
+  server:
+    port: 4453
 
 application:
   security:
