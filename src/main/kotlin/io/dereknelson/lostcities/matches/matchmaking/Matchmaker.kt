@@ -43,7 +43,7 @@ class Matchmaker(
     fun matchMake() {
         val toMatch = matchService.findUnrankedMatch()
         if (toMatch.isEmpty) {
-            logger.info("No matches available")
+            //logger.info("No matches available")
             return
         }
 
@@ -51,7 +51,7 @@ class Matchmaker(
         val matching = findMatchPair(match1)
 
         if (matching.isEmpty) {
-            logger.info("Unable to find match for ${match1.id}")
+            //logger.info("Unable to find match for ${match1.id}")
             matchService.increment(match1)
             return
         }

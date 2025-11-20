@@ -3,6 +3,7 @@ package io.dereknelson.lostcities.matches.config
 import io.dereknelson.lostcities.common.AuthoritiesConstants
 import io.dereknelson.lostcities.common.WebConfigProperties
 import io.dereknelson.lostcities.common.auth.JwtFilter
+import io.dereknelson.lostcities.common.auth.PublicTokenValidator
 import io.dereknelson.lostcities.common.auth.TokenProvider
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
@@ -34,7 +35,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
     scheme = "bearer",
 )
 class SecurityConfiguration(
-    private val tokenProvider: TokenProvider,
+    private val publicTokenValidator: PublicTokenValidator,
 ) {
     @Bean
     fun forwardedHeaderFilter(): ForwardedHeaderFilter? {
@@ -62,13 +63,13 @@ class SecurityConfiguration(
     fun corsMappingConfigurer(webConfigProperties: WebConfigProperties): WebMvcConfigurer {
         return object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
-                val cors: WebConfigProperties.Cors = webConfigProperties.cors
+                val cors: WebConfigProperties = webConfigProperties
                 registry.addMapping("/**")
-                    .allowedOrigins(*cors.allowedOrigins)
-                    .allowedMethods(*cors.allowedMethods)
+                    .allowedOrigins(*cors.allowedOrigins.toTypedArray())
+                    .allowedMethods(*cors.allowedMethods.toTypedArray())
                     .maxAge(cors.maxAge)
-                    .allowedHeaders(*cors.allowedHeaders)
-                    .exposedHeaders(*cors.exposedHeaders)
+                    .allowedHeaders(*cors.allowedHeaders.toTypedArray())
+                    .exposedHeaders(*cors.exposedHeaders.toTypedArray())
             }
         }
     }
@@ -79,7 +80,7 @@ class SecurityConfiguration(
 
         http.csrf { it.disable() }
             .cors { it.configure(http) }
-            .addFilterBefore(JwtFilter(tokenProvider), UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(JwtFilter(publicTokenValidator), UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling {}
             .headers { headersConfigurer ->
                 headersConfigurer.contentSecurityPolicy {

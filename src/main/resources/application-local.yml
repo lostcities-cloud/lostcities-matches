@@ -2,16 +2,17 @@ spring:
   application.name: matches
   devtools.restart.enabled: true
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
   jackson.serialization.indent-output: true
   datasource:
     #type: com.zaxxer.hikari.HikariDataSource
-    driver-class-name: org.h2.Driver
-
-    url: jdbc:h2:./h2/match-db
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5433}/lostcities-matches
+    username: ${POSTGRES_USER:matches}
+    password: ${POSTGRES_PASSWORD:example}
   flyway:
     enabled: false
     url: jdbc:h2:./h2/match-db

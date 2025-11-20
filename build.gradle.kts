@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     jacoco
-    id("org.springframework.boot") version "3.3.+"
+    id("org.springframework.boot") version "3.2.+"
     id("org.owasp.dependencycheck") version "11.0.0"
     id("com.github.rising3.semver") version "0.8.2"
     id("io.spring.dependency-management") version "1.1.+"
 	id("org.asciidoctor.convert") version "1.5.8"
-    id("org.jetbrains.dokka") version "2.0.0"
+    id("org.jetbrains.dokka") version "2.1.0"
     id("com.google.cloud.tools.jib") version "3.4.4"
     //id("org.openrewrite.rewrite") version "6.27.0"
 
@@ -60,14 +60,6 @@ dependencyManagement {
     }
 }
 
-configurations.matching { it.name.startsWith("dokka") }.configureEach {
-    resolutionStrategy.eachDependency {
-        if (requested.group.startsWith("com.fasterxml.jackson")) {
-            useVersion("2.15.3")
-        }
-    }
-}
-
 //rewrite {
 //    activeRecipe("org.openrewrite.java.spring.boot3.UpgradeSpringBoot_3_3")
     //exportDatatables = true
@@ -76,7 +68,7 @@ configurations.matching { it.name.startsWith("dokka") }.configureEach {
 val hibernateVersion: String = "6.5.+"
 val kotlinLoggingVersion: String = "3.0.+"
 val commonsLangVersion: String = "3.18.+"
-val jjwtVersion: String = "0.11.+"
+val jjwtVersion: String = "0.12.7"
 
 dependencies {
     //rewrite("org.openrewrite:rewrite-kotlin:1.21.2")
@@ -93,6 +85,9 @@ dependencies {
     }
 
     implementation("org.springframework.boot:spring-boot-devtools")
+
+    implementation("org.apache.httpcomponents.client5:httpclient5:5.5.1")
+    implementation("org.apache.httpcomponents.core5:httpcore5:5.3.6")
 
     implementation("io.github.microutils:kotlin-logging-jvm:${kotlinLoggingVersion}")
 
@@ -122,12 +117,12 @@ dependencies {
 
     implementation("org.hibernate:hibernate-core:${hibernateVersion}")
     implementation("org.hibernate:hibernate-micrometer:${hibernateVersion}")
-    implementation("org.flywaydb:flyway-core")
+
 
     runtimeOnly("org.flywaydb:flyway-core")
-    runtimeOnly("org.flywaydb:flyway-database-postgresql")
+    runtimeOnly("org.flywaydb:flyway-database-postgresql:10.8.1")
     runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("com.h2database:h2")
+
 
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -139,7 +134,6 @@ dependencies {
 			attribute(Bundling.BUNDLING_ATTRIBUTE, objects.named(Bundling.EXTERNAL))
 		}
 	}
-    dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:2.0.0")
 
     testImplementation("org.assertj:assertj-core:3.22.0")
 	testImplementation("org.junit.jupiter:junit-jupiter:5.6.2")
@@ -180,8 +174,8 @@ semver {
 tasks.withType<KotlinCompile>() {
 
     compilerOptions {
-        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
-        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_0)
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
+        languageVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_2_2)
 
         freeCompilerArgs.addAll(listOf(
             "-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn"

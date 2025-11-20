@@ -141,7 +141,7 @@ class MatchService(
 
     private fun updatePlayerScore(match: MatchEntity, player: String, score: Int) {
         logger.info("Finish game: $player: $score")
-        if (match.player1 === player) {
+        if (match.player1 == player) {
             match.score1 = score
         } else {
             match.score2 = score

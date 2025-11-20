@@ -17,8 +17,12 @@ import java.time.LocalDateTime
 class MatchEntity(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_sequence_generator")
+    @SequenceGenerator(
+        name = "match_sequence_generator",
+        sequenceName = "match_sequence_generator",
+        allocationSize = 1
+    )
     var id: Long? = null,
 
     @Column(name = "seed")
@@ -32,8 +36,8 @@ class MatchEntity(
     @Column(name = "match_make_count")
     var matchMakingCount: Int? = 0,
 
-    @Column(name = "player_1")
-    var player1: String,
+    @Column(name = "player_1", nullable = false)
+    var player1: String = "unknown-player",
 
     @Column(name = "player_2")
     var player2: String? = null,

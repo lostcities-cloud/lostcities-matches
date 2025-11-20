@@ -23,7 +23,7 @@ class PlayerRankEntity(
     var id: Long? = null,
 
     @Column(name = "player")
-    var player: String,
+    var player: String = "unknown-player",
 
     @Column(name = "rank")
     var rank: Int = 1000,
