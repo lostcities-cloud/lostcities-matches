@@ -1,10 +1,10 @@
 package io.dereknelson.lostcities.matches.config
 
-import io.dereknelson.lostcities.common.AuthoritiesConstants
+
+import io.dereknelson.lostcities.common.RoleConstants
 import io.dereknelson.lostcities.common.WebConfigProperties
 import io.dereknelson.lostcities.common.auth.JwtFilter
 import io.dereknelson.lostcities.common.auth.PublicTokenValidator
-import io.dereknelson.lostcities.common.auth.TokenProvider
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
 import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.context.annotation.Bean
@@ -94,8 +94,10 @@ class SecurityConfiguration(
             }
             .authorizeHttpRequests { requests ->
                 requests
-                    .requestMatchers(AntPathRequestMatcher("/api/admin/**")).hasAuthority(AuthoritiesConstants.ADMIN)
-                    .requestMatchers(AntPathRequestMatcher("/matches")).hasAuthority(AuthoritiesConstants.USER)
+                    .requestMatchers(AntPathRequestMatcher("/api/admin/**"))
+                        .hasAuthority(RoleConstants.ADMIN)
+                    .requestMatchers(AntPathRequestMatcher("/matches"))
+                        .hasAuthority(RoleConstants.USER)
                     .requestMatchers("/actuator/**").permitAll()
                     .anyRequest().authenticated()
             }

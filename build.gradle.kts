@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.run.BootRun
 
 plugins {
     jacoco
@@ -9,6 +10,7 @@ plugins {
 	id("org.asciidoctor.convert") version "1.5.8"
     id("org.jetbrains.dokka") version "2.1.0"
     id("com.google.cloud.tools.jib") version "3.4.4"
+    id("org.graalvm.buildtools.native") version "0.11.1"
     //id("org.openrewrite.rewrite") version "6.27.0"
 
     kotlin("jvm") version "2.0.+"
@@ -53,6 +55,11 @@ extra["snippetsDir"] = file("build/generated-snippets")
 
 val ktlint by configurations.creating
 
+tasks.named<BootRun>("bootRun") {
+    if(rootProject.hasProperty("debug")) {
+        systemProperty("spring.profiles.active", "local")
+    }
+}
 
 dependencyManagement {
     imports {
@@ -80,18 +87,16 @@ dependencies {
         implementation(project(":lostcities-common"))
         implementation(project(":lostcities-models"))
     } else {
-        implementation("io.dereknelson.lostcities-cloud:lostcities-common:0.0.7")
-        implementation("io.dereknelson.lostcities-cloud:lostcities-models:0.0.6")
+        implementation("io.dereknelson.lostcities-cloud:lostcities-common:${rootProject.extra["lostcities-common.version"]}")
+        implementation("io.dereknelson.lostcities-cloud:lostcities-models:${rootProject.extra["lostcities-models.version"]}")
     }
 
     implementation("org.springframework.boot:spring-boot-devtools")
 
-    implementation("org.apache.httpcomponents.client5:httpclient5:5.5.1")
-    implementation("org.apache.httpcomponents.core5:httpcore5:5.3.6")
+    implementation("org.apache.httpcomponents.client5:httpclient5:${rootProject.extra["httpclient5.version"]}")
+    implementation("org.apache.httpcomponents.core5:httpcore5:${rootProject.extra["httpcore5.version"]}")
 
-    implementation("io.github.microutils:kotlin-logging-jvm:${kotlinLoggingVersion}")
-
-	implementation("org.apache.commons:commons-lang3:${commonsLangVersion}")
+    implementation("org.apache.commons:commons-lang3:${rootProject.extra["commonsLang3.version"]}")
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-amqp")
@@ -105,11 +110,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 	implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate6")
 
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0")
-    implementation("org.springdoc:springdoc-openapi-kotlin:1.8.0")
-
-
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${rootProject.extra["springdoc.version"]}")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${rootProject.extra["springdoc.version"]}")
 
 	implementation("io.jsonwebtoken:jjwt-api:${jjwtVersion}")
 	implementation("io.jsonwebtoken:jjwt-impl:${jjwtVersion}")
