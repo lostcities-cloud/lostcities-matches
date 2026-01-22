@@ -2,7 +2,7 @@ package io.dereknelson.lostcities.matches.admin
 
 import io.dereknelson.lostcities.common.Constants.AI_USER_NAMES
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
-import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.match.MatchService
 import io.dereknelson.lostcities.matches.match.AiPlayer
 import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.swagger.v3.oas.annotations.Operation

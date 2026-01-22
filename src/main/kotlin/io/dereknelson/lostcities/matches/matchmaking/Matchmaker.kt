@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.matches.matchmaking
 
-import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.match.MatchService
 import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.dereknelson.lostcities.matches.match.MatchRepository
 import jakarta.transaction.Transactional

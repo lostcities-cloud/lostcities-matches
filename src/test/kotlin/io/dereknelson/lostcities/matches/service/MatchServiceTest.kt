@@ -1,6 +1,6 @@
 package io.dereknelson.lostcities.matches.service
 
-import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.match.MatchService
 import io.dereknelson.lostcities.matches.RankService
 import io.dereknelson.lostcities.matches.match.MatchEntity
 import io.dereknelson.lostcities.matches.match.MatchEventAmqpService

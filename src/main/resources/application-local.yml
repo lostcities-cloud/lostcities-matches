@@ -39,6 +39,7 @@ management:
       exposure:
         include: "*, openapi, swagger-ui"
 
+
 application:
   security:
     authentication:
@@ -66,4 +67,5 @@ logging:
     rollingpolicy:
       max-file-size: 10MB
       max-history: 10
+
 

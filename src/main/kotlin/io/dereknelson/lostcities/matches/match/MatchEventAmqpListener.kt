@@ -3,7 +3,7 @@ package io.dereknelson.lostcities.matches.match
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.dereknelson.lostcities.matches.FinishGameScore
-import io.dereknelson.lostcities.matches.MatchService
+import io.dereknelson.lostcities.matches.match.MatchService
 import io.dereknelson.lostcities.models.matches.FinishMatchEvent
 import io.dereknelson.lostcities.models.matches.TurnChangeEvent
 import org.slf4j.Logger

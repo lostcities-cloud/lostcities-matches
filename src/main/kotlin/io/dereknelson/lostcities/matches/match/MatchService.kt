@@ -1,10 +1,7 @@
-package io.dereknelson.lostcities.matches
+package io.dereknelson.lostcities.matches.match
 
-import io.dereknelson.lostcities.matches.match.MatchEntity
-import io.dereknelson.lostcities.matches.match.MatchEventAmqpListener
-import io.dereknelson.lostcities.matches.match.MatchEventAmqpService
-import io.dereknelson.lostcities.matches.match.MatchRepository
-import io.dereknelson.lostcities.matches.match.UnableToJoinMatchException
+import io.dereknelson.lostcities.matches.RankService
+import io.opentelemetry.api.trace.Tracer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
@@ -12,10 +9,12 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.lang.RuntimeException
 import java.time.LocalDateTime
-import java.util.*
+import java.util.Optional
+import java.util.Random
 
 @Service
 class MatchService(
+    private var tracer: Tracer,
     private var matchRepository: MatchRepository,
     private var rankService: RankService,
     private var eventService: MatchEventAmqpService,
