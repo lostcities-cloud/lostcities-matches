@@ -1,7 +1,6 @@
 package io.dereknelson.lostcities.matches.match
 
 import io.dereknelson.lostcities.matches.RankService
-import io.opentelemetry.api.trace.Tracer
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.data.domain.Page
@@ -14,7 +13,7 @@ import java.util.Random
 
 @Service
 class MatchService(
-    private var tracer: Tracer,
+
     private var matchRepository: MatchRepository,
     private var rankService: RankService,
     private var eventService: MatchEventAmqpService,
