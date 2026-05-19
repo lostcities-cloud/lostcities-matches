@@ -1,5 +1,6 @@
 package io.dereknelson.lostcities.matches.match
 
+import io.dereknelson.lostcities.matches.GAME_EVENT_QUEUE
 import io.dereknelson.lostcities.matches.RankService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -89,8 +90,8 @@ class MatchService(
         val savedMatch = matchRepository.save(match)
 
         eventService.convertAndSend(
-            MatchEventAmqpListener.CREATE_GAME_QUEUE,
-            savedMatch,
+
+            savedMatch.toDto(),
         )
 
         return savedMatch
@@ -101,8 +102,7 @@ class MatchService(
             it.isReady && !it.isCompleted
         }.forEach {
             eventService.convertAndSend(
-                MatchEventAmqpListener.CREATE_GAME_QUEUE,
-                it,
+                it.toDto(),
             )
         }
     }

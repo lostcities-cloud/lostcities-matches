@@ -2,6 +2,9 @@ package io.dereknelson.lostcities.matches.match
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import io.dereknelson.lostcities.common.auditing.AbstractAuditingEntity
+import io.dereknelson.lostcities.models.matches.GameDto
+import io.dereknelson.lostcities.models.matches.state.MatchDto
+import io.dereknelson.lostcities.models.matches.state.UserPair
 import jakarta.persistence.*
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -14,7 +17,7 @@ import java.time.LocalDateTime
         Index(name = "player_2_index", columnList = "player_2", unique = false),
     ],
 )
-class MatchEntity(
+data class MatchEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "match_sequence_generator")
@@ -115,6 +118,21 @@ class MatchEntity(
     }
 
     fun hasPlayer(name: String) = player1 == name || player2 == name
+
+    fun toDto(): GameDto {
+        return GameDto(
+            id = this.id!!,
+
+            player1 = player1,
+            player2 = player2!!,
+            isPlayer1Ai = isPlayer1Ai!!,
+            isPlayer2Ai = isPlayer2Ai!!,
+            seed = seed,
+            currentPlayer = currentPlayer!!,
+            turns = 0,
+            commands = emptyList()
+        )
+    }
 }
 
 data class PlayerObj(val player: String, val aiPlayer: Boolean)

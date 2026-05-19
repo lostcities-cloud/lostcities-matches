@@ -2,14 +2,27 @@ package io.dereknelson.lostcities.matches.match
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import io.dereknelson.lostcities.matches.END_GAME_EVENT
+import io.dereknelson.lostcities.matches.END_GAME_EVENT_DLQ
 import io.dereknelson.lostcities.matches.FinishGameScore
-import io.dereknelson.lostcities.matches.match.MatchService
-import io.dereknelson.lostcities.models.matches.FinishMatchEvent
-import io.dereknelson.lostcities.models.matches.TurnChangeEvent
+import io.dereknelson.lostcities.matches.GAME_EVENT_QUEUE
+import io.dereknelson.lostcities.matches.TURN_CHANGE_EVENT
+import io.dereknelson.lostcities.matches.TURN_CHANGE_EVENT_DLQ
+import io.dereknelson.lostcities.models.gamestate.GameEvent
+import io.dereknelson.lostcities.models.matches.GameDto
+import io.dereknelson.lostcities.models.matches.events.FinishMatchEvent
+import io.dereknelson.lostcities.models.matches.events.TurnChangeEvent
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.encodeToByteArray
+import kotlinx.serialization.protobuf.ProtoBuf
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.amqp.core.Message
 import org.springframework.amqp.core.QueueBuilder
+import org.springframework.amqp.rabbit.annotation.Argument
+import org.springframework.amqp.rabbit.annotation.Exchange
+import org.springframework.amqp.rabbit.annotation.Queue
+import org.springframework.amqp.rabbit.annotation.QueueBinding
 import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.beans.factory.annotation.Qualifier
@@ -25,71 +38,39 @@ class MatchEventAmqpListener(
     val matchService: MatchService,
 ) {
     val logger: Logger = LoggerFactory.getLogger(MatchEventAmqpListener::class.java)
-    companion object {
-        const val TURN_CHANGE_EVENT = "turn-change"
-        const val TURN_CHANGE_EVENT_DLQ = "turn-change-dlq"
-        const val END_GAME_EVENT = "end-game"
-        const val END_GAME_EVENT_DLQ = "end-game-dlq"
-        const val CREATE_GAME_QUEUE = "create-game"
-        const val CREATE_GAME_QUEUE_DLQ = "create-game-dlq"
-    }
 
-    @Bean
-    @Qualifier(CREATE_GAME_QUEUE)
-    fun createGame() = QueueBuilder
-        .durable(CREATE_GAME_QUEUE)
-        .quorum()
-        .ttl(5000)
-        .withArgument("x-dead-letter-exchange", "")
-        .withArgument("x-dead-letter-routing-key", CREATE_GAME_QUEUE_DLQ)
-        .build()!!
 
-    @Bean
-    @Qualifier(CREATE_GAME_QUEUE_DLQ)
-    fun createGameDlQueue() = QueueBuilder
-        .durable(CREATE_GAME_QUEUE_DLQ)
-        .quorum()
-        .build()!!
+    //@RabbitListener(queues = [TURN_CHANGE_EVENT], exclusive = false, concurrency = "1-8")
+    @RabbitListener(bindings =
+        [
+            QueueBinding(
+                value = Queue(
+                    name="\${app.turnChangeEventQueue}",
+                    durable =  "true",
+                    exclusive = "false",
+                    autoDelete = "false",
+                    declare = "true",
+                    arguments = [
+                        Argument("x-dead-letter-exchange", ""),
+                        Argument("x-dead-letter-routing-key", TURN_CHANGE_EVENT_DLQ)
+                    ]
+                ),
+                exchange = Exchange(
+                    name = "game-events.matches",
+                    durable = "true",
+                    declare="false",
+                    autoDelete = "false",
+                    type = "direct"
+                ),
+                key = ["match-events.turn-change"]
+            ),
 
-    @Bean
-    @Qualifier(TURN_CHANGE_EVENT)
-    fun turnChangeEventQueue() = QueueBuilder
-        .durable(TURN_CHANGE_EVENT)
-        .quorum()
-        .ttl(30000)
-        .withArgument("x-dead-letter-exchange", "")
-        .withArgument("x-dead-letter-routing-key", TURN_CHANGE_EVENT_DLQ)
-        .build()!!
-
-    @Bean
-    @Qualifier(TURN_CHANGE_EVENT_DLQ)
-    fun turnChangeEventDLQueue() = QueueBuilder
-        .durable(TURN_CHANGE_EVENT_DLQ)
-        .quorum()
-        .build()!!
-
-    @Bean
-    @Qualifier(END_GAME_EVENT)
-    fun endGameEventQueue() = QueueBuilder
-        .durable(END_GAME_EVENT)
-        .quorum()
-        .ttl(5000)
-        .withArgument("x-dead-letter-exchange", "")
-        .withArgument("x-dead-letter-routing-key", END_GAME_EVENT_DLQ)
-        .build()!!
-
-    @Bean
-    @Qualifier(END_GAME_EVENT_DLQ)
-    fun endGameEventDLQueue() = QueueBuilder
-        .durable(END_GAME_EVENT_DLQ)
-        .quorum()
-        .build()!!
-
-    @RabbitListener(queues = [TURN_CHANGE_EVENT], exclusive = false, concurrency = "1-8")
+        ])
+        //, concurrency = "1-8")
     fun gameEvent(gameMessage: Message) {
         val turnChangeEvent = objectMapper.readValue(gameMessage.body, TurnChangeEvent::class.java)
 
-        logger.debug("{} {}", TURN_CHANGE_EVENT, turnChangeEvent)
+        logger.debug("{} {}", gameMessage.messageProperties.consumerQueue, turnChangeEvent)
 
         val match = matchRepository.findById(turnChangeEvent.matchId)
 
@@ -101,7 +82,27 @@ class MatchEventAmqpListener(
         }
     }
 
-    @RabbitListener(queues = [END_GAME_EVENT], exclusive = true)
+    //@RabbitListener(queues = [END_GAME_EVENT], exclusive = true)
+    @RabbitListener(bindings = [
+        QueueBinding(
+            value = Queue(
+                name="\${app.endGameEventQueue}",
+                durable =  "true",
+                exclusive = "true",
+                autoDelete = "false",
+                declare = "true",
+                arguments = [
+                    Argument("x-dead-letter-exchange", ""),
+                    Argument("x-dead-letter-routing-key", END_GAME_EVENT_DLQ)
+                ]
+            ),
+            exchange = Exchange(
+                name = "game-events.matches",
+                declare="false",
+            ),
+            key = ["game-events.matches.end-game-event"]
+        )
+    ])
     fun endMatchEvent(matchEvent: Message) {
         try {
             val finishMatch = objectMapper.readValue<FinishMatchEvent>(matchEvent.body)
@@ -139,14 +140,15 @@ class MatchEventAmqpListener(
     }
 }
 
+@OptIn(ExperimentalSerializationApi::class)
 @Service
 class MatchEventAmqpService(
-    val objectMapper: ObjectMapper,
     private var rabbitTemplate: RabbitTemplate,
 ) {
-    fun convertAndSend(topic: String, match: MatchEntity) {
-        val jsonMatch = objectMapper.writeValueAsString(match)
-        rabbitTemplate.convertAndSend(topic, jsonMatch)
+    fun convertAndSend(gameDto: GameDto) {
+        val gameEvent = GameEvent(id = gameDto.id, gameDto = gameDto)
+        val matchProtobuf = ProtoBuf.encodeToByteArray(gameEvent)
+        rabbitTemplate.convertAndSend("$GAME_EVENT_QUEUE.game-state-group", matchProtobuf)
     }
 }
 class ListenerException : Exception()

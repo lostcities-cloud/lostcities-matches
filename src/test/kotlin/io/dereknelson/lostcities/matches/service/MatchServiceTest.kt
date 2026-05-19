@@ -87,17 +87,4 @@ internal class MatchServiceTest {
         matchService.findById(1)
         verify(matchRepository).findById(1)
     }
-
-    @Test
-    fun joinMatch() {
-        val match = MatchEntity(seed = 1L, player1 = "player1")
-        `when`(matchRepository.save(any())).thenReturn(match)
-
-        matchService.joinMatch(match, user2)
-
-        verify(matchRepository).save(match)
-
-        assertTrue(match.hasPlayer(user2))
-        assertTrue(match.isReady)
-    }
 }

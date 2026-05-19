@@ -5,6 +5,8 @@ import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import io.dereknelson.lostcities.common.WebConfigProperties
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.servers.Server
+import org.springframework.amqp.core.QueueBuilder
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
@@ -14,6 +16,12 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.scheduling.annotation.EnableScheduling
+
+const val TURN_CHANGE_EVENT = "turn-change"
+const val TURN_CHANGE_EVENT_DLQ = "turn-change-dlq"
+const val END_GAME_EVENT = "end-game"
+const val END_GAME_EVENT_DLQ = "end-game-dlq"
+const val GAME_EVENT_QUEUE = "game-event"
 
 @SpringBootApplication(exclude = [ErrorMvcAutoConfiguration::class])
 @OpenAPIDefinition(
@@ -30,10 +38,25 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableJpaRepositories
 @EnableScheduling
 @EntityScan("io.dereknelson.lostcities.matches")
-class LostcitiesMatchesApplication
+class LostcitiesMatchesApplication {
 
-@Bean
-fun mapper() = jacksonObjectMapper().registerKotlinModule()
+    @Bean
+    @Qualifier(TURN_CHANGE_EVENT_DLQ)
+    fun turnChangeEventDLQueue() = QueueBuilder
+        .durable(TURN_CHANGE_EVENT_DLQ)
+        .quorum()
+        .build()!!
+
+    @Bean
+    @Qualifier(END_GAME_EVENT_DLQ)
+    fun endGameEventDLQueue() = QueueBuilder
+        .durable(END_GAME_EVENT_DLQ)
+        .quorum()
+        .build()!!
+
+    @Bean
+    fun mapper() = jacksonObjectMapper().registerKotlinModule()
+}
 
 fun main(args: Array<String>) {
     runApplication<LostcitiesMatchesApplication>(*args)

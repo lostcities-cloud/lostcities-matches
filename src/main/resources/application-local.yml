@@ -1,3 +1,7 @@
+app:
+  endGameEventQueue: "end-game"
+  turnChangeEventQueue: "turn-change"
+
 spring:
   application.name: matches
   devtools.restart.enabled: true
@@ -10,7 +14,7 @@ spring:
   datasource:
     #type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5433}/lostcities-matches
+    url: jdbc:postgresql://${POSTGRES_IP:127.0.0.1}:${POSTGRES_PORT:5432}/lostcities-matches
     username: ${POSTGRES_USER:matches}
     password: ${POSTGRES_PASSWORD:example}
   flyway:

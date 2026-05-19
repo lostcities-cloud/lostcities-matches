@@ -2,9 +2,8 @@ package io.dereknelson.lostcities.matches.match
 
 import io.dereknelson.lostcities.common.Constants.AI_USER_NAMES
 import io.dereknelson.lostcities.common.auth.LostCitiesUserDetails
-import io.dereknelson.lostcities.matches.match.MatchService
-import io.dereknelson.lostcities.models.state.MatchDto
-import io.dereknelson.lostcities.models.state.UserPair
+import io.dereknelson.lostcities.models.matches.state.MatchDto
+import io.dereknelson.lostcities.models.matches.state.UserPair
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.responses.ApiResponse
@@ -73,7 +72,7 @@ class MatchController(
         ],
     )
     @PatchMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('USER')")
     fun joinMatch(
         @PathVariable id: Long,
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
@@ -99,7 +98,7 @@ class MatchController(
         ],
     )
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('USER')")
     fun findById(@PathVariable id: Long) =
         matchService.findById(id)
             .map { it.asMatchDto() }
@@ -110,7 +109,7 @@ class MatchController(
         security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @GetMapping("/available")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('USER')")
     fun findAvailableForUser(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
         @PageableDefault(page = 0, size = 100) page: Pageable,
@@ -124,6 +123,7 @@ class MatchController(
         security = [ SecurityRequirement(name = "bearer-key") ],
     )
     @GetMapping("/active")
+    @PreAuthorize("hasAuthority('USER')")
     fun findActiveMatches(
         @AuthenticationPrincipal @Parameter(hidden = true) userDetails: LostCitiesUserDetails,
         @PageableDefault(page = 0, size = 500) page: Pageable,
@@ -133,7 +133,7 @@ class MatchController(
     }
 
     @GetMapping("/resend")
-    @PreAuthorize("hasAuthority('ROLE_USER')")
+    @PreAuthorize("hasAuthority('USER')")
     fun resendMatchesToGamestate() {
         matchService.recreateMatches()
     }

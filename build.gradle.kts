@@ -13,11 +13,12 @@ plugins {
     //id("org.graalvm.buildtools.native") version "0.11.1"
     //id("org.openrewrite.rewrite") version "6.27.0"
 
-    kotlin("jvm") version "2.3.+"
-    kotlin("plugin.spring") version "2.3.+"
-    kotlin("plugin.jpa") version "2.3.+"
-	kotlin("plugin.allopen") version "2.3.+"
-    kotlin("plugin.noarg") version "2.3.+"
+    kotlin("jvm")
+    kotlin("plugin.spring")
+    kotlin("plugin.jpa")
+	kotlin("plugin.allopen")
+    kotlin("plugin.noarg")
+    kotlin("plugin.serialization")
 }
 
 group = "io.dereknelson.lostcities"
@@ -80,7 +81,7 @@ dependencies {
     //rewrite("org.openrewrite.recipe:rewrite-spring:5.22.0")
 
     runtimeOnly("io.micrometer:micrometer-registry-prometheus")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-protobuf:1.10.0")
     implementation("io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:2.24.0")
     implementation("io.micrometer:micrometer-tracing-bridge-otel")
     openTelemetryAgent("io.opentelemetry.javaagent:opentelemetry-javaagent:${otelAgentVersion}") // Use the latest stable version
@@ -207,7 +208,7 @@ tasks.bootBuildImage {
 
 jib {
     from {
-        image = "registry://public.ecr.aws/amazoncorretto/amazoncorretto:21.0.8-al2023-headless"
+        image = "registry://gcr.io/distroless/java21-debian13"
     }
 
     to {
